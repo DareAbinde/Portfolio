@@ -52,10 +52,11 @@ body {
 .responsive-mobile-nav {
   position: fixed;
   z-index: 100;
+  --adaptive-nav-height: 58px;
   top: 0;
   left: 0;
   right: 0;
-  height: 74px;
+  height: var(--adaptive-nav-height);
   display: none;
   opacity: 1;
   transform: translateY(0);
@@ -182,25 +183,25 @@ body {
 
   .responsive-mobile-nav__button {
     position: absolute;
-    top: 24px;
+    top: calc((var(--adaptive-nav-height) - 34px) / 2);
     right: calc(50% - var(--adaptive-hero-frame) / 2 + var(--adaptive-edge-pad));
-    width: 25px;
-    height: 25px;
-    gap: 2.84px;
+    width: 34px;
+    height: 34px;
+    gap: 3.8px;
     padding: 0;
   }
 
   .responsive-mobile-nav__button span {
-    width: 11.23px;
-    height: 1.14px;
+    width: 15px;
+    height: 1.4px;
   }
 
   .responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(1) {
-    transform: translateY(3.98px) rotate(45deg);
+    transform: translateY(5.2px) rotate(45deg);
   }
 
   .responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(3) {
-    transform: translateY(-3.98px) rotate(-45deg);
+    transform: translateY(-5.2px) rotate(-45deg);
   }
 
   .adaptive-hero {
@@ -804,10 +805,10 @@ body {
   .adaptive-contact {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(28px, 7vw, 72px);
+    gap: clamp(28px, 7vw, 64px);
     align-items: center;
-    padding-top: clamp(56px, 8vw, 72px);
-    padding-bottom: clamp(56px, 8vw, 72px);
+    padding-top: clamp(48px, 7vw, 64px);
+    padding-bottom: clamp(48px, 7vw, 64px);
     background:
       radial-gradient(ellipse 560px 420px at 55% 48%, rgba(0, 95, 204, 0.22), rgba(0, 0, 0, 0) 70%),
       #111;
@@ -821,12 +822,12 @@ body {
 
   .adaptive-contact a {
     width: min(360px, 100%);
-    margin-top: 36px;
+    margin-top: 32px;
     border-radius: 999px;
   }
 
   .adaptive-contact__portrait {
-    width: clamp(210px, 28vw, 280px);
+    width: clamp(220px, 27vw, 300px);
   }
 
   .adaptive-contact__portrait img {
@@ -881,28 +882,12 @@ body {
   }
 
   .responsive-mobile-nav {
-    height: clamp(104px, 14vw, 128px);
+    --adaptive-nav-height: 72px;
   }
 
   .responsive-mobile-nav__button {
-    top: clamp(42px, 6vw, 70px);
+    top: calc((var(--adaptive-nav-height) - 34px) / 2);
     right: var(--adaptive-section-pad);
-    width: 34px;
-    height: 34px;
-    gap: 3.8px;
-  }
-
-  .responsive-mobile-nav__button span {
-    width: 15px;
-    height: 1.4px;
-  }
-
-  .responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(1) {
-    transform: translateY(5.2px) rotate(45deg);
-  }
-
-  .responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(3) {
-    transform: translateY(-5.2px) rotate(-45deg);
   }
 
   .adaptive-hero {
@@ -1005,6 +990,23 @@ body {
   }
 }
 
+@media (min-width: 481px) and (max-width: 1023px) {
+  .adaptive-contact {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(36px, 8vw, 72px);
+    align-items: center;
+  }
+
+  .adaptive-contact__copy {
+    max-width: 520px;
+  }
+
+  .adaptive-contact__portrait {
+    width: clamp(240px, 30vw, 330px);
+    justify-self: end;
+  }
+}
+
 @media (max-width: 768px) {
   .adaptive-principles,
   .adaptive-work,
@@ -1101,6 +1103,23 @@ body {
   }
 }
 
+@media (min-width: 481px) and (max-width: 768px) {
+  .adaptive-contact {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(32px, 7vw, 56px);
+    align-items: center;
+  }
+
+  .adaptive-contact__copy {
+    max-width: 480px;
+  }
+
+  .adaptive-contact__portrait {
+    width: clamp(220px, 30vw, 290px);
+    justify-self: end;
+  }
+}
+
 @media (max-width: 819px) {
   .adaptive-tags {
     display: none;
@@ -1146,19 +1165,21 @@ body {
   }
 
   .adaptive-contact {
-    padding-top: 56px;
-    padding-bottom: 56px;
+    gap: 24px;
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
   .adaptive-contact a {
     width: 100%;
-    min-height: 64px;
-    margin-top: 36px;
+    min-height: 58px;
+    margin-top: 30px;
   }
 
   .adaptive-contact__portrait {
-    width: clamp(230px, 68vw, 330px);
-    margin-top: 8px;
+    width: clamp(190px, 56vw, 240px);
+    margin-top: 0;
+    justify-self: center;
   }
 
   .adaptive-footer {
