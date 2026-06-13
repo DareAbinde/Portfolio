@@ -52,13 +52,18 @@ body {
 .responsive-mobile-nav {
   position: fixed;
   z-index: 100;
-  top: clamp(14px, 2.5vw, 24px);
-  right: clamp(14px, 4vw, 32px);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 74px;
   display: none;
   opacity: 1;
   transform: translateY(0);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(13, 13, 13, 0.92), rgba(13, 13, 13, 0.62));
   transition: opacity 180ms ease, transform 180ms ease;
   will-change: opacity, transform;
+  pointer-events: none;
 }
 
 .responsive-mobile-nav.is-hidden {
@@ -83,6 +88,7 @@ body {
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
   cursor: pointer;
+  pointer-events: auto;
 }
 
 .responsive-mobile-nav__button span {
@@ -90,6 +96,20 @@ body {
   height: 2px;
   border-radius: 999px;
   background: #0d0d0d;
+  transition: opacity 160ms ease, transform 180ms ease;
+  transform-origin: center;
+}
+
+.responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(2) {
+  opacity: 0;
+}
+
+.responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 .responsive-mobile-nav__menu {
@@ -104,6 +124,7 @@ body {
   background: rgba(13, 13, 13, 0.94);
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.36);
   backdrop-filter: blur(16px);
+  pointer-events: auto;
 }
 
 .responsive-mobile-nav__menu.is-open {
@@ -157,11 +178,12 @@ body {
 
   .responsive-mobile-nav {
     display: block;
-    top: 30px;
-    right: calc(50% - var(--adaptive-hero-frame) / 2 + var(--adaptive-edge-pad));
   }
 
   .responsive-mobile-nav__button {
+    position: absolute;
+    top: 24px;
+    right: calc(50% - var(--adaptive-hero-frame) / 2 + var(--adaptive-edge-pad));
     width: 25px;
     height: 25px;
     gap: 2.84px;
@@ -171,6 +193,14 @@ body {
   .responsive-mobile-nav__button span {
     width: 11.23px;
     height: 1.14px;
+  }
+
+  .responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(1) {
+    transform: translateY(3.98px) rotate(45deg);
+  }
+
+  .responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(3) {
+    transform: translateY(-3.98px) rotate(-45deg);
   }
 
   .adaptive-hero {
@@ -759,7 +789,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: auto;
+    margin-top: 24px;
     color: #005fcc;
     font-size: 14px;
     font-weight: 500;
@@ -774,8 +804,10 @@ body {
   .adaptive-contact {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(36px, 8vw, 96px);
+    gap: clamp(28px, 7vw, 72px);
     align-items: center;
+    padding-top: clamp(56px, 8vw, 72px);
+    padding-bottom: clamp(56px, 8vw, 72px);
     background:
       radial-gradient(ellipse 560px 420px at 55% 48%, rgba(0, 95, 204, 0.22), rgba(0, 0, 0, 0) 70%),
       #111;
@@ -789,21 +821,12 @@ body {
 
   .adaptive-contact a {
     width: min(360px, 100%);
-    margin-top: 52px;
+    margin-top: 36px;
     border-radius: 999px;
   }
 
-  .adaptive-contact p {
-    margin: 18px 0 0;
-    color: #888;
-    font-family: var(--font-nimbus);
-    font-size: 13px;
-    letter-spacing: 0.4px;
-    line-height: 20px;
-  }
-
   .adaptive-contact__portrait {
-    width: min(280px, 30vw);
+    width: clamp(210px, 28vw, 280px);
   }
 
   .adaptive-contact__portrait img {
@@ -820,16 +843,16 @@ body {
   }
 
   .adaptive-footer__inner {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 28px;
+    display: flex;
+    gap: 24px;
     align-items: center;
+    justify-content: space-between;
   }
 
   .adaptive-footer nav {
     display: flex;
-    justify-content: center;
-    gap: 28px;
+    flex-wrap: wrap;
+    gap: 22px;
   }
 
   .adaptive-footer nav a,
@@ -858,11 +881,12 @@ body {
   }
 
   .responsive-mobile-nav {
-    top: clamp(42px, 6vw, 70px);
-    right: var(--adaptive-section-pad);
+    height: clamp(104px, 14vw, 128px);
   }
 
   .responsive-mobile-nav__button {
+    top: clamp(42px, 6vw, 70px);
+    right: var(--adaptive-section-pad);
     width: 34px;
     height: 34px;
     gap: 3.8px;
@@ -871,6 +895,14 @@ body {
   .responsive-mobile-nav__button span {
     width: 15px;
     height: 1.4px;
+  }
+
+  .responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(1) {
+    transform: translateY(5.2px) rotate(45deg);
+  }
+
+  .responsive-mobile-nav.is-open .responsive-mobile-nav__button span:nth-child(3) {
+    transform: translateY(-5.2px) rotate(-45deg);
   }
 
   .adaptive-hero {
@@ -946,6 +978,30 @@ body {
   .adaptive-categories span {
     font-size: 14px;
     line-height: 20px;
+  }
+
+  .adaptive-principle-grid,
+  .adaptive-article-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .adaptive-principle-grid article {
+    min-height: 132px;
+    padding: 24px;
+  }
+
+  .adaptive-bio,
+  .adaptive-contact {
+    grid-template-columns: 1fr;
+  }
+
+  .adaptive-bio a {
+    justify-self: start;
+  }
+
+  .adaptive-contact__portrait {
+    width: clamp(300px, 46vw, 420px);
+    justify-self: center;
   }
 }
 
@@ -1034,14 +1090,9 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .adaptive-contact__portrait {
-    width: min(420px, 76vw);
-    justify-self: center;
-  }
-
   .adaptive-footer__inner {
-    grid-template-columns: 1fr;
-    justify-items: start;
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .adaptive-footer nav {
@@ -1094,36 +1145,20 @@ body {
     font-size: 16px;
   }
 
-  .adaptive-bio h2,
-  .adaptive-contact h2 {
-    font-size: clamp(44px, 12vw, 60px);
-    line-height: 1.12;
-  }
-
-  .adaptive-bio p {
-    font-size: 24px;
-    line-height: 1.62;
-  }
-
-  .adaptive-bio strong {
-    font-size: 23px;
-    line-height: 1.55;
-  }
-
   .adaptive-contact {
-    padding-top: 72px;
-    padding-bottom: 72px;
+    padding-top: 56px;
+    padding-bottom: 56px;
   }
 
   .adaptive-contact a {
     width: 100%;
     min-height: 64px;
-    margin-top: 52px;
+    margin-top: 36px;
   }
 
   .adaptive-contact__portrait {
-    width: min(360px, 80vw);
-    margin-top: 24px;
+    width: clamp(230px, 68vw, 330px);
+    margin-top: 8px;
   }
 
   .adaptive-footer {

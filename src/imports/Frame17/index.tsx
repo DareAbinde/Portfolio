@@ -83,7 +83,7 @@ function MobileNavigation() {
   }, []);
 
   return (
-    <div className={`responsive-mobile-nav${isVisible ? " is-visible" : " is-hidden"}${hasScrolled ? " has-scrolled" : ""}`}>
+    <div className={`responsive-mobile-nav${isVisible ? " is-visible" : " is-hidden"}${hasScrolled ? " has-scrolled" : ""}${isOpen ? " is-open" : ""}`}>
       <button
         aria-controls="responsive-mobile-menu"
         aria-expanded={isOpen}
@@ -363,7 +363,6 @@ function AdaptiveFooter() {
   return (
     <footer className="adaptive-footer">
       <AdaptiveReveal className="adaptive-footer__inner">
-        <AdaptiveWordmark />
         <nav aria-label="Footer navigation">
           {navItems.slice(0, 4).map((item) => (
             <a href={item.href === "#home" ? "#home-mobile" : `${item.href}-mobile`} key={item.label}>
@@ -510,7 +509,6 @@ function AdaptivePage() {
             better decisions.
           </h2>
           <a href="mailto:dareabinde04@gmail.com">Contact Me</a>
-          <p>dareabinde04@gmail.com</p>
         </AdaptiveReveal>
         <AdaptiveReveal className="adaptive-contact__portrait" delay={0.12}>
           <img src={imgHeroPortraitCircle} alt="Dare Abinde" />
