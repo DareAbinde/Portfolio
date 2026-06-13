@@ -1,0 +1,4 @@
+node_modules/
+dist/
+.playwright-browsers/
+.DS_Store
