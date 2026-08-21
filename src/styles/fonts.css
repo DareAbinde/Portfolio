@@ -1,7 +1,113 @@
-/* Font fallbacks for system fonts */
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/Inter-Regular.woff2') format('woff2');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../assets/fonts/NeueMontreal-Light.otf') format('opentype');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../assets/fonts/NeueMontreal-LightItalic.otf') format('opentype');
+  font-display: swap;
+  font-style: italic;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../assets/fonts/NeueMontreal-Regular.otf') format('opentype');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../assets/fonts/NeueMontreal-Italic.otf') format('opentype');
+  font-display: swap;
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../assets/fonts/NeueMontreal-Medium.otf') format('opentype');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Home Greeting Fallback';
+  src:
+    local('Inter Tight Medium'),
+    local('Inter Tight'),
+    local('Inter Medium'),
+    local('Inter');
+  size-adjust: 97.6667%;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../assets/fonts/NeueMontreal-MediumItalic.otf') format('opentype');
+  font-display: swap;
+  font-style: italic;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../assets/fonts/NeueMontreal-Bold.otf') format('opentype');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('../assets/fonts/NeueMontreal-BoldItalic.otf') format('opentype');
+  font-display: swap;
+  font-style: italic;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Nimbus Sans L';
+  src: url('../assets/fonts/NimbusSanL-Reg.otf') format('opentype');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Nimbus Sans L';
+  src: url('../assets/fonts/NimbusSanL-RegIta.otf') format('opentype');
+  font-display: swap;
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Nimbus Sans L';
+  src: url('../assets/fonts/NimbusSanL-Bol.otf') format('opentype');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}
+
 :root {
-  --font-manrope: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-poppins: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-nimbus: 'Nimbus Sans L', Arial, Helvetica, sans-serif;
-  --font-joan: 'Joan', Georgia, serif;
+  --font-primary: 'Neue Montreal', 'Inter Tight', Arial, Helvetica, sans-serif;
+  --font-secondary: 'Inter Tight', 'Neue Montreal', Arial, Helvetica, sans-serif;
+  --font-nav: 'Nimbus Sans L', 'Neue Montreal', Arial, Helvetica, sans-serif;
 }

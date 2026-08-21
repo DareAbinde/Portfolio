@@ -2,3 +2,21 @@ node_modules/
 dist/
 .playwright-browsers/
 .DS_Store
+.netlify/
+.env
+.env.*
+!.env.example
+
+# Local video masters replaced by Mux playback in production.
+src/assets/final-portfolio/home/ch-video-prototype.mp4
+src/assets/final-portfolio/case-pages/ch-promotional-video.mp4
+src/assets/final-portfolio/case-pages/ch-prototype-1.mp4
+src/assets/final-portfolio/case-pages/ch-prototype-2.mp4
+src/assets/final-portfolio/case-pages/climate-new-prototype-1.mp4
+src/assets/final-portfolio/case-pages/climate-new-prototype-2.mp4
+src/assets/final-portfolio/case-pages/cm-promotional-video.mp4
+src/assets/final-portfolio/case-pages/landa-new-desktop-prototype-1.mov
+src/assets/final-portfolio/case-pages/landa-new-desktop-prototype-2.mov
+src/assets/final-portfolio/case-pages/landa-new-mobile-middle.mov
+src/assets/final-portfolio/case-pages/landa-prototype-1.mp4
+src/assets/final-portfolio/case-pages/landa-prototype-2.mp4

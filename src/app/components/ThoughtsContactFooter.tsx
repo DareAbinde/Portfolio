@@ -10,7 +10,7 @@ function ArrowIcon({ clipId }: { clipId: string }) {
     <div className="h-[9.175px] relative shrink-0 w-[14.275px]">
       <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14.2748 9.17472">
         <g clipPath={`url(#${clipId})`}>
-          <path d={svgPaths.pd29fc60} stroke="var(--stroke-0, #1D1D1F)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.52912" />
+          <path d={svgPaths.pd29fc60} stroke="var(--stroke-0, #005FCC)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.52912" />
         </g>
         <defs>
           <clipPath id={clipId}>
@@ -73,25 +73,25 @@ function ArticleCard({ article, index }: { article: Article; index: number }) {
         <div className="relative shrink-0 w-full flex flex-col gap-[10.2px]">
           {/* Tag + read time */}
           <div className="relative shrink-0 w-full flex items-center justify-between">
-            <p className="font-['Nimbus_Sans_L:Bold',sans-serif] leading-[15.3px] not-italic text-[#6e6e73] text-[10.2px] tracking-[1.428px] uppercase whitespace-nowrap">
+            <p className="font-nimbus font-bold leading-[15.3px] not-italic text-[#6e6e73] text-[10.2px] tracking-[1.428px] uppercase whitespace-nowrap">
               {article.tag}
             </p>
-            <p className="font-['Nimbus_Sans_L:Regular',sans-serif] leading-[16.83px] not-italic text-[#b3b3b3] text-[11.22px] whitespace-nowrap">
+            <p className="font-nimbus font-normal leading-[16.83px] not-italic text-[#b3b3b3] text-[11.22px] whitespace-nowrap">
               {article.readTime}
             </p>
           </div>
           {/* Title */}
-          <p className="font-['Poppins:Medium',sans-serif] leading-[25.194px] not-italic text-[#1d1d1f] text-[19.38px] tracking-[-0.51px] w-full">
+          <p className="font-poppins font-medium leading-[25.194px] not-italic text-[#1d1d1f] text-[19.38px] tracking-[-0.51px] w-full">
             {article.title}
           </p>
           {/* Description */}
-          <p className="font-['Poppins:Regular',sans-serif] leading-[20.553px] not-italic text-[#6e6e73] text-[13.26px] tracking-[-0.102px] w-full">
+          <p className="font-poppins font-normal leading-[20.553px] not-italic text-[#6e6e73] text-[13.26px] tracking-[-0.102px] w-full">
             {article.description}
           </p>
         </div>
         {/* Bottom: Read Article + icon */}
         <div className="relative shrink-0 w-full flex gap-[8.16px] items-center">
-          <p className="font-['Poppins:Medium',sans-serif] leading-[19.89px] not-italic text-[#1d1d1f] text-[13.26px] whitespace-nowrap">
+          <p className="font-poppins font-medium leading-[19.89px] not-italic text-[#005fcc] text-[13.26px] whitespace-nowrap">
             Read Article
           </p>
           <ArrowIcon clipId={article.clipId} />
@@ -113,10 +113,10 @@ export function ThoughtsSection() {
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <p className="font-['Poppins:Medium',sans-serif] leading-[48.6px] not-italic text-[#1d1d1f] text-[39px] tracking-[-0.93px] whitespace-nowrap mb-0">
+          <p className="font-poppins font-medium leading-[48.6px] not-italic text-[#1d1d1f] text-[39px] tracking-[-0.93px] whitespace-nowrap mb-0">
             {`Thoughts on design, `}
           </p>
-          <p className="font-['Poppins:Medium',sans-serif] leading-[48.6px] not-italic text-[39px] tracking-[-0.93px] whitespace-nowrap mb-0">
+          <p className="font-poppins font-medium leading-[48.6px] not-italic text-[39px] tracking-[-0.93px] whitespace-nowrap mb-0">
             <span className="text-[#6e6e73]">insight</span>
             <span className="text-[#1d1d1f]">, and human behaviour.</span>
           </p>
@@ -174,9 +174,9 @@ export function ContactSection() {
             <div style={{ height: "17px" }} />
             <div className="h-[129px] relative shrink-0 w-[361px]" style={{ paddingTop: "16px" }}>
               <div className="absolute left-0 top-[-49px] w-[758px]">
-                <div className="font-['Poppins:Medium',sans-serif] leading-[0] not-italic text-[#b3b3b3] tracking-[-1.8px] whitespace-nowrap">
-                  <p className="leading-[66.8px] mb-0 text-[56px]">Love to work with someone</p>
-                  <p className="leading-[66.8px] text-[56px] text-white mb-0">keen on insight?</p>
+                <div className="font-poppins font-medium leading-[0] not-italic text-[#b3b3b3] tracking-[-1.8px] whitespace-nowrap">
+                  <p className="leading-[66.8px] mb-0 text-[56px]">Let’s turn insights into</p>
+                  <p className="leading-[66.8px] text-[56px] text-white mb-0">better decisions.</p>
                 </div>
               </div>
             </div>
@@ -190,11 +190,11 @@ export function ContactSection() {
                 className="bg-white relative rounded-[9999px] shrink-0 flex items-center justify-center cursor-pointer hover:bg-[#f0f0f0] transition-colors duration-200"
                 style={{ height: "48.996px", width: "185.444px" }}
               >
-                <p className="font-['Nimbus_Sans_L:Bold',sans-serif] leading-[21px] not-italic text-[14px] text-black tracking-[1.4px] uppercase whitespace-nowrap">
+                <p className="font-nimbus font-bold leading-[21px] not-italic text-[14px] text-black tracking-[1.4px] uppercase whitespace-nowrap">
                   Contact Me
                 </p>
               </a>
-              <p className="font-['Nimbus_Sans_L:Regular',sans-serif] leading-[21px] not-italic text-[#888] text-[14px] tracking-[0.4px] whitespace-nowrap">
+              <p className="font-nimbus font-normal leading-[21px] not-italic text-[#888] text-[14px] tracking-[0.4px] whitespace-nowrap">
                 dareabinde04@gmail.com
               </p>
             </div>
@@ -205,7 +205,7 @@ export function ContactSection() {
       {/* Profile photo — absolute positioned as in Figma */}
       <motion.div
         className="absolute overflow-hidden"
-        style={{ height: "257px", left: "1160px", top: "151px", width: "250px" }}
+        style={{ height: "310px", left: "1134px", top: "118px", width: "302px" }}
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-60px" }}
@@ -231,45 +231,84 @@ export function ContactSection() {
 
 // ─── Footer Section ───────────────────────────────────────────────────────────
 
-export function FooterSection() {
-  const navLinks = ["Home", "Work", "Thoughts", "About"];
+const footerLinks = [
+  { label: "Home", href: "#home" },
+  { label: "Work", href: "#work" },
+  { label: "Thoughts", href: "#thoughts" },
+  { label: "About", href: "#about" },
+];
 
+function getDesktopSectionTop(sectionId: string, offset = 80) {
+  const target = document.getElementById(sectionId);
+  const canvas = document.querySelector(".responsive-frame-canvas") as HTMLElement | null;
+
+  if (!target) {
+    return null;
+  }
+
+  if (sectionId === "home") {
+    return 0;
+  }
+
+  if (canvas && target.closest(".responsive-frame-canvas")) {
+    let top = 0;
+    let node: HTMLElement | null = target;
+
+    while (node && node !== canvas) {
+      top += node.offsetTop;
+      node = node.offsetParent as HTMLElement | null;
+    }
+
+    const scale = canvas.getBoundingClientRect().width / canvas.offsetWidth;
+    return Math.max(canvas.offsetTop + top * scale - offset, 0);
+  }
+
+  return Math.max(window.scrollY + target.getBoundingClientRect().top - offset, 0);
+}
+
+function scrollToDesktopSection(sectionId: string) {
+  const top = getDesktopSectionTop(sectionId, sectionId === "home" ? 0 : 80);
+
+  if (top === null) {
+    return;
+  }
+
+  window.scrollTo({ top, behavior: "smooth" });
+  window.setTimeout(() => history.replaceState(null, "", `#${sectionId}`), 900);
+}
+
+export function FooterSection() {
   return (
     <div className="bg-[#0d0d0d] relative shrink-0 w-full" style={{ height: "79.993px" }}>
       <div aria-hidden className="absolute border-[rgba(255,255,255,0.08)] border-solid border-t-[0.575px] inset-0 pointer-events-none" />
       <div className="flex flex-row items-center size-full">
         <div className="flex items-center justify-between pl-[139px] pr-[139px] size-full">
-          {/* Logo */}
+          {/* Wordmark */}
           <div className="flex gap-[10px] items-center shrink-0">
-            <div className="bg-white relative rounded-[2px] shrink-0 flex items-center justify-center" style={{ width: "27.999px", height: "27.999px" }}>
-              <div className="relative shrink-0" style={{ width: "14px", height: "14px" }}>
-                <div className="absolute flex items-center justify-center" style={{ left: "-2.9px", width: "19.799px", height: "19.799px", top: "-2.9px" }}>
-                  <div className="rotate-45">
-                    <div className="bg-black" style={{ width: "14px", height: "14px" }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p className="font-['Nimbus_Sans_L:Bold',sans-serif] leading-[24px] not-italic text-[16px] text-white tracking-[-0.4px] whitespace-nowrap">
+            <p className="font-nimbus font-bold leading-[24px] not-italic text-[16px] text-white tracking-[-0.4px] whitespace-nowrap">
               DARExABINDE
             </p>
           </div>
 
           {/* Navigation */}
-          <div className="flex gap-[40px] items-center shrink-0">
-            {navLinks.map((link) => (
+          <nav aria-label="Desktop footer navigation" className="flex gap-[40px] items-center shrink-0">
+            {footerLinks.map((link) => (
               <a
-                key={link}
-                href="#"
-                className="font-['Nimbus_Sans_L:Regular',sans-serif] leading-[19.5px] not-italic text-[#888] text-[13px] tracking-[1.2px] uppercase whitespace-nowrap hover:text-white transition-colors duration-200 cursor-pointer"
+                key={link.label}
+                href={link.href}
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToDesktopSection(link.href.slice(1));
+                }}
+                className="font-nimbus font-normal leading-[19.5px] not-italic text-[#888] text-[13px] tracking-[1.2px] uppercase whitespace-nowrap hover:text-white transition-colors duration-200 cursor-pointer"
               >
-                {link}
+                {link.label}
               </a>
             ))}
-          </div>
+          </nav>
 
           {/* Copyright */}
-          <p className="font-['Nimbus_Sans_L:Regular',sans-serif] leading-[19.5px] not-italic text-[#555] text-[13px] whitespace-nowrap shrink-0">
+          <p className="font-nimbus font-normal leading-[19.5px] not-italic text-[#555] text-[13px] whitespace-nowrap shrink-0">
             © 2026 Dare Abinde. All rights reserved.
           </p>
         </div>

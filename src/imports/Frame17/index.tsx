@@ -16,8 +16,9 @@ import imgClimateLaptop from "../image.png";
 import imgClimatePhone from "../image-1.png";
 import imgLandaLaptop from "../image-2.png";
 import imgLandaPhone from "../image-3.png";
+import imgCalmotionCaseHero from "../../assets/case-stories/calmotion-exact/Hero Hand Holding Phone Mockup - CM.png";
 import { motion } from "motion/react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type MouseEvent, type PointerEvent as ReactPointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
 // Bio section with 2D animations
 import BioSection from "../BioSection/index";
 import { ThoughtsSection, ContactSection, FooterSection } from "../../app/components/ThoughtsContactFooter";
@@ -42,6 +43,168 @@ const disciplineFields = [
 
 const articleArrowPath = "M10.1939 8.15531L13.2522 4.58736L10.1939 1.01942M13.2522 4.58736H1.01923";
 
+let lastProjectArrowPointerScroll = 0;
+
+function getPageScrollElement() {
+  const documentScroller = (document.scrollingElement as HTMLElement | null) ?? document.documentElement;
+  if (documentScroller.scrollHeight > documentScroller.clientHeight + 1) {
+    return documentScroller;
+  }
+
+  const root = document.getElementById("root");
+  if (root && root.scrollHeight > root.clientHeight + 1) {
+    return root;
+  }
+  return documentScroller;
+}
+
+function getPageScrollTop() {
+  return getPageScrollElement()?.scrollTop ?? window.scrollY;
+}
+
+function isDocumentScrollElement(scrollElement: HTMLElement | null) {
+  return scrollElement === document.scrollingElement || scrollElement === document.documentElement || scrollElement === document.body;
+}
+
+function setPageScrollTop(value: number) {
+  const scrollElement = getPageScrollElement();
+  if (isDocumentScrollElement(scrollElement)) {
+    document.documentElement.scrollTop = value;
+    document.body.scrollTop = value;
+    return;
+  }
+
+  if (scrollElement) {
+    if (typeof scrollElement.scrollTo === "function") {
+      scrollElement.scrollTo({ top: value, behavior: "auto" });
+    } else {
+      scrollElement.scrollTop = value;
+    }
+    return;
+  }
+  window.scrollTo({ top: value });
+}
+
+function getPageScrollTarget(scrollElement: HTMLElement | null) {
+  return isDocumentScrollElement(scrollElement) ? window : scrollElement ?? window;
+}
+
+function scrollPageTo(value: number, behavior: ScrollBehavior = "smooth") {
+  const scrollElement = getPageScrollElement();
+
+  if (isDocumentScrollElement(scrollElement)) {
+    window.scrollTo({ top: value, behavior });
+    return;
+  }
+
+  scrollElement?.scrollTo({ top: value, behavior });
+}
+
+function getCanvasRelativeTop(target: HTMLElement, canvas: HTMLElement) {
+  let top = 0;
+  let node: HTMLElement | null = target;
+
+  while (node && node !== canvas) {
+    top += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
+  }
+
+  return top;
+}
+
+function getSectionScrollTop(sectionId: string, offset = 0) {
+  const scrollRoot = getPageScrollElement();
+  const target = document.getElementById(sectionId);
+
+  if (!scrollRoot || !target) {
+    return null;
+  }
+
+  const canvas = document.querySelector(".responsive-frame-canvas") as HTMLElement | null;
+  const scale = canvas ? canvas.getBoundingClientRect().width / canvas.offsetWidth : Math.min(1, window.innerWidth / 1680);
+  const canvasTop = canvas ? canvas.offsetTop : 0;
+
+  if (target.closest(".responsive-frame-canvas")) {
+    return Math.max(canvasTop + getCanvasRelativeTop(target, canvas ?? target) * scale - offset, 0);
+  }
+
+  const start = getPageScrollTop();
+  return Math.max(start + target.getBoundingClientRect().top - offset, 0);
+}
+
+function slowScrollToSection(sectionId: string, offset = 0) {
+  const end = getSectionScrollTop(sectionId, offset);
+
+  if (end === null) {
+    return;
+  }
+
+  const start = getPageScrollTop();
+  const distance = end - start;
+  const immediateStep = Math.sign(distance) * Math.min(Math.abs(distance), 24);
+  const adjustedStart = start + immediateStep;
+  const adjustedDistance = end - adjustedStart;
+  const duration = 1150;
+  const startTime = performance.now();
+  const easeOutSine = (value: number) => Math.sin((value * Math.PI) / 2);
+
+  if (immediateStep !== 0) {
+    setPageScrollTop(adjustedStart);
+  }
+
+  const step = (now: number) => {
+    const progress = Math.min((now - startTime) / duration, 1);
+    setPageScrollTop(adjustedStart + adjustedDistance * easeOutSine(progress));
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+      return;
+    }
+
+    history.replaceState(null, "", `#${sectionId}`);
+  };
+
+  requestAnimationFrame(step);
+}
+
+function startProjectArrowScroll(sectionId: string, offset = 42) {
+  lastProjectArrowPointerScroll = performance.now();
+  slowScrollToSection(sectionId, offset);
+}
+
+function handleProjectArrowPointer(event: ReactPointerEvent<HTMLButtonElement>, sectionId: string, offset = 42) {
+  event.preventDefault();
+  startProjectArrowScroll(sectionId, offset);
+}
+
+function handleProjectArrowMouseDown(event: MouseEvent<HTMLButtonElement>, sectionId: string, offset = 42) {
+  event.preventDefault();
+  if (performance.now() - lastProjectArrowPointerScroll < 80) {
+    return;
+  }
+  startProjectArrowScroll(sectionId, offset);
+}
+
+function handleProjectArrowClick(event: MouseEvent<HTMLButtonElement>, sectionId: string, offset = 42) {
+  event.preventDefault();
+  if (performance.now() - lastProjectArrowPointerScroll > 450) {
+    startProjectArrowScroll(sectionId, offset);
+  }
+}
+
+function scrollRootToHashTarget(sectionId: string, offset = 0) {
+  const target = document.getElementById(sectionId);
+
+  if (!target) {
+    return;
+  }
+
+  const end = getSectionScrollTop(sectionId, offset);
+  if (end !== null) {
+    scrollPageTo(end, "smooth");
+  }
+}
+
 function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -55,9 +218,9 @@ function MobileNavigation() {
   };
 
   useEffect(() => {
-    const scrollRoot = document.getElementById("root");
-    const scrollTarget = scrollRoot ?? window;
-    const getScrollY = () => scrollRoot?.scrollTop ?? window.scrollY;
+    const scrollRoot = getPageScrollElement();
+    const scrollTarget = getPageScrollTarget(scrollRoot);
+    const getScrollY = () => getPageScrollTop();
     let previousScrollY = getScrollY();
 
     const handleScroll = () => {
@@ -82,14 +245,23 @@ function MobileNavigation() {
     return () => scrollTarget.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const toggleMenu = () => setIsOpen((current) => !current);
+
   return (
-    <div className={`responsive-mobile-nav${isVisible ? " is-visible" : " is-hidden"}${hasScrolled ? " has-scrolled" : ""}${isOpen ? " is-open" : ""}`}>
+    <div
+      className={`responsive-mobile-nav${isVisible ? " is-visible" : " is-hidden"}${hasScrolled ? " has-scrolled" : ""}${isOpen ? " is-open" : ""}`}
+      onClick={toggleMenu}
+      role="presentation"
+    >
       <button
         aria-controls="responsive-mobile-menu"
         aria-expanded={isOpen}
         aria-label="Toggle navigation"
         className="responsive-mobile-nav__button"
-        onClick={() => setIsOpen((current) => !current)}
+        onClick={(event) => {
+          event.stopPropagation();
+          toggleMenu();
+        }}
         type="button"
       >
         <span />
@@ -100,6 +272,7 @@ function MobileNavigation() {
         aria-label="Mobile navigation"
         className={`responsive-mobile-nav__menu${isOpen ? " is-open" : ""}`}
         id="responsive-mobile-menu"
+        onClick={(event) => event.stopPropagation()}
       >
         {navItems.map((item) => (
           <a href={resolveHref(item.href)} key={item.label} onClick={() => setIsOpen(false)}>
@@ -107,6 +280,143 @@ function MobileNavigation() {
           </a>
         ))}
       </nav>
+    </div>
+  );
+}
+
+function DesktopNavigation() {
+  const [isVisible, setIsVisible] = useState(true);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("Home");
+  const hashSelectionUntil = useRef(0);
+  const lastHandledHash = useRef("");
+  const desktopLinks = navItems.filter((item) => item.label !== "Contact");
+
+  useEffect(() => {
+    const getScrollY = () => getPageScrollTop();
+    let previousScrollY = getScrollY();
+    const sections = [
+      { label: "Home", id: "home" },
+      { label: "Work", id: "work" },
+      { label: "About", id: "about" },
+      { label: "Thoughts", id: "thoughts" },
+      { label: "Contact", id: "contact" },
+    ];
+
+    const handleScroll = () => {
+      const currentScrollY = getScrollY();
+      const scrollDelta = currentScrollY - previousScrollY;
+
+      if (performance.now() < hashSelectionUntil.current) {
+        if (Math.abs(scrollDelta) >= 6) {
+          setHasScrolled(currentScrollY > 24);
+          setIsVisible(currentScrollY < 24 || scrollDelta < 0);
+          previousScrollY = Math.max(currentScrollY, 0);
+        }
+        return;
+      }
+
+      const currentSection =
+        sections
+          .map((section) => {
+            const node = document.getElementById(section.id);
+            return node ? { label: section.label, top: node.getBoundingClientRect().top } : null;
+          })
+          .filter((section): section is { label: string; top: number } => Boolean(section) && section.top <= 140)
+          .sort((a, b) => b.top - a.top)[0]?.label ?? "Home";
+      setActiveSection(currentSection);
+
+      if (Math.abs(scrollDelta) >= 6) {
+        setHasScrolled(currentScrollY > 24);
+        setIsVisible(currentScrollY < 24 || scrollDelta < 0);
+        previousScrollY = Math.max(currentScrollY, 0);
+      }
+    };
+
+    const handleHashChange = () => {
+      if (window.location.hash === lastHandledHash.current) {
+        return;
+      }
+
+      lastHandledHash.current = window.location.hash;
+      const hashMatch = navItems.find((item) => item.href === window.location.hash);
+      if (hashMatch) {
+        hashSelectionUntil.current = performance.now() + 1400;
+        setActiveSection(hashMatch.label);
+        scrollRootToHashTarget(hashMatch.href.slice(1), hashMatch.label === "Home" ? 0 : 80);
+        return;
+      }
+
+      const sectionId = window.location.hash.slice(1);
+      if (sectionId && document.getElementById(sectionId)) {
+        scrollRootToHashTarget(sectionId, 42);
+      }
+    };
+
+    handleScroll();
+    handleHashChange();
+    const hashWatcher = window.setInterval(handleHashChange, 120);
+    const scrollTargets = [window, document.getElementById("root")].filter(Boolean) as EventTarget[];
+    scrollTargets.forEach((target) => target.addEventListener("scroll", handleScroll, { passive: true }));
+    window.addEventListener("hashchange", handleHashChange);
+    return () => {
+      window.clearInterval(hashWatcher);
+      scrollTargets.forEach((target) => target.removeEventListener("scroll", handleScroll));
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
+
+  const selectNavItem = (event: MouseEvent<HTMLAnchorElement>, item: (typeof navItems)[number]) => {
+    event.preventDefault();
+    hashSelectionUntil.current = performance.now() + 1400;
+    setActiveSection(item.label);
+    scrollRootToHashTarget(item.href.slice(1), item.label === "Home" ? 0 : 80);
+    window.setTimeout(() => history.replaceState(null, "", item.href), 900);
+  };
+
+  return (
+    <header className={`responsive-desktop-nav${isVisible ? " is-visible" : " is-hidden"}${hasScrolled ? " has-scrolled" : ""}`} aria-label="Primary navigation">
+      <div className="responsive-desktop-nav__inner">
+        <a className="responsive-desktop-nav__brand" href="#home" onClick={(event) => selectNavItem(event, navItems[0])}>
+          DARExABINDE
+        </a>
+        <nav className="responsive-desktop-nav__links" aria-label="Desktop navigation">
+          {desktopLinks.map((item) => (
+            <a className={activeSection === item.label ? "is-active" : ""} href={item.href} key={item.label} onClick={(event) => selectNavItem(event, item)}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <a className={`responsive-desktop-nav__cta${activeSection === "Contact" ? " is-active" : ""}`} href="#contact" onClick={(event) => selectNavItem(event, navItems[4])}>
+          Contact Me
+        </a>
+      </div>
+    </header>
+  );
+}
+
+function DesktopReveal({
+  children,
+  className = "",
+  delay = 0,
+  "data-name": dataName,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  "data-name"?: string;
+}) {
+  return (
+    <div className={className} data-name={dataName}>
+      <motion.div
+        className="relative size-full"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.58, ease: "easeOut", delay }}
+      >
+        {children}
+      </motion.div>
     </div>
   );
 }
@@ -126,7 +436,6 @@ function useAdaptiveShowcaseInView() {
       return undefined;
     }
 
-    const scrollRoot = document.getElementById("root");
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -135,7 +444,7 @@ function useAdaptiveShowcaseInView() {
         }
       },
       {
-        root: scrollRoot,
+        root: null,
         rootMargin: "0px 0px -10% 0px",
         threshold: 0.12,
       },
@@ -333,8 +642,11 @@ function AdaptiveProject({
   project: (typeof adaptiveProjects)[number];
   nextProjectId?: string;
 }) {
+  const projectId = `${project.id}-mobile`;
+  const nextId = nextProjectId ? `${nextProjectId}-mobile` : undefined;
+
   return (
-    <article className="adaptive-project" id={project.id}>
+    <article className="adaptive-project" id={projectId}>
       <AdaptiveProjectShowcase type={project.type} />
       <AdaptiveReveal className="adaptive-project-copy">
         <h3>{project.name}</h3>
@@ -344,11 +656,19 @@ function AdaptiveProject({
             <li key={tag}>{tag}</li>
           ))}
         </ul>
-        <a className="adaptive-case-link" href={`#${project.id}`}>
+        <a className="adaptive-case-link" href={project.id === "calmotion" ? "/case/calmotion" : project.id === "safemap" ? "/case/safemap" : `#${project.id}`}>
           View Case Story
         </a>
-        {nextProjectId ? (
-          <a className="adaptive-project-arrow" href={`#${nextProjectId}`} aria-label={`Go to next project`}>
+        {nextId ? (
+          <a
+            className="adaptive-project-arrow"
+            href={`#${nextId}`}
+            aria-label={`Go to next project`}
+            onClick={(event) => {
+              event.preventDefault();
+              slowScrollToSection(nextId);
+            }}
+          >
             <svg fill="none" preserveAspectRatio="none" viewBox="0 0 26 15" aria-hidden="true">
               <path d={svgPaths.pca30000} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3.66667" />
             </svg>
@@ -362,7 +682,7 @@ function AdaptiveProject({
 function AdaptiveFooter() {
   return (
     <footer className="adaptive-footer">
-      <AdaptiveReveal className="adaptive-footer__inner">
+      <div className="adaptive-footer__inner">
         <nav aria-label="Footer navigation">
           {navItems.slice(0, 4).map((item) => (
             <a href={item.href === "#home" ? "#home-mobile" : `${item.href}-mobile`} key={item.label}>
@@ -370,8 +690,9 @@ function AdaptiveFooter() {
             </a>
           ))}
         </nav>
-        <p>© 2026 Dare Abinde. All rights reserved.</p>
-      </AdaptiveReveal>
+        <p className="adaptive-footer__copyright adaptive-footer__copyright--full">© 2026 Dare Abinde. All rights reserved.</p>
+        <p className="adaptive-footer__copyright adaptive-footer__copyright--short">© 2026 Dare Abinde.</p>
+      </div>
     </footer>
   );
 }
@@ -455,9 +776,14 @@ function AdaptivePage() {
 
       <section className="adaptive-bio" id="about-mobile">
         <AdaptiveReveal>
-          <h2>
+          <h2 className="adaptive-bio-heading adaptive-bio-heading--tablet">
             My journey into design
-            <span> began with studying people.</span>
+            <span>began with studying people.</span>
+          </h2>
+          <h2 className="adaptive-bio-heading adaptive-bio-heading--mobile">
+            <span className="adaptive-bio-heading__white">My journey into</span>
+            <span><span className="adaptive-bio-heading__white-inline">design</span> began with</span>
+            <span>studying people.</span>
           </h2>
           <p>
             With a background in Psychology and Human Computer Interaction, my work has centered on understanding how people <em>think</em>, <em>behave</em>, and <em>make decisions</em>, and how that understanding can inform the design of products, services, and systems.
@@ -506,7 +832,7 @@ function AdaptivePage() {
         <AdaptiveReveal className="adaptive-contact__copy">
           <h2>
             <span>Let’s turn insights into</span>
-            better decisions.
+            <span className="adaptive-contact__line-strong">better decisions.</span>
           </h2>
           <a href="mailto:dareabinde04@gmail.com">Contact Me</a>
         </AdaptiveReveal>
@@ -522,13 +848,13 @@ function AdaptivePage() {
 function Heading2() {
   return (
     <div className="absolute content-stretch flex flex-col items-start left-[-9px] right-[9px] top-0" data-name="Heading 3">
-      <div className="[word-break:break-word] flex flex-col font-['Manrope:Medium',sans-serif] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[39px] tracking-[-1.8px] w-[567px] whitespace-pre-wrap">
-        <p className="font-['Poppins:Medium',sans-serif] mb-0">
+      <div className="[word-break:break-word] flex flex-col font-manrope font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[39px] tracking-[-1.8px] w-[567px] whitespace-pre-wrap">
+        <p className="font-poppins font-medium mb-0">
           <span className="leading-[46.8px]">Selected work</span>
           <span className="leading-[46.8px] text-[#6e6e73]">{` shaped `}</span>
         </p>
-        <p className="font-['Poppins:Medium',sans-serif] leading-[46.8px] mb-0">{`by research, clarity, `}</p>
-        <p className="font-['Poppins:Medium',sans-serif]">
+        <p className="font-poppins font-medium leading-[46.8px] mb-0">{`by research, clarity, `}</p>
+        <p className="font-poppins font-medium">
           <span className="leading-[46.8px] text-[#6e6e73]">{`and `}</span>
           <span className="leading-[46.8px]">intention.</span>
         </p>
@@ -548,7 +874,15 @@ function Container() {
 function Header() {
   return (
     <div className="-translate-y-1/2 absolute content-stretch flex flex-col h-[141px] items-start left-0 max-w-[1200px] top-[calc(50%-2580.16px)] w-[1200px]" data-name="HEADER">
-      <Container />
+      <motion.div
+        className="relative size-full"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.58, ease: "easeOut" }}
+      >
+        <Container />
+      </motion.div>
     </div>
   );
 }
@@ -593,16 +927,24 @@ function NavGoToNextSection() {
 
 function LinkAutoscrollToNextSection() {
   return (
-    <div className="-translate-x-1/2 absolute content-stretch flex items-center justify-center left-[calc(50%+0.5px)] top-[984px]" data-name="Link - Autoscroll to next section">
+    <button
+      aria-label="Scroll to about section"
+      className="-translate-x-1/2 absolute bg-transparent border-0 content-stretch cursor-pointer flex items-center justify-center left-[calc(50%+0.5px)] p-0 top-[984px]"
+      data-name="Link - Autoscroll to next section"
+      onClick={(event) => handleProjectArrowClick(event, "about", 80)}
+      onMouseDown={(event) => handleProjectArrowMouseDown(event, "about", 80)}
+      onPointerDown={(event) => handleProjectArrowPointer(event, "about", 80)}
+      type="button"
+    >
       <NavGoToNextSection />
-    </div>
+    </button>
   );
 }
 
 function Container6() {
   return (
     <div className="content-stretch flex flex-col items-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[15.099px] text-center whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[15.099px] text-center whitespace-nowrap">
         <p className="leading-[24.158px]">View Case Story</p>
       </div>
     </div>
@@ -630,16 +972,16 @@ function LinkOutlined() {
 
 function Container4() {
   return (
-    <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%-0.35px)] top-[864px]" data-name="Container">
+    <DesktopReveal className="-translate-x-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%-0.35px)] top-[864px]" data-name="Container" delay={0.12}>
       <LinkOutlined />
-    </div>
+    </DesktopReveal>
   );
 }
 
 function Container10() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">RESEARCH LED</p>
       </div>
     </div>
@@ -681,7 +1023,7 @@ function Container7() {
 function Container13() {
   return (
     <div className="content-stretch flex flex-col items-center justify-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">ARTIFICIAL INTELLIGENCE</p>
       </div>
     </div>
@@ -715,7 +1057,7 @@ function Container11() {
 function Container16() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">FULL-STACK</p>
       </div>
     </div>
@@ -749,7 +1091,7 @@ function Container14() {
 function Container19() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">SYSTEMS THINKING</p>
       </div>
     </div>
@@ -783,7 +1125,7 @@ function Container17() {
 function Container21() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">PRODUCT DESIGN</p>
       </div>
     </div>
@@ -809,7 +1151,7 @@ function Variant4() {
 function Container24() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">TOOL</p>
       </div>
     </div>
@@ -846,14 +1188,14 @@ function Container22() {
 
 function Tags() {
   return (
-    <div className="-translate-x-1/2 absolute h-[127px] left-1/2 top-[701px] w-[525px]" data-name="Tags">
+    <DesktopReveal className="-translate-x-1/2 absolute h-[127px] left-1/2 top-[701px] w-[525px]" data-name="Tags" delay={0.18}>
       <Container7 />
       <Container11 />
       <Container14 />
       <Container17 />
       <Variant4 />
       <Container22 />
-    </div>
+    </DesktopReveal>
   );
 }
 
@@ -863,9 +1205,9 @@ function Container25() {
 
 function Logo() {
   return (
-    <div className="-translate-x-1/2 absolute h-[48px] left-1/2 overflow-clip top-[488px] w-[121px]" data-name="Logo">
-      <p className="[word-break:break-word] absolute font-['Poppins:Bold',sans-serif] h-[48px] leading-[47.079px] left-[5px] not-italic text-[#24151d] text-[36.215px] top-0 w-[116px]">Landa</p>
-    </div>
+    <DesktopReveal className="-translate-x-1/2 absolute h-[48px] left-1/2 overflow-clip top-[488px] w-[121px]" data-name="Logo">
+      <p className="[word-break:break-word] absolute font-poppins font-bold h-[48px] leading-[47.079px] left-[5px] not-italic text-[#24151d] text-[36.215px] top-0 w-[116px]">Landa</p>
+    </DesktopReveal>
   );
 }
 
@@ -1246,12 +1588,16 @@ function LandaShowcase() {
 
 function Landa() {
   return (
-    <div className="-translate-x-1/2 absolute h-[1062px] left-[calc(50%+0.5px)] top-[4088px] w-[1003px]" data-name="Landa">
-      <LinkAutoscrollToNextSection />
+    <div className="-translate-x-1/2 absolute h-[970px] left-[calc(50%+0.5px)] top-[4088px] w-[1003px]" data-name="Landa" id="landa">
       <Container4 />
       <Tags />
       <Container25 />
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Poppins:Regular',sans-serif] h-[98px] leading-[normal] left-[calc(50%+0.5px)] not-italic text-[#6e6e73] text-[22.123px] text-center top-[570px] w-[588px]">A minimal decision-support tool helping international students assess life in Sweden before committing. Self-initiated, built, in use.</p>
+      <DesktopReveal
+        className="-translate-x-1/2 [word-break:break-word] absolute font-poppins font-normal h-[98px] leading-[normal] left-[calc(50%+0.5px)] not-italic text-[#6e6e73] text-[22.123px] text-center top-[570px] w-[588px]"
+        delay={0.06}
+      >
+        A minimal decision-support tool helping international students assess life in Sweden before committing. Self-initiated, built, in use.
+      </DesktopReveal>
       <Logo />
       <LandaShowcase />
     </div>
@@ -1290,16 +1636,24 @@ function NavGoToNextSection1() {
 
 function LinkAutoscrollToNextSection1() {
   return (
-    <div className="-translate-x-1/2 absolute content-stretch flex items-center justify-center left-[calc(50%+0.5px)] top-[1016px]" data-name="Link - Autoscroll to next section">
+    <button
+      aria-label="Scroll to Landa project"
+      className="-translate-x-1/2 absolute bg-transparent border-0 content-stretch cursor-pointer flex items-center justify-center left-[calc(50%+0.5px)] p-0 top-[1016px]"
+      data-name="Link - Autoscroll to next section"
+      onClick={(event) => handleProjectArrowClick(event, "landa", 42)}
+      onMouseDown={(event) => handleProjectArrowMouseDown(event, "landa", 42)}
+      onPointerDown={(event) => handleProjectArrowPointer(event, "landa", 42)}
+      type="button"
+    >
       <NavGoToNextSection1 />
-    </div>
+    </button>
   );
 }
 
 function Container29() {
   return (
     <div className="content-stretch flex flex-col items-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[15.099px] text-center whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[15.099px] text-center whitespace-nowrap">
         <p className="leading-[24.158px]">View Case Story</p>
       </div>
     </div>
@@ -1327,16 +1681,16 @@ function LinkOutlined1() {
 
 function Container27() {
   return (
-    <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%-0.35px)] top-[896px]" data-name="Container">
+    <DesktopReveal className="-translate-x-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%-0.35px)] top-[896px]" data-name="Container" delay={0.12}>
       <LinkOutlined1 />
-    </div>
+    </DesktopReveal>
   );
 }
 
 function Container33() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">RESEARCH LED</p>
       </div>
     </div>
@@ -1378,7 +1732,7 @@ function Container30() {
 function Container36() {
   return (
     <div className="content-stretch flex flex-col items-center justify-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">EDTECH</p>
       </div>
     </div>
@@ -1412,7 +1766,7 @@ function Container34() {
 function Container39() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">FULL-STACK</p>
       </div>
     </div>
@@ -1446,7 +1800,7 @@ function Container37() {
 function Container42() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">AI INTEGRATION</p>
       </div>
     </div>
@@ -1480,7 +1834,7 @@ function Container40() {
 function Container44() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">SERVICE DESIGN</p>
       </div>
     </div>
@@ -1506,7 +1860,7 @@ function Variant10() {
 function Container47() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">SUSTAINABILITY</p>
       </div>
     </div>
@@ -1543,14 +1897,14 @@ function Container45() {
 
 function Tags1() {
   return (
-    <div className="-translate-x-1/2 absolute h-[127px] left-1/2 top-[734px] w-[525px]" data-name="Tags">
+    <DesktopReveal className="-translate-x-1/2 absolute h-[127px] left-1/2 top-[734px] w-[525px]" data-name="Tags" delay={0.18}>
       <Container30 />
       <Container34 />
       <Container37 />
       <Container40 />
       <Variant10 />
       <Container45 />
-    </div>
+    </DesktopReveal>
   );
 }
 
@@ -1560,9 +1914,9 @@ function Container48() {
 
 function Logo1() {
   return (
-    <div className="-translate-x-1/2 absolute h-[48px] left-1/2 overflow-clip top-[488px] w-[227px]" data-name="Logo">
-      <p className="[word-break:break-word] absolute font-['Poppins:Bold',sans-serif] h-[48px] leading-[47.079px] left-[5px] not-italic text-[#24151d] text-[36.215px] top-0 w-[275px]">Klimathubb</p>
-    </div>
+    <DesktopReveal className="-translate-x-1/2 absolute h-[48px] left-1/2 overflow-clip top-[488px] w-[227px]" data-name="Logo">
+      <p className="[word-break:break-word] absolute font-poppins font-bold h-[48px] leading-[47.079px] left-[5px] not-italic text-[#24151d] text-[36.215px] top-0 w-[275px]">Klimathubb</p>
+    </DesktopReveal>
   );
 }
 
@@ -1927,12 +2281,17 @@ function ClimateHubShowcase() {
 
 function ClimateHub() {
   return (
-    <div className="-translate-x-1/2 absolute h-[1060px] left-[calc(50%+0.5px)] top-[2893px] w-[1003px]" data-name="Climate Hub">
+    <div className="-translate-x-1/2 absolute h-[1060px] left-[calc(50%+0.5px)] top-[2893px] w-[1003px]" data-name="Climate Hub" id="climate">
       <LinkAutoscrollToNextSection1 />
       <Container27 />
       <Tags1 />
       <Container48 />
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Poppins:Regular',sans-serif] h-[131px] leading-[normal] left-[calc(50%+0.5px)] not-italic text-[#6e6e73] text-[22.123px] text-center top-[570px] w-[588px]">A sustainability engagement platform designed in collaboration with Biotopia Uppsala. Designed for immigrants navigating an unfamiliar environmental system.</p>
+      <DesktopReveal
+        className="-translate-x-1/2 [word-break:break-word] absolute font-poppins font-normal h-[131px] leading-[normal] left-[calc(50%+0.5px)] not-italic text-[#6e6e73] text-[22.123px] text-center top-[570px] w-[588px]"
+        delay={0.06}
+      >
+        A sustainability engagement platform designed in collaboration with Biotopia Uppsala. Designed for immigrants navigating an unfamiliar environmental system.
+      </DesktopReveal>
       <Logo1 />
       <ClimateHubShowcase />
     </div>
@@ -1971,16 +2330,24 @@ function NavGoToNextSection2() {
 
 function LinkAutoscrollToNextSection2() {
   return (
-    <div className="-translate-x-1/2 absolute content-stretch flex items-center justify-center left-[calc(50%+0.5px)] top-[1121px]" data-name="Link - Autoscroll to next section">
+    <button
+      aria-label="Scroll to Klimathubb project"
+      className="-translate-x-1/2 absolute bg-transparent border-0 content-stretch cursor-pointer flex items-center justify-center left-[calc(50%+0.5px)] p-0 top-[1121px]"
+      data-name="Link - Autoscroll to next section"
+      onClick={(event) => handleProjectArrowClick(event, "climate", 42)}
+      onMouseDown={(event) => handleProjectArrowMouseDown(event, "climate", 42)}
+      onPointerDown={(event) => handleProjectArrowPointer(event, "climate", 42)}
+      type="button"
+    >
       <NavGoToNextSection2 />
-    </div>
+    </button>
   );
 }
 
 function Container52() {
   return (
     <div className="content-stretch flex flex-col items-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[15.099px] text-center whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[15.099px] text-center whitespace-nowrap">
         <p className="leading-[24.158px]">View Case Story</p>
       </div>
     </div>
@@ -1997,27 +2364,27 @@ function Container51() {
 
 function LinkOutlined2() {
   return (
-    <div className="content-stretch flex items-center justify-center px-[22.649px] py-[15.099px] relative rounded-[45.297px] shrink-0" data-name="Link - Outlined">
+    <a className="content-stretch flex items-center justify-center px-[22.649px] py-[15.099px] relative rounded-[45.297px] shrink-0 no-underline" data-name="Link - Outlined" href="/case/safemap">
       <Container51 />
       <div className="absolute inset-[0_0.4px_0.84px_0] rounded-[45.297px]" data-name="Border">
         <div aria-hidden className="absolute border-[#dbdbdb] border-[0.944px] border-solid inset-0 pointer-events-none rounded-[45.297px]" />
       </div>
-    </div>
+    </a>
   );
 }
 
 function Container50() {
   return (
-    <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%-0.35px)] top-[1001px]" data-name="Container">
+    <DesktopReveal className="-translate-x-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%-0.35px)] top-[1001px]" data-name="Container" delay={0.12}>
       <LinkOutlined2 />
-    </div>
+    </DesktopReveal>
   );
 }
 
 function Container56() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">PROTOTYPING</p>
       </div>
     </div>
@@ -2059,7 +2426,7 @@ function Container53() {
 function Container59() {
   return (
     <div className="content-stretch flex flex-col items-center justify-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">CIVIC DESIGN</p>
       </div>
     </div>
@@ -2093,7 +2460,7 @@ function Container57() {
 function Container62() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">RESEARCH LED</p>
       </div>
     </div>
@@ -2127,7 +2494,7 @@ function Container60() {
 function Container65() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">SOCIAL GOOD</p>
       </div>
     </div>
@@ -2161,7 +2528,7 @@ function Container63() {
 function Container67() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">DESIGN STRATEGY</p>
       </div>
     </div>
@@ -2187,7 +2554,7 @@ function Variant16() {
 function Container70() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">DESIGN ACTIVISM</p>
       </div>
     </div>
@@ -2224,14 +2591,14 @@ function Container68() {
 
 function Tags2() {
   return (
-    <div className="-translate-x-1/2 absolute h-[127px] left-1/2 top-[839px] w-[525px]" data-name="Tags">
+    <DesktopReveal className="-translate-x-1/2 absolute h-[127px] left-1/2 top-[839px] w-[525px]" data-name="Tags" delay={0.18}>
       <Container53 />
       <Container57 />
       <Container60 />
       <Container63 />
       <Variant16 />
       <Container68 />
-    </div>
+    </DesktopReveal>
   );
 }
 
@@ -2254,10 +2621,10 @@ function BlueWhiteIllustrativeCuteWereHiringGraphicIllustratorLinkedinPost() {
 
 function Logo2() {
   return (
-    <div className="-translate-x-1/2 absolute h-[47.658px] left-1/2 overflow-clip top-[626px] w-[237px]" data-name="Logo">
-      <p className="[word-break:break-word] absolute font-['Poppins:Bold',sans-serif] leading-[47.079px] left-[66.98px] not-italic text-[#24151d] text-[36.215px] top-0 w-[170.022px]">SafeMap</p>
+    <DesktopReveal className="-translate-x-1/2 absolute h-[47.658px] left-1/2 overflow-clip top-[626px] w-[237px]" data-name="Logo">
+      <p className="[word-break:break-word] absolute font-poppins font-bold leading-[47.079px] left-[66.98px] not-italic text-[#24151d] text-[36.215px] top-0 w-[170.022px]">SafeMap</p>
       <BlueWhiteIllustrativeCuteWereHiringGraphicIllustratorLinkedinPost />
-    </div>
+    </DesktopReveal>
   );
 }
 
@@ -2290,12 +2657,17 @@ function SafeMapShowcase() {
 
 function SafeMap() {
   return (
-    <div className="-translate-x-1/2 absolute h-[1160px] left-[calc(50%+0.5px)] top-[1598px] w-[1003px]" data-name="SafeMap">
+    <div className="-translate-x-1/2 absolute h-[1160px] left-[calc(50%+0.5px)] top-[1598px] w-[1003px]" data-name="SafeMap" id="safemap">
       <LinkAutoscrollToNextSection2 />
       <Container50 />
       <Tags2 />
       <Container71 />
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Poppins:Regular',sans-serif] h-[98px] leading-[normal] left-[calc(50%+0.5px)] not-italic text-[#6e6e73] text-[22.123px] text-center top-[708px] w-[588px]">Designed in collaboration with Uppsala Kvinnojour to map gendered public harassment as collective evidence. Led problem framing, concept, and design.</p>
+      <DesktopReveal
+        className="-translate-x-1/2 [word-break:break-word] absolute font-poppins font-normal h-[98px] leading-[normal] left-[calc(50%+0.5px)] not-italic text-[#6e6e73] text-[22.123px] text-center top-[708px] w-[588px]"
+        delay={0.06}
+      >
+        Designed in collaboration with Uppsala Kvinnojour to map gendered public harassment as collective evidence. Led problem framing, concept, and design.
+      </DesktopReveal>
       <Logo2 />
       <SafeMapShowcase />
     </div>
@@ -2334,16 +2706,24 @@ function NavGoToNextSection3() {
 
 function LinkAutoscrollToNextSection3() {
   return (
-    <div className="-translate-x-1/2 absolute content-stretch flex items-center justify-center left-[calc(50%+0.5px)] top-[1097px]" data-name="Link - Autoscroll to next section">
+    <button
+      aria-label="Scroll to SafeMap project"
+      className="-translate-x-1/2 absolute bg-transparent border-0 content-stretch cursor-pointer flex items-center justify-center left-[calc(50%+0.5px)] p-0 top-[1097px]"
+      data-name="Link - Autoscroll to next section"
+      onClick={(event) => handleProjectArrowClick(event, "safemap", 42)}
+      onMouseDown={(event) => handleProjectArrowMouseDown(event, "safemap", 42)}
+      onPointerDown={(event) => handleProjectArrowPointer(event, "safemap", 42)}
+      type="button"
+    >
       <NavGoToNextSection3 />
-    </div>
+    </button>
   );
 }
 
 function Container75() {
   return (
     <div className="content-stretch flex flex-col items-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[15.099px] text-center whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[15.099px] text-center whitespace-nowrap">
         <p className="leading-[24.158px]">View Case Story</p>
       </div>
     </div>
@@ -2359,28 +2739,101 @@ function Container74() {
 }
 
 function LinkOutlined3() {
+  const [isPreviewVisible, setIsPreviewVisible] = useState(false);
+  const [previewMotion, setPreviewMotion] = useState({ x: 0, y: 0 });
+  const previewLinkRef = useRef<HTMLAnchorElement | null>(null);
+
+  useEffect(() => {
+    const dismissOutsideLink = (event: PointerEvent) => {
+      const link = previewLinkRef.current;
+      if (!link) {
+        return;
+      }
+
+      const bounds = link.getBoundingClientRect();
+      const isInside = event.clientX >= bounds.left && event.clientX <= bounds.right && event.clientY >= bounds.top && event.clientY <= bounds.bottom;
+      if (!isInside) {
+        setIsPreviewVisible(false);
+        setPreviewMotion({ x: 0, y: 0 });
+      }
+    };
+
+    window.addEventListener("pointermove", dismissOutsideLink, { passive: true });
+    return () => window.removeEventListener("pointermove", dismissOutsideLink);
+  }, []);
+
+  const updatePreviewMotion = (event: ReactPointerEvent<HTMLAnchorElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const normalizedX = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const normalizedY = (event.clientY - bounds.top) / bounds.height - 0.5;
+    setIsPreviewVisible(true);
+    setPreviewMotion({ x: normalizedX, y: normalizedY });
+  };
+
+  const hidePreview = () => {
+    setIsPreviewVisible(false);
+    setPreviewMotion({ x: 0, y: 0 });
+  };
+
+  const previewStyle = {
+    "--calmotion-preview-x": `${previewMotion.x * 140}px`,
+    "--calmotion-preview-y": `${previewMotion.y * 100}px`,
+    "--calmotion-preview-rotate": `${previewMotion.x * 0.8}deg`,
+    "--calmotion-preview-image-x": `${previewMotion.x * -6}px`,
+    "--calmotion-preview-image-y": `${previewMotion.y * -4}px`,
+  } as CSSProperties;
+
   return (
-    <div className="content-stretch flex items-center justify-center px-[22.649px] py-[15.099px] relative rounded-[45.297px] shrink-0" data-name="Link - Outlined">
-      <Container74 />
-      <div className="absolute inset-[0_0.4px_0.84px_0] rounded-[45.297px]" data-name="Border">
-        <div aria-hidden className="absolute border-[#dbdbdb] border-[0.944px] border-solid inset-0 pointer-events-none rounded-[45.297px]" />
+    <div className="calmotion-case-preview-anchor">
+      <div className={`calmotion-case-preview${isPreviewVisible ? " is-visible" : ""}`} style={previewStyle} aria-hidden="true">
+        <div className="calmotion-case-preview__copy">
+          <span>Calmotion</span>
+          <strong>Designing<br />Emotionally Aware<br />AI for Drivers.</strong>
+          <p>
+            An adaptive AI driver assistant combining a<br />
+            head-up display with an emotionally aware voice<br />
+            companion, designed to support drivers without<br />
+            taking control away from them.
+          </p>
+        </div>
+        <img src={imgCalmotionCaseHero} alt="" />
       </div>
+
+      <a
+        className="calmotion-case-preview-link content-stretch flex items-center justify-center px-[22.649px] py-[15.099px] relative rounded-[45.297px] shrink-0 no-underline"
+        data-name="Link - Outlined"
+        href="/case/calmotion"
+        id="calmotion-case-story-link"
+        ref={previewLinkRef}
+        onMouseEnter={() => setIsPreviewVisible(true)}
+        onMouseLeave={hidePreview}
+        onPointerEnter={() => setIsPreviewVisible(true)}
+        onPointerMove={updatePreviewMotion}
+        onPointerLeave={hidePreview}
+        onFocus={() => setIsPreviewVisible(true)}
+        onBlur={hidePreview}
+      >
+        <Container74 />
+        <div className="absolute inset-[0_0.4px_0.84px_0] rounded-[45.297px]" data-name="Border">
+          <div aria-hidden className="absolute border-[#dbdbdb] border-[0.944px] border-solid inset-0 pointer-events-none rounded-[45.297px]" />
+        </div>
+      </a>
     </div>
   );
 }
 
 function Container73() {
   return (
-    <div className="-translate-x-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%-0.35px)] top-[977px]" data-name="Container">
+    <DesktopReveal className="calmotion-case-preview-container -translate-x-1/2 absolute content-stretch flex flex-col items-start left-[calc(50%-0.35px)] top-[977px]" data-name="Container" delay={0.12}>
       <LinkOutlined3 />
-    </div>
+    </DesktopReveal>
   );
 }
 
 function Container79() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">VOICE ASSISTANT</p>
       </div>
     </div>
@@ -2422,7 +2875,7 @@ function Container76() {
 function Container82() {
   return (
     <div className="content-stretch flex flex-col items-center justify-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">HEADS-UP DISPLAY</p>
       </div>
     </div>
@@ -2456,7 +2909,7 @@ function Container80() {
 function Container85() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">RESEARCH LED</p>
       </div>
     </div>
@@ -2490,7 +2943,7 @@ function Container83() {
 function Container88() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">MOBILITY TECH</p>
       </div>
     </div>
@@ -2524,7 +2977,7 @@ function Container86() {
 function Container90() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">DESIGN STRATEGY</p>
       </div>
     </div>
@@ -2550,7 +3003,7 @@ function Variant22() {
 function Container93() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:SemiBold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[11.269px] tracking-[0.3468px] whitespace-nowrap">
         <p className="leading-[13.523px]">AFFECTIVE COMPUTING</p>
       </div>
     </div>
@@ -2583,14 +3036,14 @@ function Container91() {
 
 function Tags3() {
   return (
-    <div className="-translate-x-1/2 absolute h-[127px] left-1/2 top-[815px] w-[525px]" data-name="Tags">
+    <DesktopReveal className="-translate-x-1/2 absolute h-[127px] left-1/2 top-[815px] w-[525px]" data-name="Tags" delay={0.18}>
       <Container76 />
       <Container80 />
       <Container83 />
       <Container86 />
       <Variant22 />
       <Container91 />
-    </div>
+    </DesktopReveal>
   );
 }
 
@@ -2619,8 +3072,16 @@ function Group47() {
 function Logo3() {
   return (
     <div className="-translate-x-1/2 absolute content-stretch flex h-[45.945px] items-center justify-between left-[calc(50%+0.5px)] top-[604px] w-[240px]" data-name="Logo">
-      <Group47 />
-      <p className="[word-break:break-word] font-['Joan:Regular',sans-serif] leading-[normal] not-italic relative shrink-0 text-[#749aff] text-[34.204px] whitespace-nowrap">Calmotion</p>
+      <motion.div
+        className="content-stretch flex h-full items-center justify-between w-full"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.58, ease: "easeOut" }}
+      >
+        <Group47 />
+        <p className="[word-break:break-word] font-joan font-normal leading-[normal] not-italic relative shrink-0 text-[#749aff] text-[34.204px] whitespace-nowrap">Calmotion</p>
+      </motion.div>
     </div>
   );
 }
@@ -2654,14 +3115,19 @@ function CalmotionShowcase() {
 
 function Calmotion() {
   return (
-    <div className="-translate-x-1/2 absolute h-[1143px] left-[calc(50%+0.5px)] top-[320px] w-[1003px]" data-name="Calmotion">
+    <div className="-translate-x-1/2 absolute h-[1143px] left-[calc(50%+0.5px)] top-[264px] w-[1003px]" data-name="Calmotion" id="calmotion">
       <LinkAutoscrollToNextSection3 />
       <Container73 />
       <Tags3 />
       <Container94 />
       <Logo3 />
       <CalmotionShowcase />
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Poppins:Regular',sans-serif] h-[98px] leading-[normal] left-1/2 not-italic text-[#6e6e73] text-[22.123px] text-center top-[684px] w-[599px]">An AI driving companion designed to support drivers without taking control. Led research, problem framing, and interaction design.</p>
+      <DesktopReveal
+        className="-translate-x-1/2 [word-break:break-word] absolute font-poppins font-normal h-[98px] leading-[normal] left-1/2 not-italic text-[#6e6e73] text-[22.123px] text-center top-[684px] w-[599px]"
+        delay={0.06}
+      >
+        An AI driving companion designed to support drivers without taking control. Led research, problem framing, and interaction design.
+      </DesktopReveal>
     </div>
   );
 }
@@ -2703,7 +3169,7 @@ function Strong() {
 
 function Heading() {
   return (
-    <div className="[word-break:break-word] font-['Manrope:Medium',sans-serif] font-medium h-[117.59px] leading-[0] relative shrink-0 text-[49px] text-center tracking-[-1.9px] w-full whitespace-nowrap" data-name="Heading 1">
+    <div className="[word-break:break-word] font-manrope font-medium h-[117.59px] leading-[0] relative shrink-0 text-[49px] text-center tracking-[-1.9px] w-full whitespace-nowrap" data-name="Heading 1">
       <div className="-translate-x-1/2 -translate-y-1/2 absolute flex flex-col justify-center left-[calc(50%-199.52px)] text-[#b3b3b3] top-[29.25px]">
         <p className="leading-[58.8px]">{`I’m Mikael, `}</p>
       </div>
@@ -2723,7 +3189,7 @@ function Container99() {
 function Container101() {
   return (
     <div className="content-stretch flex flex-col items-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#b3b3b3] text-[20px] text-center tracking-[-0.2px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#b3b3b3] text-[20px] text-center tracking-[-0.2px] whitespace-nowrap">
         <p className="leading-[28px]">{`I enable product leaders to make confident decisions and `}</p>
       </div>
     </div>
@@ -2733,7 +3199,7 @@ function Container101() {
 function Container102() {
   return (
     <div className="content-stretch flex flex-col items-center relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#b3b3b3] text-[20px] text-center tracking-[-0.2px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#b3b3b3] text-[20px] text-center tracking-[-0.2px] whitespace-nowrap">
         <p className="leading-[28px]">deliver outcomes using design as a strategic lever.</p>
       </div>
     </div>
@@ -2806,7 +3272,7 @@ function HeaderTop() {
 function Container105() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] whitespace-nowrap">
         <p className="leading-[20px]">01</p>
       </div>
     </div>
@@ -2816,7 +3282,7 @@ function Container105() {
 function Margin() {
   return (
     <div className="content-stretch flex flex-col items-start pl-[16px] relative shrink-0" data-name="Margin">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-white tracking-[1.4px] uppercase whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-bold justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-white tracking-[1.4px] uppercase whitespace-nowrap">
         <p className="leading-[20px]">UX RESEARCH</p>
       </div>
     </div>
@@ -2835,7 +3301,7 @@ function Category() {
 function Container106() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] whitespace-nowrap">
         <p className="leading-[20px]">02</p>
       </div>
     </div>
@@ -2845,7 +3311,7 @@ function Container106() {
 function Margin1() {
   return (
     <div className="content-stretch flex flex-col items-start pl-[16px] relative shrink-0" data-name="Margin">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-white tracking-[1.4px] uppercase whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-bold justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-white tracking-[1.4px] uppercase whitespace-nowrap">
         <p className="leading-[20px]">PRODUCT DESIGN</p>
       </div>
     </div>
@@ -2864,7 +3330,7 @@ function Category1() {
 function Container107() {
   return (
     <div className="content-stretch flex flex-col items-start mr-[-0.01px] relative shrink-0" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] whitespace-nowrap">
         <p className="leading-[20px]">03</p>
       </div>
     </div>
@@ -2874,7 +3340,7 @@ function Container107() {
 function Margin2() {
   return (
     <div className="content-stretch flex flex-col items-start pl-[16px] relative shrink-0" data-name="Margin">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-white tracking-[1.4px] uppercase whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-bold justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-white tracking-[1.4px] uppercase whitespace-nowrap">
         <p className="leading-[20px]">STRATEGY</p>
       </div>
     </div>
@@ -2925,7 +3391,7 @@ function FooterCategories() {
           {/* First set */}
           {disciplineFields.map((discipline, index) => (
             <div key={`first-${index}`} className="flex items-center shrink-0" style={{ width: "485.333px" }}>
-              <span className="font-['Nimbus_Sans_L:Bold',sans-serif] text-white text-[14px] tracking-[1.4px] uppercase leading-[20px] whitespace-nowrap">
+              <span className="font-nimbus font-bold text-white text-[14px] tracking-[1.4px] uppercase leading-[20px] whitespace-nowrap">
                 {discipline}
               </span>
             </div>
@@ -2933,7 +3399,7 @@ function FooterCategories() {
           {/* Second set for seamless loop */}
           {disciplineFields.map((discipline, index) => (
             <div key={`second-${index}`} className="flex items-center shrink-0" style={{ width: "485.333px" }}>
-              <span className="font-['Nimbus_Sans_L:Bold',sans-serif] text-white text-[14px] tracking-[1.4px] uppercase leading-[20px] whitespace-nowrap">
+              <span className="font-nimbus font-bold text-white text-[14px] tracking-[1.4px] uppercase leading-[20px] whitespace-nowrap">
                 {discipline}
               </span>
             </div>
@@ -2958,8 +3424,8 @@ function Background() {
 
 function Margin3() {
   return (
-    <div className="content-stretch flex flex-col items-start pl-[12px] relative shrink-0" data-name="Margin">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[20px] text-white tracking-[-0.5px] whitespace-nowrap">
+    <div className="content-stretch flex flex-col items-start relative shrink-0" data-name="Margin">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-bold justify-center leading-[0] not-italic relative shrink-0 text-[20px] text-white tracking-[-0.5px] whitespace-nowrap">
         <p className="leading-[28px]">DARExABINDE</p>
       </div>
     </div>
@@ -2969,7 +3435,6 @@ function Margin3() {
 function LogoSection() {
   return (
     <div className="absolute content-stretch flex items-center left-[64px] top-[24px]" data-name="Logo Section">
-      <Background />
       <Margin3 />
     </div>
   );
@@ -2978,7 +3443,7 @@ function LogoSection() {
 function Link() {
   return (
     <div className="content-stretch flex flex-col items-start relative self-stretch shrink-0" data-name="Link">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-white tracking-[1.4px] uppercase whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-normal justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-white tracking-[1.4px] uppercase whitespace-nowrap">
         <p className="leading-[21px]">HOME</p>
       </div>
     </div>
@@ -2988,7 +3453,7 @@ function Link() {
 function Link1() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-h-px relative" data-name="Link">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] tracking-[1.4px] uppercase whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] tracking-[1.4px] uppercase whitespace-nowrap">
         <p className="leading-[21px]">WORK</p>
       </div>
     </div>
@@ -3006,7 +3471,7 @@ function LinkMargin() {
 function Link2() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-h-px relative" data-name="Link">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] tracking-[1.4px] uppercase whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] tracking-[1.4px] uppercase whitespace-nowrap">
         <p className="leading-[21px]">THOUGHTS</p>
       </div>
     </div>
@@ -3024,7 +3489,7 @@ function LinkMargin1() {
 function Link3() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-h-px relative" data-name="Link">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] tracking-[1.4px] uppercase whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] tracking-[1.4px] uppercase whitespace-nowrap">
         <p className="leading-[21px]">ABOUT</p>
       </div>
     </div>
@@ -3061,7 +3526,7 @@ function CenterNavigationMargin() {
 function LinkCtaButton() {
   return (
     <div className="absolute bg-white content-stretch flex flex-col items-start left-[1446.99px] px-[32px] py-[12px] rounded-[9999px] top-[18px]" data-name="Link - CTA Button">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-black tracking-[1.4px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-bold justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-black tracking-[1.4px] whitespace-nowrap">
         <p className="leading-[20px]">CONTACT ME</p>
       </div>
     </div>
@@ -3070,16 +3535,22 @@ function LinkCtaButton() {
 
 function Heading1() {
   return (
-    <div className="content-stretch flex flex-col items-start pb-[0.685px] relative shrink-0 w-full" data-name="Heading 1">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[128px] text-white tracking-[-5.12px] w-full">
+    <motion.div
+      className="content-stretch flex flex-col items-start pb-[0.685px] relative shrink-0 w-full"
+      data-name="Heading 1"
+      initial={{ opacity: 0, x: -72 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.78, ease: "easeOut" }}
+    >
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-bold justify-center leading-[0] not-italic relative shrink-0 text-[128px] text-white tracking-[-5.12px] w-full">
         <p className="leading-[121.6px] mb-0">Designing</p>
         <p className="leading-[121.6px] mb-0">Insight Driven</p>
         <p>
           <span className="leading-[121.6px]">Experiences</span>
-          <span className="[word-break:break-word] font-['Nimbus_Sans_L:Bold',sans-serif] leading-[121.6px] not-italic text-[#4b5563]">.</span>
+          <span className="[word-break:break-word] font-nimbus font-bold leading-[121.6px] not-italic text-[#4b5563]">.</span>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -3090,7 +3561,7 @@ function Heading3() {
 function Button() {
   return (
     <div className="bg-white content-stretch flex items-center justify-center px-[40px] py-[16px] relative shrink-0" data-name="Button">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-black text-center tracking-[1.4px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-bold justify-center leading-[0] not-italic relative shrink-0 text-[14px] text-black text-center tracking-[1.4px] whitespace-nowrap">
         <p className="leading-[20px]">VIEW PROJECTS</p>
       </div>
     </div>
@@ -3107,9 +3578,15 @@ function Container109() {
 
 function Container108() {
   return (
-    <div className="absolute content-stretch flex flex-col items-start left-[3px] max-w-[512px] top-[487.22px] w-[512px]" data-name="Container">
+    <motion.div
+      className="absolute content-stretch flex flex-col items-start left-[3px] max-w-[512px] top-[487.22px] w-[512px]"
+      data-name="Container"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.58, ease: "easeOut", delay: 0.36 }}
+    >
       <Container109 />
-    </div>
+    </motion.div>
   );
 }
 
@@ -3118,12 +3595,14 @@ function LeftColumnCopy() {
     <div className="absolute content-stretch flex flex-col gap-[64px] h-[705px] items-start left-0 pb-[7.22px] pt-[63.095px] top-0 w-[1034.66px]" data-name="Left Column: Copy">
       <Heading1 />
       <Heading3 />
-      <div className="-translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Nimbus_Sans_L:Bold',sans-serif] justify-center leading-[0] left-[6px] not-italic text-[24px] text-white top-[471px] w-[1034.66px]">
-        <p>
-          <span className="[word-break:break-word] font-['Nimbus_Sans_L:Regular',sans-serif] leading-[32px] not-italic">{`I’m Dare, a `}</span>
-          <span className="[word-break:break-word] font-['Nimbus_Sans_L:Regular_Italic',sans-serif] italic leading-[32px]">{`Product Designer & UX Researcher`}</span>
-          <span className="leading-[32px]">.</span>
-        </p>
+      <div className="-translate-y-1/2 [word-break:break-word] absolute flex flex-col font-nimbus font-bold justify-center leading-[0] left-[6px] not-italic text-[24px] text-white top-[471px] w-[1034.66px]">
+        <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.58, ease: "easeOut", delay: 0.22 }}>
+          <p>
+            <span className="[word-break:break-word] font-nimbus font-normal leading-[32px] not-italic">{`I’m Dare, a `}</span>
+            <span className="[word-break:break-word] font-nimbus font-normal italic leading-[32px]">{`Product Designer & UX Researcher`}</span>
+            <span className="leading-[32px]">.</span>
+          </p>
+        </motion.div>
       </div>
       <Container108 />
     </div>
@@ -3133,7 +3612,7 @@ function LeftColumnCopy() {
 function SecondaryTextMatchingImage1TopRightLayout() {
   return (
     <div className="absolute content-stretch flex flex-col items-end left-0 right-0 top-[19px]" data-name="Secondary text matching IMAGE_1 top right layout">
-      <div className="[word-break:break-word] flex flex-col font-['Nimbus_Sans_L:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] text-right tracking-[1.4px] uppercase whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-nimbus font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#888] text-[14px] text-right tracking-[1.4px] uppercase whitespace-nowrap">
         <p className="leading-[22.75px]">UPPSALA, SWEDEN</p>
       </div>
     </div>
@@ -3142,9 +3621,15 @@ function SecondaryTextMatchingImage1TopRightLayout() {
 
 function SecondaryTextMatchingImage1TopRightLayoutMargin() {
   return (
-    <div className="absolute h-[85px] left-[1107px] top-[53px] w-[320px]" data-name="Secondary text matching IMAGE_1 top right layout:margin">
+    <motion.div
+      className="absolute h-[85px] left-[1079px] top-[37px] w-[320px]"
+      data-name="Secondary text matching IMAGE_1 top right layout:margin"
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.52, ease: "easeOut", delay: 0.12 }}
+    >
       <SecondaryTextMatchingImage1TopRightLayout />
-    </div>
+    </motion.div>
   );
 }
 
@@ -3152,9 +3637,15 @@ function Frame() {
   return (
     <div className="-translate-x-1/2 absolute h-[705px] left-[calc(50%+0.5px)] top-[152px] w-[1427px]">
       <LeftColumnCopy />
-      <div className="absolute h-[444px] left-[1131px] top-[112px] w-[296px]" data-name="Pic 3 1">
+      <motion.div
+        className="absolute h-[444px] left-[1103px] top-[96px] w-[296px]"
+        data-name="Pic 3 1"
+        initial={{ opacity: 0, y: 36, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.68, ease: "easeOut", delay: 0.42 }}
+      >
         <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgPic31} />
-      </div>
+      </motion.div>
       <SecondaryTextMatchingImage1TopRightLayoutMargin />
     </div>
   );
@@ -3165,9 +3656,6 @@ function Dide() {
     <div className="absolute bg-[#0d0d0d] h-[962px] left-0 overflow-clip top-0 w-[1680px]" data-name="DIDE">
       <HeaderTop />
       <FooterCategories />
-      <LogoSection />
-      <CenterNavigationMargin />
-      <LinkCtaButton />
       <Frame />
     </div>
   );
@@ -3176,7 +3664,7 @@ function Dide() {
 function Heading4() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 3">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[31px] tracking-[-0.93px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[31px] tracking-[-0.93px] whitespace-nowrap">
         <p className="leading-[40.3px]">Understand People</p>
       </div>
     </div>
@@ -3194,7 +3682,7 @@ function Container110() {
 function Container111() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[16px] tracking-[-0.1px] w-full">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[16px] tracking-[-0.1px] w-full">
         <p className="leading-[25.6px]">Research reveals needs, behaviors, and context before any design decisions.</p>
       </div>
     </div>
@@ -3213,7 +3701,7 @@ function Background1() {
 function Heading5() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 3">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[31px] tracking-[-0.93px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[31px] tracking-[-0.93px] whitespace-nowrap">
         <p className="leading-[40.3px]">Frame the Problem</p>
       </div>
     </div>
@@ -3231,7 +3719,7 @@ function Container112() {
 function Container113() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[16px] tracking-[-0.1px] w-full">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[16px] tracking-[-0.1px] w-full">
         <p className="leading-[25.6px]">Most design failures begin with solving the wrong challenge.</p>
       </div>
     </div>
@@ -3250,7 +3738,7 @@ function Background2() {
 function Heading6() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 3">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[31px] tracking-[-0.93px] whitespace-nowrap">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#1d1d1f] text-[31px] tracking-[-0.93px] whitespace-nowrap">
         <p className="leading-[40.3px]">Design with Intention</p>
       </div>
     </div>
@@ -3268,7 +3756,7 @@ function Container114() {
 function Container115() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Container">
-      <div className="[word-break:break-word] flex flex-col font-['Poppins:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[16px] tracking-[-0.1px] w-full">
+      <div className="[word-break:break-word] flex flex-col font-poppins font-normal justify-center leading-[0] not-italic relative shrink-0 text-[#6e6e73] text-[16px] tracking-[-0.1px] w-full">
         <p className="leading-[25.6px]">Every interaction should support both people and outcomes.</p>
       </div>
     </div>
@@ -3297,12 +3785,12 @@ function Content() {
 function Frame2() {
   return (
     <div className="absolute h-[335.55px] left-[139px] top-[68px] w-[1200px]">
-      <div className="-translate-y-1/2 [word-break:break-word] absolute capitalize flex flex-col font-['Nimbus_Sans_L:Regular',sans-serif] justify-center leading-[0] not-italic right-[1200px] text-[37.726px] text-black top-[61.5px] tracking-[-1px] translate-x-full whitespace-nowrap">
-        <p className="font-['Poppins:Medium',sans-serif] mb-0">
+      <div className="-translate-y-1/2 [word-break:break-word] absolute capitalize flex flex-col font-nimbus font-normal justify-center leading-[0] not-italic right-[1200px] text-[37.726px] text-black top-[61.5px] tracking-[-1px] translate-x-full whitespace-nowrap">
+        <p className="font-poppins font-medium mb-0">
           <span className="leading-[61.305px]">D</span>
           <span className="leading-[61.305px]">esign problems are rarely design.</span>
         </p>
-        <p className="font-['Poppins:Medium',sans-serif]">
+        <p className="font-poppins font-medium">
           <span className="leading-[61.305px]">{`It’s an `}</span>
           <span className="leading-[61.305px] text-[#6e6e73]">insight</span>
           <span className="leading-[61.305px]">{` problem.`}</span>
@@ -3315,9 +3803,9 @@ function Frame2() {
 
 function HeaderTop1() {
   return (
-    <div className="-translate-x-1/2 absolute bg-[#eee] h-[480px] left-[calc(50%+0.5px)] top-[962px] w-[1680px]" data-name="Header - Top">
+    <DesktopReveal className="-translate-x-1/2 absolute bg-[#eee] h-[480px] left-[calc(50%+0.5px)] top-[962px] w-[1680px]" data-name="Header - Top">
       <Frame2 />
-    </div>
+    </DesktopReveal>
   );
 }
 
@@ -3325,13 +3813,14 @@ export default function Frame1() {
   return (
     <div className="responsive-frame-shell">
       <MobileNavigation />
+      <DesktopNavigation />
       <AdaptivePage />
-      <div className="responsive-frame-canvas relative" id="home" style={{ height: "8338px", overflow: "hidden" }}>
+      <div className="responsive-frame-canvas relative" id="home" style={{ height: "8166px", overflow: "hidden" }}>
         <Body />
-        <div className="absolute left-px top-[6767px] w-[1680px] h-[480px]" id="about">
+        <div className="absolute left-px top-[6595px] w-[1680px] h-[480px]" id="about">
           <BioSection />
         </div>
-        <div className="absolute left-px top-[7247px] w-[1680px]" id="thoughts">
+        <div className="absolute left-px top-[7075px] w-[1680px]" id="thoughts">
           <ThoughtsSection />
           <ContactSection />
           <FooterSection />
@@ -3339,7 +3828,7 @@ export default function Frame1() {
         <Dide />
         <HeaderTop1 />
         <div className="absolute left-0 top-[1442px]" id="work" />
-        <div className="absolute left-0 top-[7600px]" id="contact" />
+        <div className="absolute left-0 top-[7428px]" id="contact" />
       </div>
     </div>
   );
