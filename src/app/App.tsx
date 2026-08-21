@@ -3754,6 +3754,8 @@ export default function App() {
     page = <HomePage />;
   }
 
+  const isStandaloneResume = path === "/resume";
+
   return (
     <>
       <div
@@ -3761,10 +3763,12 @@ export default function App() {
       >
         <div className="dare-site-stage">
           {page}
-          <FloatingNav path={path} />
+          {!isStandaloneResume && <FloatingNav path={path} />}
         </div>
       </div>
-      <DareLlm isOpen={llmOpen} path={path} drawerWidth={llmDrawerWidth} onClose={closeDareLlm} />
+      {!isStandaloneResume && (
+        <DareLlm isOpen={llmOpen} path={path} drawerWidth={llmDrawerWidth} onClose={closeDareLlm} />
+      )}
     </>
   );
 }
