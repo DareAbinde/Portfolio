@@ -2857,7 +2857,7 @@ button {
   transform: rotate(180deg);
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (any-hover: hover) and (any-pointer: fine) {
   .fp-expertise__row:hover > button span {
     opacity: 0.62;
     transform: translateX(-18px);
@@ -16597,5 +16597,65 @@ html.fp-side-nav-lock .fp-project-cursor {
 @media (max-width: 575px) {
   .figma-ica-responsive-journey__steps b {
     color: #d90000;
+  }
+}
+
+/* Touch input stays visually neutral; a connected mouse/trackpad restores hover. */
+@media (any-hover: none) {
+  .fp-nav__contact:hover,
+  .fp-floating-menu:hover,
+  .fp-home-about:hover,
+  .fp-action-pill:hover,
+  .fp-pill:hover,
+  .fp-footer__button:hover,
+  .fp-contact-submit:hover,
+  .fp-filter button:hover {
+    background-position: top;
+  }
+
+  .fp-floating-menu.is-open,
+  .fp-nav__contact[aria-current="page"] {
+    background-position: bottom;
+  }
+
+  .fp-nav__links a:hover,
+  .fp-nav__links button:hover {
+    color: #888;
+  }
+
+  .fp-nav__links a[aria-current="page"] {
+    color: #000;
+  }
+
+  .fp-nav__links a:hover::after,
+  .fp-nav__links button:hover::after {
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  .fp-nav__links a[aria-current="page"]::after {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .fp-mobile-top-menu:hover span {
+    transform: translateX(-50%) translateY(var(--mobile-menu-y));
+  }
+
+  .fp-mobile-top-menu:hover i {
+    transform: none;
+  }
+
+  .figma-case-screen-pill:hover,
+  .figma-case-prototype-label:hover,
+  .figma-case-footer__button:hover,
+  .figma-ica-case .figma-case-tablet-next--ica:hover,
+  .figma-calmotion-case .figma-case-tablet-next--cal:hover,
+  .figma-safemap-case .figma-case-tablet-next--safemap:hover {
+    filter: none;
+  }
+
+  .figma-ica-case .figma-case-tablet-next--ica:hover,
+  .figma-calmotion-case .figma-case-tablet-next--cal:hover,
+  .figma-safemap-case .figma-case-tablet-next--safemap:hover {
+    transform: translateY(-50%);
   }
 }

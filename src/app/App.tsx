@@ -726,6 +726,10 @@ function FloatingNav({ path }: { path: string }) {
 
   useEffect(() => {
     if (!isOpen) return undefined;
+    if (!window.matchMedia("(any-hover: hover) and (any-pointer: fine)").matches) {
+      setHoveredLink(null);
+      return undefined;
+    }
 
     function updateHoveredLink(event: PointerEvent) {
       const panel = document.querySelector<HTMLElement>(".fp-side-nav__panel");

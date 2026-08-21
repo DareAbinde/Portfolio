@@ -114,7 +114,7 @@ function setupPageTransitions(navigate: Navigate) {
 }
 
 function setupMagneticTargets() {
-  if (reducedMotion() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
+  if (reducedMotion() || !window.matchMedia("(any-hover: hover) and (any-pointer: fine)").matches) return () => {};
 
   const targets = Array.from(document.querySelectorAll<HTMLElement>([
     ".fp-nav__brand",
@@ -355,7 +355,7 @@ function setupCalmotionSeeMoreEye() {
 }
 
 function setupWorkCursorPreview() {
-  if (reducedMotion() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
+  if (reducedMotion() || !window.matchMedia("(any-hover: hover) and (any-pointer: fine)").matches) return () => {};
 
   const rows = Array.from(document.querySelectorAll<HTMLElement>(".fp-project-row[data-work-preview]"));
   if (!rows.length) return () => {};
@@ -545,7 +545,7 @@ function setupWorkCursorPreview() {
 }
 
 function setupGridPreviewButtons() {
-  if (reducedMotion() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
+  if (reducedMotion() || !window.matchMedia("(any-hover: hover) and (any-pointer: fine)").matches) return () => {};
 
   const figures = Array.from(document.querySelectorAll<HTMLElement>(".fp-work-grid__card figure"));
   const cleanups = figures.map((figure) => {
