@@ -16602,6 +16602,10 @@ html.fp-side-nav-lock .fp-project-cursor {
 
 /* Touch input stays visually neutral; a connected mouse/trackpad restores hover. */
 @media (any-hover: none) {
+  .fp-work-grid__view {
+    display: none;
+  }
+
   .fp-nav__contact:hover,
   .fp-floating-menu:hover,
   .fp-home-about:hover,
