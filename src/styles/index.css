@@ -11938,6 +11938,10 @@ button {
   background: #1c1d21;
 }
 
+.fp-resume-viewer__mobile-preview {
+  display: none;
+}
+
 .fp-resume-viewer__fallback {
   position: fixed;
   right: 18px;
@@ -11951,6 +11955,34 @@ button {
   font-size: 14px;
   line-height: 1;
   text-decoration: none;
+}
+
+@media (max-width: 575px) {
+  .fp-resume-viewer {
+    position: relative;
+    width: 100%;
+    min-height: 100dvh;
+    height: auto;
+    overflow-x: hidden;
+    background: #eef0f2;
+  }
+
+  .fp-resume-viewer__frame {
+    display: none;
+  }
+
+  .fp-resume-viewer__mobile-preview {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .fp-resume-viewer__fallback {
+    right: 12px;
+    bottom: 12px;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
 }
 
 /* ICA process case study: Figma tablet/mobile frames (820px / 430px bases). */

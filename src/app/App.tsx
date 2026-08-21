@@ -1447,6 +1447,11 @@ function ContactPage() {
 function ResumePage() {
   return (
     <main className="fp-resume-viewer" aria-label="Dare Abinde resume">
+      <img
+        className="fp-resume-viewer__mobile-preview"
+        src="/dare-abinde-resume-mobile.jpg"
+        alt="Dare Abinde resume"
+      />
       <iframe
         className="fp-resume-viewer__frame"
         src={resumePdfHref}
