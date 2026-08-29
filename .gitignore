@@ -7,6 +7,9 @@ dist/
 .env.*
 !.env.example
 
+# Local workflow notes.
+FIGMA_PROTOTYPE_WORKFLOW.md
+
 # Local video masters replaced by Mux playback in production.
 src/assets/final-portfolio/home/ch-video-prototype.mp4
 src/assets/final-portfolio/case-pages/ch-promotional-video.mp4
