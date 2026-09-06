@@ -1540,9 +1540,9 @@ function ContactPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name,
-          email,
-          message,
+          name: formValues.name.trim(),
+          email: formValues.email.trim(),
+          message: formValues.message.trim(),
           botField: String(formData.get("bot-field") || ""),
         }),
       });

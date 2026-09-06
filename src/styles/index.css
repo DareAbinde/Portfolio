@@ -3155,11 +3155,13 @@ button {
   color: #fff;
 }
 
-.fp-contact-page .fp-nav__links a {
+.fp-contact-page .fp-nav__links a,
+.fp-contact-page .fp-nav__links button {
   color: #fff;
 }
 
-.fp-contact-page .fp-nav__links a:hover {
+.fp-contact-page .fp-nav__links a:hover,
+.fp-contact-page .fp-nav__links button:hover {
   color: rgba(255, 255, 255, 0.54);
 }
 

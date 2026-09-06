@@ -38,3 +38,18 @@ export async function GET(request: Request) {
   console.log("Deleted " + deleted + " expired DARE LLM transcript(s).");
   return Response.json({ deleted });
 }
+
+async function sendVercelResponse(response: any, result: Response) {
+  result.headers.forEach((value, key) => response.setHeader(key, value));
+  response.status(result.status).send(await result.text());
+}
+
+export default async function handler(request: any, response: any) {
+  if (request.method !== "GET") {
+    return response.status(405).json({ error: "Method not allowed" });
+  }
+  const result = await GET(new Request("https://dareabinde.com/api/cleanup-dare-llm", {
+    headers: { authorization: request.headers.authorization || "" },
+  }));
+  return sendVercelResponse(response, result);
+}

@@ -32,6 +32,19 @@ function json(data: unknown, status = 200) {
   });
 }
 
+async function readVercelBody(request: any) {
+  if (request.body) return typeof request.body === "string" ? JSON.parse(request.body) : request.body;
+  const chunks: Buffer[] = [];
+  for await (const chunk of request) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  const text = Buffer.concat(chunks).toString("utf8");
+  return text ? JSON.parse(text) : {};
+}
+
+async function sendVercelResponse(response: any, result: Response) {
+  result.headers.forEach((value, key) => response.setHeader(key, value));
+  response.status(result.status).send(await result.text());
+}
+
 function validationShape(value: unknown) {
   if (!value || typeof value !== "object") return { valueType: typeof value };
   const record = value as Record<string, unknown>;
@@ -279,4 +292,20 @@ export async function POST(request: Request) {
 
 export function GET() {
   return json({ error: "Method not allowed" }, 405);
+}
+
+export default async function handler(request: any, response: any) {
+  try {
+    if (request.method !== "POST") return sendVercelResponse(response, GET());
+    const body = await readVercelBody(request);
+    const result = await POST(new Request("https://dareabinde.com/api/dare-llm", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }));
+    return sendVercelResponse(response, result);
+  } catch (error) {
+    console.error("DARE LLM function failed", error);
+    return response.status(500).json({ error: "DARE LLM is temporarily unavailable" });
+  }
 }
