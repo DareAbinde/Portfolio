@@ -89,6 +89,11 @@ button {
   .fp-floating-menu--ica-hidden:not(.is-open) {
     display: none !important;
   }
+
+  .figma-apple-case > .fp-canvas > .fp-nav,
+  .figma-apple-case > .fp-canvas > .figma-ica-desktop-only {
+    display: none !important;
+  }
 }
 
 @media (min-width: 576px) and (max-width: 1024px) {
@@ -1477,6 +1482,10 @@ button {
     letter-spacing: -0.09756vw;
   }
 
+  .figma-calmotion-case .figma-ica-mobile-intro span {
+    color: #005fcc;
+  }
+
   .figma-calmotion-responsive-brief {
     height: auto;
     min-height: 30.70433vw;
@@ -1917,12 +1926,14 @@ button {
   object-fit: cover;
 }
 
-.fp-project-cursor__item[data-preview-slug="landa"] {
+.fp-project-cursor__item[data-preview-slug="landa"],
+.fp-project-cursor__item[data-preview-slug="apple-mail"] {
   height: 100%;
   background: transparent;
 }
 
-.fp-project-cursor__item[data-preview-slug="landa"] img {
+.fp-project-cursor__item[data-preview-slug="landa"] img,
+.fp-project-cursor__item[data-preview-slug="apple-mail"] img {
   height: 100%;
   object-fit: cover;
 }
@@ -2672,6 +2683,31 @@ button {
 
 .fp-action-pill--dark:hover {
   border-color: #475be9;
+}
+
+.fp-action-pill--rapid-link {
+  left: 696px;
+  width: 288px;
+  border-color: rgba(166, 166, 166, 0.72);
+  color: #1c1d21;
+}
+
+.fp-work-action-group {
+  position: absolute;
+  left: 534px;
+  display: flex;
+  width: 612px;
+  height: 56.419px;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+}
+
+.fp-work-action-group .fp-action-pill {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 288px;
 }
 
 .fp-gallery {
@@ -3614,7 +3650,12 @@ button {
   background: transparent;
 }
 
-.fp-work-grid__card figure[data-preview-slug="landa"] img {
+.fp-work-grid__card figure[data-preview-slug="apple-mail"] {
+  background: transparent;
+}
+
+.fp-work-grid__card figure[data-preview-slug="landa"] img,
+.fp-work-grid__card figure[data-preview-slug="apple-mail"] img {
   height: 100%;
   object-fit: cover;
 }
@@ -7373,11 +7414,13 @@ button {
   max-width: none;
 }
 
-.figma-case-footer__thumb[data-preview-slug="landa"] {
+.figma-case-footer__thumb[data-preview-slug="landa"],
+.figma-case-footer__thumb[data-preview-slug="apple-mail"] {
   background: transparent;
 }
 
-.figma-case-footer__thumb[data-preview-slug="landa"] img {
+.figma-case-footer__thumb[data-preview-slug="landa"] img,
+.figma-case-footer__thumb[data-preview-slug="apple-mail"] img {
   height: auto;
 }
 
@@ -10032,7 +10075,14 @@ button {
   .figma-landa-case > .fp-canvas > .figma-landa-prototype-two,
   .figma-landa-case > .fp-canvas > .figma-landa-desktop-mobile-screens,
   .figma-landa-case > .fp-canvas > .figma-case-export,
-  .figma-landa-case > .fp-canvas > .figma-case-footer {
+  .figma-landa-case > .fp-canvas > .figma-case-footer,
+  .figma-apple-case > .fp-canvas > .figma-case-hero,
+  .figma-apple-case > .fp-canvas > .figma-case-intro,
+  .figma-apple-case > .fp-canvas > .figma-case-story,
+  .figma-apple-case > .fp-canvas > .figma-case-process,
+  .figma-apple-case > .fp-canvas > .figma-apple-still-showcase,
+  .figma-apple-case > .fp-canvas > .figma-case-prototype,
+  .figma-apple-case > .fp-canvas > .figma-case-footer {
     display: none;
   }
 
@@ -12211,6 +12261,10 @@ button {
     letter-spacing: -0.09756vw;
   }
 
+  .figma-ica-case .figma-ica-mobile-intro span {
+    color: #d90000;
+  }
+
   .figma-ica-responsive-brief {
     display: grid;
     grid-template-columns: 15.60976vw 1fr;
@@ -13609,7 +13663,8 @@ button {
     object-position: center bottom;
   }
 
-  .figma-ica-responsive-footer__next a[data-preview-slug="landa"] img {
+  .figma-ica-responsive-footer__next a[data-preview-slug="landa"] img,
+  .figma-ica-responsive-footer__next a[data-preview-slug="apple-mail"] img {
     object-position: center center;
   }
 }
@@ -14757,7 +14812,8 @@ button {
   body:has(.figma-calmotion-case) .fp-mobile-top-menu,
   body:has(.figma-safemap-case) .fp-mobile-top-menu,
   body:has(.figma-climate-case) .fp-mobile-top-menu,
-  body:has(.figma-landa-case) .fp-mobile-top-menu {
+  body:has(.figma-landa-case) .fp-mobile-top-menu,
+  body:has(.figma-apple-case) .fp-mobile-top-menu {
     display: none !important;
   }
 
@@ -14765,7 +14821,8 @@ button {
   body:has(.figma-calmotion-case) .fp-floating-menu:not(.is-open),
   body:has(.figma-safemap-case) .fp-floating-menu:not(.is-open),
   body:has(.figma-climate-case) .fp-floating-menu:not(.is-open),
-  body:has(.figma-landa-case) .fp-floating-menu:not(.is-open) {
+  body:has(.figma-landa-case) .fp-floating-menu:not(.is-open),
+  body:has(.figma-apple-case) .fp-floating-menu:not(.is-open) {
     display: grid !important;
   }
 
@@ -16661,5 +16718,1063 @@ html.fp-side-nav-lock .fp-project-cursor {
   .figma-calmotion-case .figma-case-tablet-next--cal:hover,
   .figma-safemap-case .figma-case-tablet-next--safemap:hover {
     transform: translateY(-50%);
+  }
+}
+
+
+/* Rapid prototypes and Apple Mail case additions */
+.fp-home-rapid-list .fp-kicker,
+.fp-rapid-list .fp-kicker {
+  width: 230px;
+}
+
+.fp-rapid-list .fp-project-row__title {
+  width: 520px;
+}
+
+.fp-rapid-list .fp-project-row__category {
+  width: 250px;
+}
+
+.fp-rapid-grid .fp-work-grid__card figure img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.fp-action-pill--rapid-link {
+  width: 288px;
+}
+
+.fp-work-action-group {
+  width: 612px;
+}
+
+.figma-apple-case.fp-shell {
+  overflow: visible;
+}
+
+.figma-apple-case .figma-case-hero {
+  height: 1466px;
+}
+
+.figma-apple-case .figma-case-intro {
+  top: 1586px;
+  width: 562px;
+  height: 140px;
+}
+
+.figma-apple-intro p {
+  width: 562px;
+  font-size: 30px;
+  line-height: 35px;
+}
+
+.figma-apple-project-brief,
+.figma-apple-narrative-phase {
+  position: absolute;
+  width: 1200px;
+}
+
+.figma-apple-project-brief {
+  top: 1866px;
+  left: 240px;
+  height: 551px;
+}
+
+.figma-apple-project-brief .figma-apple-problem-column {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 380px;
+  height: 110px;
+}
+
+.figma-apple-project-brief .figma-apple-understand-column {
+  position: absolute;
+  top: 209px;
+  left: 0;
+  width: 380px;
+  height: 132px;
+}
+
+.figma-apple-project-brief .figma-apple-understand-column .figma-ica-narrative__phase-heading {
+  position: static;
+}
+
+.figma-apple-project-brief .figma-ica-narrative__kicker {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.figma-apple-project-brief .figma-apple-problem-heading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+
+.figma-apple-project-brief .figma-apple-problem-heading > p {
+  position: static;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.figma-apple-project-brief .figma-apple-problem-heading h2 {
+  margin-top: 20px;
+}
+
+.figma-apple-project-brief .figma-ica-narrative__body {
+  position: absolute;
+  top: 10px;
+  left: 627px;
+  width: 573px;
+  margin: 0;
+  font-family: var(--font-secondary);
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.1818px;
+}
+
+.figma-apple-narrative-phase--understand {
+  top: 2006px;
+  left: 240px;
+  height: 342px;
+}
+
+.figma-apple-narrative-phase--direction {
+  top: 2552px;
+  left: 240px;
+  height: 788px;
+}
+
+.figma-apple-narrative-phase--reflection {
+  top: 4336px;
+  left: 240px;
+  height: 210px;
+}
+
+.figma-apple-footer-mask-anchor {
+  position: absolute;
+  top: 4545px;
+  left: 0;
+  width: 1680px;
+  height: 2px;
+  background: #fff;
+}
+
+.figma-apple-footer-mask-anchor.fp-footer-mask-source::after {
+  left: -18%;
+  width: 136%;
+  height: 280px;
+}
+
+.figma-apple-narrative__copy--friction,
+.figma-apple-narrative__copy--hypothesis,
+.figma-apple-narrative__copy--implementation,
+.figma-apple-narrative__copy--reflection {
+  top: 0;
+}
+
+.figma-apple-narrative__copy--prototype {
+  top: 192px;
+}
+
+.figma-apple-narrative__copy--cost {
+  top: 212px;
+}
+
+.figma-apple-project-brief .figma-apple-narrative__copy--friction {
+  top: 209px;
+}
+
+.figma-apple-project-brief .figma-apple-narrative__copy--cost {
+  top: 421px;
+}
+
+.figma-apple-narrative__copy--judgement {
+  top: 384px;
+}
+
+.figma-apple-narrative__copy--implementation {
+  top: 570px;
+}
+
+.figma-apple-direction-phone,
+.figma-apple-technical-phone {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 380px;
+  height: 788px;
+  overflow: hidden;
+}
+
+.figma-apple-direction-phone img,
+.figma-apple-technical-phone img {
+  display: block;
+  width: 380px;
+  height: auto;
+  max-width: none;
+}
+
+.figma-apple-desktop-video {
+  position: absolute;
+  top: 3516px;
+  left: 390px;
+  width: 900px;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+.figma-apple-desktop-video video,
+.figma-apple-video-responsive video {
+  display: block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.figma-apple-desktop-video video {
+  height: 675px;
+}
+
+.figma-apple-desktop-video figcaption {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 20px;
+  padding-inline: 13px;
+  color: #777;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.72px;
+  text-align: center;
+}
+
+.figma-apple-video-responsive figcaption {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding-inline: 1.2vw;
+  color: #777;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  text-align: center;
+}
+
+.figma-apple-video-caption > span {
+  grid-column: 2;
+}
+
+.figma-apple-video-caption > a {
+  grid-column: 3;
+  justify-self: end;
+  color: #005fcc;
+  text-decoration: none;
+}
+
+.figma-apple-video-caption > a:hover,
+.figma-apple-video-caption > a:focus-visible {
+  text-decoration: underline;
+}
+
+.figma-apple-video-controls {
+  position: absolute;
+  z-index: 2;
+  top: 20px;
+  right: 40px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.figma-apple-desktop-video:hover .figma-apple-video-controls,
+.figma-apple-desktop-video:focus-within .figma-apple-video-controls,
+.figma-apple-video-responsive:hover .figma-apple-video-controls,
+.figma-apple-video-responsive:focus-within .figma-apple-video-controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.figma-apple-video-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 62%);
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.figma-apple-video-control:hover {
+  background: rgb(0 0 0 / 78%);
+  transform: scale(1.04);
+}
+
+.figma-apple-video-control--play span {
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  border-top: 5.5px solid transparent;
+  border-bottom: 5.5px solid transparent;
+  border-left: 8.5px solid #fff;
+}
+
+.figma-apple-video-control--pause {
+  display: flex;
+  gap: 3px;
+}
+
+.figma-apple-video-control--pause span {
+  display: block;
+  width: 3px;
+  height: 12px;
+  border-radius: 2px;
+  background: #fff;
+}
+
+.figma-apple-video-restart-icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.3;
+}
+
+.figma-apple-video-responsive {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+.figma-apple-video-responsive video {
+  aspect-ratio: 4 / 3;
+  height: auto;
+}
+
+@media (min-width: 1025px) {
+  .figma-apple-case > .fp-canvas > .figma-ica-mobile-layout {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .fp-home-rapid-list,
+  .fp-rapid-list {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 var(--tablet-pad) 118px;
+  }
+
+  .fp-home-rapid-list {
+    display: block;
+    background: #fff;
+  }
+
+  .fp-home-rapid-list .fp-kicker,
+  .fp-rapid-list .fp-kicker {
+    width: auto;
+  }
+
+  .fp-rapid-list .fp-project-row__title,
+  .fp-rapid-list .fp-project-row__category {
+    width: auto;
+  }
+
+  .fp-action-pill--rapid-link {
+    width: 254px;
+  }
+
+  .fp-home-rapid-list .fp-row-line,
+  .fp-home-rapid-list .fp-project-row__hit {
+    display: none;
+  }
+
+  .fp-work-action-group,
+  .fp-work-grid__action.fp-work-action-group {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: auto;
+    height: auto;
+    margin: 58px auto 0;
+    gap: 26px;
+  }
+
+  .fp-work-action-group .fp-action-pill {
+    margin: 0;
+  }
+
+  .figma-apple-case > .fp-canvas > .figma-ica-mobile-layout {
+    display: block;
+    width: 100%;
+    padding-bottom: 0;
+    background: #fff;
+  }
+
+  .figma-apple-case > .fp-canvas > .fp-nav,
+  .figma-apple-case > .fp-canvas > .figma-case-hero,
+  .figma-apple-case > .fp-canvas > .figma-case-intro,
+  .figma-apple-case > .fp-canvas > .figma-case-prototype,
+  .figma-apple-case > .fp-canvas > .figma-case-footer,
+  .figma-apple-case > .fp-canvas > .figma-ica-desktop-only,
+  .figma-apple-case > .fp-canvas > .figma-apple-project-brief,
+  .figma-apple-case > .fp-canvas > .figma-apple-narrative-phase,
+  .figma-apple-case > .fp-canvas > .figma-apple-desktop-video,
+  .figma-apple-case > .fp-canvas > .figma-apple-footer-mask-anchor,
+  .figma-apple-case > .fp-canvas > .figma-apple-still-showcase {
+    display: none !important;
+  }
+
+  .figma-apple-case .figma-ica-mobile-layout {
+    padding-top: 0 !important;
+  }
+
+  .figma-apple-case .figma-ica-mobile-layout > .figma-apple-still-showcase {
+    position: relative;
+    display: block;
+    top: auto;
+    left: auto;
+    width: calc(100% - (var(--tablet-pad) * 2));
+    height: auto;
+    aspect-ratio: 1480 / 1280;
+    margin: 0 var(--tablet-pad) 88px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .figma-apple-still-showcase img {
+    position: absolute;
+    top: 8.59375%;
+    left: 16.21622%;
+    height: 82.8125%;
+    width: auto;
+    max-width: none;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 1024px) {
+  .figma-apple-case .figma-ica-mobile-hero {
+    box-sizing: border-box;
+    height: 99.73235vw;
+    padding: 7.80488vw 5.85366vw 0;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero h1 {
+    font-size: 10.73171vw;
+    font-weight: 400;
+    line-height: 10.73171vw;
+    letter-spacing: -0.4878vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5.85366vw;
+    width: 100% !important;
+    margin-top: 5.85366vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta article,
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta article:not(:first-child) {
+    display: flex !important;
+    position: static !important;
+    left: auto !important;
+    flex-direction: column;
+    gap: 0;
+    width: auto !important;
+    padding-top: 1.95122vw;
+    border-top: 0.07146vw solid #a6a6a6;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta hr {
+    display: none;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta span,
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta p {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta span {
+    font-size: 1.46341vw;
+    line-height: 1.95122vw;
+    letter-spacing: 0.03659vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta p {
+    margin-top: 0.97561vw;
+    font-size: 1.70732vw;
+    line-height: 2.21951vw;
+    letter-spacing: 0;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero__image {
+    display: block;
+    width: calc(100% + 11.70732vw);
+    max-width: none;
+    height: 61.34384vw;
+    margin: 6.82927vw 0 0 -5.85366vw;
+    object-fit: cover;
+  }
+
+  .figma-apple-case .figma-ica-mobile-intro {
+    box-sizing: border-box;
+    height: auto;
+    padding: 7.80488vw 5.85366vw 0;
+  }
+
+  .figma-apple-case .figma-ica-mobile-intro p {
+    width: 78.17073vw;
+    font-size: 3.65854vw;
+    line-height: 5.12195vw;
+    letter-spacing: -0.09756vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-intro::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 0.07146vw;
+    margin-top: 7.80488vw;
+    background: #e0e0e0;
+  }
+
+  .figma-apple-case .figma-ica-mobile-intro span {
+    color: #005fcc;
+  }
+
+  .figma-apple-case .figma-apple-responsive-brief {
+    display: grid;
+    grid-template-columns: 15.60976vw 1fr;
+    gap: 7.80488vw;
+    height: auto;
+    margin: 0 5.85366vw;
+    padding-top: 2.92683vw;
+    padding-bottom: 7.80488vw;
+    border-top: 0;
+  }
+
+  .figma-apple-case .figma-apple-responsive-brief > p:last-child {
+    font-family: Inter, sans-serif;
+    font-size: 1.95122vw;
+    line-height: 3.31707vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-phase {
+    height: auto;
+    padding: 7.80488vw 5.85366vw;
+    background: #fff;
+  }
+
+  .figma-apple-case .figma-ica-responsive-phase--understand,
+  .figma-apple-case .figma-ica-responsive-phase--design-direction,
+  .figma-apple-case .figma-ica-responsive-phase--reflection {
+    padding-top: 0;
+  }
+
+  .figma-apple-case .figma-ica-responsive-phase h2 {
+    padding-top: 1.95122vw;
+    font-family: "Neue Montreal", Inter, sans-serif;
+    font-size: 4.39024vw;
+    font-weight: 400;
+    line-height: 5.92683vw;
+    letter-spacing: -0.12195vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-phase__body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5.85366vw;
+    margin-top: 6.82927vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-copy-block {
+    padding-top: 2.92683vw;
+    border-top: 0.07146vw solid #e0e0e0;
+  }
+
+  .figma-apple-case .figma-ica-responsive-copy-block h3 {
+    font-family: "Neue Montreal", Inter, sans-serif;
+    font-size: 1.95122vw;
+    font-weight: 400;
+    line-height: 2.92683vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-copy-block > div {
+    padding-top: 1.46341vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-copy-block p {
+    font-family: Inter, sans-serif;
+    font-size: 1.70732vw;
+    line-height: 2.90244vw;
+  }
+
+  .figma-apple-case .figma-apple-video-responsive {
+    width: calc(100% - (5.85366vw * 2));
+    aspect-ratio: auto;
+    margin: 0 5.85366vw 7.80488vw;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .figma-apple-case .figma-apple-video-responsive figcaption {
+    padding-top: 2.19512vw;
+    font-size: 1.21951vw;
+    line-height: 1.82927vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-layout > .figma-case-footer {
+    box-sizing: border-box;
+    height: 91.36427vw !important;
+    min-height: 91.36427vw;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .fp-home-rapid-list,
+  .fp-rapid-list {
+    padding: 0 var(--mobile-pad) 86px;
+  }
+
+  .fp-home-rapid-list {
+    box-sizing: border-box;
+    padding-right: 4.97674vw;
+    padding-left: 4.97674vw;
+  }
+
+  .fp-home-rapid-list .fp-kicker {
+    margin: 0 0 5.96977vw;
+    color: #a6a6a6;
+    font-size: 3.48256vw;
+    line-height: 4.97674vw;
+    letter-spacing: 0.34826vw;
+  }
+
+  .fp-home-rapid-list > .fp-row-line {
+    display: block;
+    position: relative;
+    top: auto !important;
+    left: 0 !important;
+    width: 100%;
+    height: 0.1286vw;
+    background: #a6a6a6;
+  }
+
+  .fp-home-rapid-list .fp-project-row {
+    display: flex;
+    min-height: 0;
+    height: 18.63721vw;
+    padding: 0;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 0;
+    border-bottom: 0.1286vw solid #a6a6a6;
+  }
+
+  .fp-home-rapid-list .fp-project-row__title,
+  .fp-home-rapid-list .fp-project-row__category {
+    position: relative;
+    top: auto !important;
+    left: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .fp-home-rapid-list .fp-project-row__title {
+    font-size: 5.47256vw;
+    line-height: 8.20907vw;
+    letter-spacing: -0.12437vw;
+  }
+
+  .fp-home-rapid-list .fp-project-row__title small {
+    color: #a6a6a6;
+    font-size: 3.48256vw;
+    line-height: 4.97674vw;
+    letter-spacing: -0.07463vw;
+  }
+
+  .fp-home-rapid-list .fp-project-row__category {
+    font-size: 3.48256vw;
+    line-height: 4.97674vw;
+    letter-spacing: -0.07463vw;
+    text-align: right;
+  }
+
+  .fp-home-rapid-list .fp-project-row .fp-row-line,
+  .fp-home-rapid-list .fp-project-row__hit {
+    display: none;
+  }
+
+  .fp-home-rapid-list .fp-action-pill {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 35.5814vw;
+    height: 11.19419vw;
+    margin: 7.96023vw auto 0;
+    padding: 0;
+    gap: 1.49256vw;
+    font-size: 3.48256vw;
+    line-height: 4.97674vw;
+  }
+
+  .fp-home-rapid-list .fp-action-pill small {
+    margin: 0;
+    color: #a6a6a6;
+    font-size: 2.98512vw;
+    line-height: 3.98023vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-layout > .figma-apple-still-showcase {
+    width: calc(100% - (var(--mobile-pad) * 2));
+    margin: 0 var(--mobile-pad) 72px;
+  }
+
+  .fp-action-pill--rapid-link {
+    width: min(254px, 78vw);
+  }
+
+  .fp-work-action-group,
+  .fp-work-grid__action.fp-work-action-group {
+    flex-direction: column;
+    margin-top: 54px;
+    gap: 18px;
+  }
+
+  .figma-apple-still-showcase img {
+    left: 9.5%;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 1024px) {
+  .fp-home-rapid-list {
+    box-sizing: border-box;
+    padding-right: 5.85366vw;
+    padding-bottom: 7.80488vw;
+    padding-left: 5.85366vw;
+  }
+
+  .fp-home-rapid-list .fp-kicker {
+    margin: 0 0 2.92683vw;
+    color: #a6a6a6;
+    font-size: 1.70732vw;
+    line-height: 2.43902vw;
+    letter-spacing: 0.17073vw;
+  }
+
+  .fp-home-rapid-list > .fp-row-line {
+    display: block;
+    position: relative;
+    top: auto !important;
+    left: 0 !important;
+    width: 100%;
+    height: 0.07146vw;
+    background: #a6a6a6;
+  }
+
+  .fp-home-rapid-list .fp-project-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 24.83232vw;
+    width: 100%;
+    height: 11.70732vw;
+    min-height: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: normal;
+    border: 0;
+    border-bottom: 0.07146vw solid #a6a6a6;
+  }
+
+  .fp-home-rapid-list .fp-project-row__title,
+  .fp-home-rapid-list .fp-project-row__category {
+    position: relative;
+    top: auto !important;
+    left: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .fp-home-rapid-list .fp-project-row__title {
+    font-size: 3.90244vw;
+    line-height: 5.85366vw;
+    letter-spacing: -0.06098vw;
+  }
+
+  .fp-home-rapid-list .fp-project-row__title small {
+    color: #a6a6a6;
+    font-size: 1.95122vw;
+    line-height: 2.92683vw;
+    letter-spacing: -0.03659vw;
+  }
+
+  .fp-home-rapid-list .fp-project-row__category {
+    justify-self: start;
+    font-size: 1.95122vw;
+    line-height: 2.92683vw;
+    letter-spacing: -0.03659vw;
+    text-align: right;
+  }
+
+  .fp-home-rapid-list .fp-project-row .fp-row-line,
+  .fp-home-rapid-list .fp-project-row__hit {
+    display: none;
+  }
+
+  .fp-home-rapid-list .fp-action-pill {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 18.53659vw;
+    height: 5.5072vw;
+    margin: 3.90244vw auto 0;
+    padding: 0;
+    gap: 0.73171vw;
+    font-size: 1.70732vw;
+    line-height: 2.43902vw;
+  }
+
+  .fp-home-rapid-list .fp-action-pill small {
+    margin: 0;
+    color: #a6a6a6;
+    font-size: 1.46341vw;
+    line-height: 1.95122vw;
+  }
+
+  .figma-apple-case .figma-apple-still-showcase img {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 575px) {
+  .figma-apple-case .figma-ica-mobile-hero {
+    box-sizing: border-box;
+    height: 116.76361vw;
+    padding: 9.93795vw 4.96871vw 0;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero h1 {
+    font-size: 12.91884vw;
+    font-weight: 400;
+    line-height: 12.91884vw;
+    letter-spacing: -0.49687vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.98125vw;
+    width: 100% !important;
+    margin-top: 7.94999vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta article,
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta article:not(:first-child) {
+    position: static !important;
+    left: 0 !important;
+    display: flex !important;
+    width: auto !important;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 2.98125vw;
+    border-top: 0.12844vw solid #a6a6a6;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta span {
+    font-size: 2.48435vw;
+    line-height: 3.72652vw;
+    letter-spacing: 0.0621vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero .figma-case-meta p {
+    margin-top: 1.9875vw;
+    font-size: 2.98125vw;
+    line-height: 3.87541vw;
+    letter-spacing: 0;
+  }
+
+  .figma-apple-case .figma-ica-mobile-hero__image {
+    display: block;
+    width: calc(100% + 9.93742vw);
+    max-width: none;
+    height: 61.35113vw;
+    margin: 7.94999vw 0 0 -4.96871vw;
+    object-fit: cover;
+  }
+
+  .figma-apple-case .figma-ica-mobile-intro {
+    box-sizing: border-box;
+    height: 50.5455vw;
+    margin: 0;
+    padding: 9.93795vw 4.96871vw;
+    border-bottom: 0;
+  }
+
+  .figma-apple-case .figma-ica-mobile-intro p {
+    width: 90.18782vw;
+    font-size: 5.46554vw;
+    line-height: 7.65185vw;
+    letter-spacing: -0.12422vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-intro::after {
+    display: none;
+  }
+
+  .figma-apple-case .figma-ica-mobile-intro span {
+    color: #005fcc;
+  }
+
+  .figma-apple-case .figma-apple-responsive-brief {
+    display: block;
+    height: auto;
+    margin: 0 4.96871vw;
+    padding-top: 5.9625vw;
+    padding-bottom: 11.92499vw;
+    border-top: 0.12844vw solid #e0e0e0;
+  }
+
+  .figma-apple-case .figma-apple-responsive-brief > p:last-child {
+    width: 100%;
+    padding-top: 3.975vw;
+    font-size: 3.47796vw;
+    line-height: 5.91284vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-phase {
+    height: auto;
+    padding: 0 4.96871vw 11.92499vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-phase h2 {
+    padding-top: 3.975vw;
+    font-size: 6.45942vw;
+    line-height: 8.71997vw;
+    letter-spacing: -0.12422vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-phase__body {
+    display: flex;
+    flex-direction: column;
+    gap: 7.94999vw;
+    margin-top: 9.93795vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-copy-block {
+    padding-top: 5.9625vw;
+    border-top: 0.12844vw solid #e0e0e0;
+  }
+
+  .figma-apple-case .figma-ica-responsive-copy-block h3 {
+    font-size: 3.975vw;
+    line-height: 5.9625vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-copy-block > div {
+    padding-top: 2.98125vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-copy-block p {
+    font-size: 3.47796vw;
+    line-height: 5.91284vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-layout > .figma-apple-still-showcase {
+    width: calc(100% - (var(--mobile-pad) * 2));
+    aspect-ratio: 1480 / 1280;
+    margin: 0 var(--mobile-pad) 11.92499vw;
+  }
+
+  .figma-apple-case .figma-apple-still-showcase img {
+    top: 8.59375%;
+    left: 50%;
+    height: 82.8125%;
+    width: auto;
+    transform: translateX(-50%);
+  }
+
+  .figma-apple-case .figma-apple-video-responsive {
+    width: calc(100% - (var(--mobile-pad) * 2));
+    aspect-ratio: auto;
+    margin: 0 var(--mobile-pad) 11.92499vw;
+    overflow: visible;
+  }
+
+  .figma-apple-case .figma-apple-video-responsive figcaption {
+    padding-top: 2.98125vw;
+    font-size: 2.48435vw;
+    line-height: 3.72652vw;
+  }
+
+  .figma-apple-case .figma-apple-video-controls {
+    top: 4.65116vw;
+    right: 4.65116vw;
+    gap: 2.7907vw;
+    opacity: 1;
+  }
+
+  .figma-apple-case .figma-apple-video-control {
+    width: 8.37209vw;
+    height: 8.37209vw;
+  }
+
+  .figma-apple-case .figma-apple-video-control--pause span {
+    width: 1.16279vw;
+    height: 3.48837vw;
+  }
+
+  .figma-apple-case .figma-apple-video-restart-icon {
+    width: 3.72093vw;
+    height: 3.72093vw;
+  }
+
+  .figma-apple-case .figma-ica-responsive-phase--reflection {
+    padding-bottom: 18.60465vw;
+  }
+
+  .figma-apple-case .figma-ica-mobile-layout > .figma-case-footer {
+    box-sizing: border-box;
+    height: 135.50429vw !important;
+    min-height: 135.50429vw;
+    margin-top: 0;
   }
 }

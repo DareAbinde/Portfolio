@@ -49,8 +49,9 @@ I kept the assistant intentionally scoped:
 - GSAP
 - Lenis
 - HLS.js / Mux playback
-- Netlify Functions
-- Netlify Blobs
+- Vercel Functions
+- Vercel Blob
+- Resend
 - OpenRouter Chat Completions
 
 ## Local Development
@@ -61,16 +62,16 @@ Install dependencies:
 npm install
 ```
 
-Start the local Netlify/Vite development server:
+Start the local Vite development server:
 
 ```bash
 npm run dev
 ```
 
-For Vite only:
+To test Vercel API routes locally, use Vercel CLI:
 
 ```bash
-npm run dev:vite
+npm run dev:vercel
 ```
 
 Build for production:
@@ -85,8 +86,13 @@ The AI assistant requires server-side environment variables. Keep these out of s
 
 ```bash
 OPENROUTER_API_KEY=
-DARE_LLM_PRIMARY_MODEL=
-DARE_LLM_FALLBACK_MODEL=
+OPENROUTER_PRIMARY_MODEL=
+OPENROUTER_FALLBACK_MODEL=
+BLOB_READ_WRITE_TOKEN=
+RESEND_API_KEY=
+CONTACT_TO_EMAIL=
+CONTACT_FROM_EMAIL=
+CRON_SECRET=
 ```
 
 Optional diagnostics can be enabled during testing, but should stay off for normal production use.
@@ -97,6 +103,6 @@ DEBUG_AI_RESPONSES=true
 
 ## Repository Notes
 
-This repository is public for portfolio review. It should not contain secrets, API keys, private transcripts, local Netlify state, or user data.
+This repository is public for portfolio review. It should not contain secrets, API keys, private transcripts, local deployment state, or user data.
 
 Some implementation files are intentionally pragmatic because the site evolved through detailed visual design iterations into production-ready responsive pages. The repository is best read as a product-design portfolio implementation rather than a general-purpose component library.

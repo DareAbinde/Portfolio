@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from "react";
-import pianoPhoto from "../../assets/final-portfolio/about/piano.png";
-import workshopPhoto from "../../assets/final-portfolio/about/workshop.png";
-import designProjectPhoto from "../../assets/final-portfolio/about/design-project.png";
+import pianoPhoto from "../../assets/final-portfolio/about/piano.webp";
+import workshopPhoto from "../../assets/final-portfolio/about/workshop.webp";
+import designProjectPhoto from "../../assets/final-portfolio/about/design-project.webp";
 import resetIcon from "../../assets/final-portfolio/ui/reset.svg";
 
 type MediaKey = "piano" | "workshop" | "design-project";

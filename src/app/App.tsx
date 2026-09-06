@@ -3,57 +3,60 @@ import { flushSync } from "react-dom";
 import gsap from "gsap";
 import Hls from "hls.js";
 import { DareLlm } from "./components/DareLlm";
-import homePortrait from "../assets/final-portfolio/home/portrait.png";
-import galleryIcaTop from "../assets/final-portfolio/home/gallery-ica-top.png";
-import gallerySafemapTop from "../assets/final-portfolio/home/gallery-safemap-top.png";
-import cmThumbnail from "../assets/final-portfolio/home/cm-thumbnail.png";
-import chThumbnail from "../assets/final-portfolio/home/ch-thumbnail.png";
-import chMacFigmaSource from "../assets/final-portfolio/home/ch-mac-figma-source.png";
-import galleryIcaBottomLeft from "../assets/final-portfolio/home/gallery-ica-bottom-left.png";
-import galleryIcaBottomRight from "../assets/final-portfolio/home/gallery-ica-bottom-right.png";
-import gallerySafemapBottom from "../assets/final-portfolio/home/gallery-safemap-bottom.png";
-import europe from "../assets/final-portfolio/ui/europe.png";
+import homePortrait from "../assets/final-portfolio/home/portrait.webp";
+import galleryIcaTop from "../assets/final-portfolio/home/gallery-ica-top.webp";
+import gallerySafemapTop from "../assets/final-portfolio/home/gallery-safemap-top.webp";
+import cmThumbnail from "../assets/final-portfolio/home/cm-thumbnail.webp";
+import chThumbnail from "../assets/final-portfolio/home/ch-thumbnail.webp";
+import chMacFigmaSource from "../assets/final-portfolio/home/ch-mac-figma-source.webp";
+import galleryIcaBottomLeft from "../assets/final-portfolio/home/gallery-ica-bottom-left.webp";
+import galleryIcaBottomRight from "../assets/final-portfolio/home/gallery-ica-bottom-right.webp";
+import gallerySafemapBottom from "../assets/final-portfolio/home/gallery-safemap-bottom.webp";
+import europe from "../assets/final-portfolio/ui/europe.webp";
 import arrowUpRight from "../assets/final-portfolio/ui/arrow-up-right.svg";
 import arrowUpRightWhite from "../assets/final-portfolio/ui/arrow-up-right-white.svg";
 import cameraIcon from "../assets/final-portfolio/ui/camera-icon.svg";
-import contactPortrait from "../assets/final-portfolio/ui/contact-portrait.png";
+import contactPortrait from "../assets/final-portfolio/ui/contact-portrait.webp";
 import globe from "../assets/final-portfolio/ui/globe.svg";
 import locationPinWhite from "../assets/final-portfolio/ui/location-pin-white.svg";
-import aboutPiano from "../assets/final-portfolio/about/piano.png";
-import aboutWife from "../assets/final-portfolio/about/wife.png";
-import aboutDesignProject from "../assets/final-portfolio/about/design-project.png";
-import aboutWorkshop from "../assets/final-portfolio/about/workshop.png";
-import icaHeroBg from "../assets/final-portfolio/cases/ica-hero-bg.png";
-import icaHeroScreen from "../assets/final-portfolio/cases/ica-hero-screen.png";
-import icaMockupBg from "../assets/final-portfolio/cases/ica-mockup-bg.png";
-import icaMockupScreen1 from "../assets/final-portfolio/cases/ica-mockup-screen-1.png";
-import icaMockupScreen2 from "../assets/final-portfolio/cases/ica-mockup-screen-2.png";
-import icaApp1 from "../assets/final-portfolio/cases/ica-app-1.png";
-import icaApp2 from "../assets/final-portfolio/cases/ica-app-2.png";
-import calmotionHero from "../assets/final-portfolio/cases/calmotion-hero.png";
-import calmotionCarBg from "../assets/final-portfolio/cases/calmotion-car-bg.png";
-import calmotionPhone1 from "../assets/final-portfolio/cases/calmotion-phone-1.png";
-import calmotionPhone2 from "../assets/final-portfolio/cases/calmotion-phone-2.png";
-import calmotionPhone3 from "../assets/final-portfolio/cases/calmotion-phone-3.png";
-import calmotionPhone4 from "../assets/final-portfolio/cases/calmotion-phone-4.png";
-import calmotionPhone5 from "../assets/final-portfolio/cases/calmotion-phone-5.png";
-import safemapHeroBg from "../assets/final-portfolio/cases/safemap-hero-bg.png";
-import safemapHeroScreen from "../assets/final-portfolio/cases/safemap-hero-screen.png";
-import safemapLaptop from "../assets/final-portfolio/cases/safemap-laptop.png";
-import safemapPhone from "../assets/final-portfolio/cases/safemap-phone.png";
+import aboutPiano from "../assets/final-portfolio/about/piano.webp";
+import aboutWife from "../assets/final-portfolio/about/wife.webp";
+import aboutDesignProject from "../assets/final-portfolio/about/design-project.webp";
+import aboutWorkshop from "../assets/final-portfolio/about/workshop.webp";
+import icaHeroBg from "../assets/final-portfolio/cases/ica-hero-bg.webp";
+import icaHeroScreen from "../assets/final-portfolio/cases/ica-hero-screen.webp";
+import icaMockupBg from "../assets/final-portfolio/cases/ica-mockup-bg.webp";
+import icaMockupScreen1 from "../assets/final-portfolio/cases/ica-mockup-screen-1.webp";
+import icaMockupScreen2 from "../assets/final-portfolio/cases/ica-mockup-screen-2.webp";
+import icaApp1 from "../assets/final-portfolio/cases/ica-app-1.webp";
+import icaApp2 from "../assets/final-portfolio/cases/ica-app-2.webp";
+import calmotionHero from "../assets/final-portfolio/cases/calmotion-hero.webp";
+import calmotionCarBg from "../assets/final-portfolio/cases/calmotion-car-bg.webp";
+import calmotionPhone1 from "../assets/final-portfolio/cases/calmotion-phone-1.webp";
+import calmotionPhone2 from "../assets/final-portfolio/cases/calmotion-phone-2.webp";
+import calmotionPhone3 from "../assets/final-portfolio/cases/calmotion-phone-3.webp";
+import calmotionPhone4 from "../assets/final-portfolio/cases/calmotion-phone-4.webp";
+import calmotionPhone5 from "../assets/final-portfolio/cases/calmotion-phone-5.webp";
+import safemapHeroBg from "../assets/final-portfolio/cases/safemap-hero-bg.webp";
+import safemapHeroScreen from "../assets/final-portfolio/cases/safemap-hero-screen.webp";
+import safemapLaptop from "../assets/final-portfolio/cases/safemap-laptop.webp";
+import safemapPhone from "../assets/final-portfolio/cases/safemap-phone.webp";
 import safemapMap from "../assets/final-portfolio/cases/safemap-map.png";
-import climateHeroBg from "../assets/final-portfolio/cases/climate-hero-bg.png";
-import climateHeroScreen from "../assets/final-portfolio/cases/climate-hero-screen.png";
-import climateMacBg from "../assets/final-portfolio/cases/climate-mac-bg.png";
-import climateGuide from "../assets/final-portfolio/cases/climate-guide.png";
-import climateEducation from "../assets/final-portfolio/cases/climate-education.png";
-import climateMobileHero from "../assets/final-portfolio/cases/climate-mobile-hero.png";
-import landaHeroBg from "../assets/final-portfolio/cases/landa-hero-bg.png";
-import landaHeroScreen from "../assets/final-portfolio/cases/landa-hero-screen.png";
-import landaMacBg from "../assets/final-portfolio/cases/landa-mac-bg.png";
-import landaMobile1 from "../assets/final-portfolio/cases/landa-mobile-1.png";
-import landaMobile2 from "../assets/final-portfolio/cases/landa-mobile-2.png";
-import landaMobile3 from "../assets/final-portfolio/cases/landa-mobile-3.png";
+import climateHeroBg from "../assets/final-portfolio/cases/climate-hero-bg.webp";
+import climateHeroScreen from "../assets/final-portfolio/cases/climate-hero-screen.webp";
+import climateMacBg from "../assets/final-portfolio/cases/climate-mac-bg.webp";
+import climateGuide from "../assets/final-portfolio/cases/climate-guide.webp";
+import climateEducation from "../assets/final-portfolio/cases/climate-education.webp";
+import climateMobileHero from "../assets/final-portfolio/cases/climate-mobile-hero.webp";
+import landaHeroBg from "../assets/final-portfolio/cases/landa-hero-bg.webp";
+import landaHeroScreen from "../assets/final-portfolio/cases/landa-hero-screen.webp";
+import landaMacBg from "../assets/final-portfolio/cases/landa-mac-bg.webp";
+import landaMobile1 from "../assets/final-portfolio/cases/landa-mobile-1.webp";
+import landaMobile2 from "../assets/final-portfolio/cases/landa-mobile-2.webp";
+import landaMobile3 from "../assets/final-portfolio/cases/landa-mobile-3.webp";
+import appleMailThumbnail from "../assets/final-portfolio/case-pages/apple-mail/apple-mail-thumbnail.webp";
+import appleMailIntroThumbnail from "../assets/final-portfolio/case-pages/apple-mail/intro-thumbnail.webp";
+import appleMailInterventionImage from "../assets/final-portfolio/case-pages/apple-mail/static-intervention.webp";
 
 declare global {
   interface Window {
@@ -62,7 +65,7 @@ declare global {
 }
 import calArrowLeft4x from "../assets/final-portfolio/case-pages/cal-arrow-left-4x.png";
 import calArrowRight4x from "../assets/final-portfolio/case-pages/cal-arrow-right-4x.png";
-import calHeroFigma4x from "../assets/final-portfolio/case-pages/cal-hero-figma-4x.png";
+import calHeroFigma4x from "../assets/final-portfolio/case-pages/cal-hero-figma-4x.webp";
 import calHudFigma4x from "../assets/final-portfolio/case-pages/cal-hud-figma-4x.png";
 import calHudFocusedFigma4x from "../assets/final-portfolio/case-pages/cal-hud-focused-figma-4x.png";
 import calHudDistractedFigma4x from "../assets/final-portfolio/case-pages/cal-hud-distracted-figma-4x.png";
@@ -86,12 +89,12 @@ import calTabletScreen03Figma4x from "../assets/final-portfolio/case-pages/calmo
 import calTabletScreen04Figma4x from "../assets/final-portfolio/case-pages/calmotion-tablet-screens/04-4x.png";
 import calTabletScreen05Figma4x from "../assets/final-portfolio/case-pages/calmotion-tablet-screens/05-4x.png";
 import calTabletScreen06Figma4x from "../assets/final-portfolio/case-pages/calmotion-tablet-screens/06-4x.png";
-import calmotionProcessPersona4x from "../assets/final-portfolio/case-pages/calmotion-process-persona-4x.png";
-import calmotionProcessJourney4x from "../assets/final-portfolio/case-pages/calmotion-process-journey-4x.png";
-import calmotionProcessFlow4x from "../assets/final-portfolio/case-pages/calmotion-process-flow-4x.png";
-import calmotionProcessSketches4x from "../assets/final-portfolio/case-pages/calmotion-process-sketches-4x.png";
-import calmotionProcessHudIa from "../assets/final-portfolio/case-pages/calmotion-process-hud-ia.png";
-import calmotionProcessWoz from "../assets/final-portfolio/case-pages/calmotion-process-woz.png";
+import calmotionProcessPersona4x from "../assets/final-portfolio/case-pages/calmotion-process-persona-4x.webp";
+import calmotionProcessJourney4x from "../assets/final-portfolio/case-pages/calmotion-process-journey-4x.webp";
+import calmotionProcessFlow4x from "../assets/final-portfolio/case-pages/calmotion-process-flow-4x.webp";
+import calmotionProcessSketches4x from "../assets/final-portfolio/case-pages/calmotion-process-sketches-4x.webp";
+import calmotionProcessHudIa from "../assets/final-portfolio/case-pages/calmotion-process-hud-ia.webp";
+import calmotionProcessWoz from "../assets/final-portfolio/case-pages/calmotion-process-woz.webp";
 import calmotionResponsiveScreen01 from "../assets/final-portfolio/case-pages/calmotion-responsive/screens/01-get-started.png";
 import calmotionResponsiveScreen02 from "../assets/final-portfolio/case-pages/calmotion-responsive/screens/02-verification.png";
 import calmotionResponsiveScreen03 from "../assets/final-portfolio/case-pages/calmotion-responsive/screens/03-scan-id.png";
@@ -105,12 +108,12 @@ import calmotionResponsiveScreen10 from "../assets/final-portfolio/case-pages/ca
 import icaDarkArrowLeft4x from "../assets/final-portfolio/case-pages/ica-dark-arrow-left-4x.png";
 import icaDarkArrowRight4x from "../assets/final-portfolio/case-pages/ica-dark-arrow-right-4x.png";
 import icaDarkModeIcon4x from "../assets/final-portfolio/case-pages/ica-dark-mode-icon-4x.png";
-import icaHeroFigma4x from "../assets/final-portfolio/case-pages/ica-hero-figma-4x.png";
+import icaHeroFigma4x from "../assets/final-portfolio/case-pages/ica-hero-figma-4x.webp";
 import icaLightArrowLeft4x from "../assets/final-portfolio/case-pages/ica-light-arrow-left-4x.png";
 import icaLightArrowRight4x from "../assets/final-portfolio/case-pages/ica-light-arrow-right-4x.png";
 import icaLightModeIcon4x from "../assets/final-portfolio/case-pages/ica-light-mode-icon-4x.png";
 import icaLmPrototypeVideo from "../assets/final-portfolio/case-pages/ica-lm-prototype.mp4";
-import icaMockup1Figma4x from "../assets/final-portfolio/case-pages/ica-mockup-1-figma-4x.png";
+import icaMockup1Figma4x from "../assets/final-portfolio/case-pages/ica-mockup-1-figma-4x.webp";
 import icaNextDmLanguage4x from "../assets/final-portfolio/case-pages/ica-next-dm-01-language-4x.png";
 import icaNextDmTransferOwn4x from "../assets/final-portfolio/case-pages/ica-next-dm-02-transfer-own-4x.png";
 import icaNextDmTransferSomeone4x from "../assets/final-portfolio/case-pages/ica-next-dm-03-transfer-someone-4x.png";
@@ -121,14 +124,14 @@ import icaNextLmTransferOwn4x from "../assets/final-portfolio/case-pages/ica-nex
 import icaNextLmTransferSomeone4x from "../assets/final-portfolio/case-pages/ica-next-lm-03-transfer-someone-4x.png";
 import icaNextLmPaymentReview4x from "../assets/final-portfolio/case-pages/ica-next-lm-04-payment-review-4x.png";
 import icaNextLmProfile4x from "../assets/final-portfolio/case-pages/ica-next-lm-05-profile-4x.png";
-import icaPrototypeBg4x from "../assets/final-portfolio/case-pages/ica-prototype-bg-4x.png";
+import icaPrototypeBg4x from "../assets/final-portfolio/case-pages/ica-prototype-bg-4x.webp";
 import icaPrototypePlayIcon4x from "../assets/final-portfolio/case-pages/ica-prototype-play-icon-4x.png";
 import icaDmPrototypeVideo from "../assets/final-portfolio/case-pages/ica-dm-prototype.mp4";
 import icaScreensDarkStrip4x from "../assets/final-portfolio/case-pages/ica-screens-dark-strip-4x.png";
 import icaScreensLightStrip4x from "../assets/final-portfolio/case-pages/ica-screens-light-strip-4x.png";
-import icaProcessResearch4x from "../assets/final-portfolio/case-pages/ica-process-research-4x.png";
-import icaProcessJourney4x from "../assets/final-portfolio/case-pages/ica-process-journey-4x.png";
-import icaProcessWireframes4x from "../assets/final-portfolio/case-pages/ica-process-wireframes-4x.png";
+import icaProcessResearch4x from "../assets/final-portfolio/case-pages/ica-process-research-4x.webp";
+import icaProcessJourney4x from "../assets/final-portfolio/case-pages/ica-process-journey-4x.webp";
+import icaProcessWireframes4x from "../assets/final-portfolio/case-pages/ica-process-wireframes-4x.webp";
 import icaMobileLightL01Figma4x from "../assets/final-portfolio/case-pages/ica-mobile-screens/light-l01-4x.png";
 import icaMobileLightL02Figma4x from "../assets/final-portfolio/case-pages/ica-mobile-screens/light-l02-4x.png";
 import icaMobileLightL03Figma4x from "../assets/final-portfolio/case-pages/ica-mobile-screens/light-l03-4x.png";
@@ -147,24 +150,24 @@ import icaTabletDark03Figma4x from "../assets/final-portfolio/case-pages/ica-tab
 import icaTabletDark04Figma4x from "../assets/final-portfolio/case-pages/ica-tablet-screens/dark/d04-4x.png";
 import icaTabletDark05Figma4x from "../assets/final-portfolio/case-pages/ica-tablet-screens/dark/d05-4x.png";
 import icaTabletDark06Figma4x from "../assets/final-portfolio/case-pages/ica-tablet-screens/dark/d06-4x.png";
-import icaResponsiveSwedishOnly from "../assets/final-portfolio/case-pages/ica-responsive/research/swedish-only.png";
-import icaResponsiveNoLanguage from "../assets/final-portfolio/case-pages/ica-responsive/research/no-language.png";
-import icaResponsiveChat1 from "../assets/final-portfolio/case-pages/ica-responsive/research/chat-1.png";
-import icaResponsiveChat2 from "../assets/final-portfolio/case-pages/ica-responsive/research/chat-2.png";
-import icaResponsiveJourneyTablet from "../assets/final-portfolio/case-pages/ica-responsive/journey-tablet.png";
-import icaResponsiveJourneyMobile from "../assets/final-portfolio/case-pages/ica-responsive/journey-mobile.png";
-import icaResponsiveWireframesTablet from "../assets/final-portfolio/case-pages/ica-responsive/wireframes-tablet.png";
-import icaResponsiveWireframesMobile from "../assets/final-portfolio/case-pages/ica-responsive/wireframes-mobile.png";
+import icaResponsiveSwedishOnly from "../assets/final-portfolio/case-pages/ica-responsive/research/swedish-only.webp";
+import icaResponsiveNoLanguage from "../assets/final-portfolio/case-pages/ica-responsive/research/no-language.webp";
+import icaResponsiveChat1 from "../assets/final-portfolio/case-pages/ica-responsive/research/chat-1.webp";
+import icaResponsiveChat2 from "../assets/final-portfolio/case-pages/ica-responsive/research/chat-2.webp";
+import icaResponsiveJourneyTablet from "../assets/final-portfolio/case-pages/ica-responsive/journey-tablet.webp";
+import icaResponsiveJourneyMobile from "../assets/final-portfolio/case-pages/ica-responsive/journey-mobile.webp";
+import icaResponsiveWireframesTablet from "../assets/final-portfolio/case-pages/ica-responsive/wireframes-tablet.webp";
+import icaResponsiveWireframesMobile from "../assets/final-portfolio/case-pages/ica-responsive/wireframes-mobile.webp";
 import icaResponsiveMenuIcon from "../assets/final-portfolio/case-pages/ica-responsive/ui/menu.svg";
-import icaResponsivePixelate1 from "../assets/final-portfolio/case-pages/ica-responsive/ui/pixelate-1.png";
-import icaResponsivePixelate2 from "../assets/final-portfolio/case-pages/ica-responsive/ui/pixelate-2.png";
+import icaResponsivePixelate1 from "../assets/final-portfolio/case-pages/ica-responsive/ui/pixelate-1.webp";
+import icaResponsivePixelate2 from "../assets/final-portfolio/case-pages/ica-responsive/ui/pixelate-2.webp";
 import icaResponsiveConfidenceTablet from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/confidence-tablet.png";
 import icaResponsiveConfidenceMobile from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/confidence-mobile.png";
-import icaResponsiveWireframe01 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/01.png";
-import icaResponsiveWireframe02 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/02.png";
-import icaResponsiveWireframe03 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/03.png";
-import icaResponsiveWireframe04 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/04.png";
-import icaResponsiveWireframe05 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/05.png";
+import icaResponsiveWireframe01 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/01.webp";
+import icaResponsiveWireframe02 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/02.webp";
+import icaResponsiveWireframe03 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/03.webp";
+import icaResponsiveWireframe04 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/04.webp";
+import icaResponsiveWireframe05 from "../assets/final-portfolio/case-pages/ica-responsive/wireframes/05.webp";
 import icaResponsiveLight01 from "../assets/final-portfolio/case-pages/ica-responsive/light/01-login.png";
 import icaResponsiveLight02 from "../assets/final-portfolio/case-pages/ica-responsive/light/02-home.png";
 import icaResponsiveLight03 from "../assets/final-portfolio/case-pages/ica-responsive/light/03-account.png";
@@ -185,11 +188,11 @@ import icaResponsiveDark07 from "../assets/final-portfolio/case-pages/ica-respon
 import icaResponsiveDark08 from "../assets/final-portfolio/case-pages/ica-responsive/dark/08-transfer-someone.png";
 import icaResponsiveDark09 from "../assets/final-portfolio/case-pages/ica-responsive/dark/09-confirmation.png";
 import icaResponsiveDark10 from "../assets/final-portfolio/case-pages/ica-responsive/dark/10-profile.png";
-import nextCalmotionFigma4x from "../assets/final-portfolio/case-pages/next-calmotion-figma-4x.png";
-import nextSafemapFigma4x from "../assets/final-portfolio/case-pages/next-safemap-figma-4x.png";
-import nextClimateHubFigma4x from "../assets/final-portfolio/case-pages/next-climate-hub-figma-4x.png";
-import safemapHeroFigma4x from "../assets/final-portfolio/case-pages/safemap-hero-figma-4x.png";
-import safemapMockup1Figma4x from "../assets/final-portfolio/case-pages/safemap-mockup-1-figma-4x.png";
+import nextCalmotionFigma4x from "../assets/final-portfolio/case-pages/next-calmotion-figma-4x.webp";
+import nextSafemapFigma4x from "../assets/final-portfolio/case-pages/next-safemap-figma-4x.webp";
+import nextClimateHubFigma4x from "../assets/final-portfolio/case-pages/next-climate-hub-figma-4x.webp";
+import safemapHeroFigma4x from "../assets/final-portfolio/case-pages/safemap-hero-figma-4x.webp";
+import safemapMockup1Figma4x from "../assets/final-portfolio/case-pages/safemap-mockup-1-figma-4x.webp";
 import safemapAppScreensFigma4x from "../assets/final-portfolio/case-pages/safemap-app-screens-figma-4x.png";
 import safemapMobileScreen01Figma4x from "../assets/final-portfolio/case-pages/safemap-mobile-screens/safemap-01-4x.png";
 import safemapMobileScreen02Figma4x from "../assets/final-portfolio/case-pages/safemap-mobile-screens/safemap-02-4x.png";
@@ -200,45 +203,45 @@ import safemapTabletScreen03Figma4x from "../assets/final-portfolio/case-pages/s
 import safemapTabletScreen04Figma4x from "../assets/final-portfolio/case-pages/safemap-tablet-screens/04-4x.png";
 import safemapTabletScreen05Figma4x from "../assets/final-portfolio/case-pages/safemap-tablet-screens/05-4x.png";
 import safemapTabletScreen06Figma4x from "../assets/final-portfolio/case-pages/safemap-tablet-screens/06-4x.png";
-import safemapProcessResearch from "../assets/final-portfolio/case-pages/safemap-process/research-evidence.png";
-import safemapProcessJourney from "../assets/final-portfolio/case-pages/safemap-process/experience-evidence-journey.png";
-import safemapProcessPersona from "../assets/final-portfolio/case-pages/safemap-process/persona.png";
-import safemapProcessBlueprint from "../assets/final-portfolio/case-pages/safemap-process/reporting-advocacy-blueprint.png";
-import safemapProcessWireframes from "../assets/final-portfolio/case-pages/safemap-process/mid-fidelity-wireframes.png";
+import safemapProcessResearch from "../assets/final-portfolio/case-pages/safemap-process/research-evidence.webp";
+import safemapProcessJourney from "../assets/final-portfolio/case-pages/safemap-process/experience-evidence-journey.webp";
+import safemapProcessPersona from "../assets/final-portfolio/case-pages/safemap-process/persona.webp";
+import safemapProcessBlueprint from "../assets/final-portfolio/case-pages/safemap-process/reporting-advocacy-blueprint.webp";
+import safemapProcessWireframes from "../assets/final-portfolio/case-pages/safemap-process/mid-fidelity-wireframes.webp";
 import safemapPrototypeVideo from "../assets/final-portfolio/case-pages/safemap-process/prototype.mov";
-import safemapResponsiveWireframe01 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/01-home.png";
-import safemapResponsiveWireframe02 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/02-harassment-details.png";
-import safemapResponsiveWireframe03 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/03-location.png";
-import safemapResponsiveWireframe04 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/04-report-status.png";
-import safemapResponsiveWireframe05 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/05-impact-map.png";
+import safemapResponsiveWireframe01 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/01-home.webp";
+import safemapResponsiveWireframe02 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/02-harassment-details.webp";
+import safemapResponsiveWireframe03 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/03-location.webp";
+import safemapResponsiveWireframe04 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/04-report-status.webp";
+import safemapResponsiveWireframe05 from "../assets/final-portfolio/case-pages/safemap-responsive/wireframes/05-impact-map.webp";
 import safemapResponsiveScreen01 from "../assets/final-portfolio/case-pages/safemap-responsive/screens/01-home.png";
 import safemapResponsiveScreen02 from "../assets/final-portfolio/case-pages/safemap-responsive/screens/02-incident-type.png";
 import safemapResponsiveScreen03 from "../assets/final-portfolio/case-pages/safemap-responsive/screens/03-locate-incident.png";
 import safemapResponsiveScreen04 from "../assets/final-portfolio/case-pages/safemap-responsive/screens/04-report-status.png";
 import safemapResponsiveScreen05 from "../assets/final-portfolio/case-pages/safemap-responsive/screens/05-impact-map.png";
-import climateHeroFigma4x from "../assets/final-portfolio/case-pages/climate-hero-figma-4x.png";
-import climatePrototype1Figma4x from "../assets/final-portfolio/case-pages/climate-prototype-1-figma-4x.png";
-import climateProcessIdeation from "../assets/final-portfolio/case-pages/climate-hub-process/ideation-sessions.png";
-import climateProcessPersonas from "../assets/final-portfolio/case-pages/climate-hub-process/personas.png";
-import climateProcessMoscow from "../assets/final-portfolio/case-pages/climate-hub-process/moscow.png";
-import climateProcessSitemap from "../assets/final-portfolio/case-pages/climate-hub-process/sitemap.png";
-import climateProcessWireframes from "../assets/final-portfolio/case-pages/climate-hub-process/wireframes-display.png";
-import climateProcessTesting from "../assets/final-portfolio/case-pages/climate-hub-process/usability-testing.png";
-import climateProcessBlueprint from "../assets/final-portfolio/case-pages/climate-hub-process/service-blueprint.png";
+import climateHeroFigma4x from "../assets/final-portfolio/case-pages/climate-hero-figma-4x.webp";
+import climatePrototype1Figma4x from "../assets/final-portfolio/case-pages/climate-prototype-1-figma-4x.webp";
+import climateProcessIdeation from "../assets/final-portfolio/case-pages/climate-hub-process/ideation-sessions.webp";
+import climateProcessPersonas from "../assets/final-portfolio/case-pages/climate-hub-process/personas.webp";
+import climateProcessMoscow from "../assets/final-portfolio/case-pages/climate-hub-process/moscow.webp";
+import climateProcessSitemap from "../assets/final-portfolio/case-pages/climate-hub-process/sitemap.webp";
+import climateProcessWireframes from "../assets/final-portfolio/case-pages/climate-hub-process/wireframes-display.webp";
+import climateProcessTesting from "../assets/final-portfolio/case-pages/climate-hub-process/usability-testing.webp";
+import climateProcessBlueprint from "../assets/final-portfolio/case-pages/climate-hub-process/service-blueprint.webp";
 import climateNewMobileLeft from "../assets/final-portfolio/case-pages/climate-new-mobile-left.png";
 import climateNewMobileMiddleVideo from "../assets/final-portfolio/case-pages/climate-new-mobile-middle.mp4";
 import climateNewMobileRight from "../assets/final-portfolio/case-pages/climate-new-mobile-right.png";
-import nextLandaFigma4x from "../assets/final-portfolio/case-pages/next-landa-figma-4x.png";
-import landaPrototype1Figma4x from "../assets/final-portfolio/case-pages/landa-prototype-1-figma-4x.png";
-import landaNewTopIntroMockup from "../assets/final-portfolio/case-pages/landa-new-top-intro-mockup.png";
-import nextLandaRedesignFramed from "../assets/final-portfolio/case-pages/next-landa-redesign-framed.png";
-import landaNewHeroWireframe from "../assets/final-portfolio/case-pages/landa-new-hero-wireframe.png";
+import nextLandaFigma4x from "../assets/final-portfolio/case-pages/next-landa-figma-4x.webp";
+import landaPrototype1Figma4x from "../assets/final-portfolio/case-pages/landa-prototype-1-figma-4x.webp";
+import landaNewTopIntroMockup from "../assets/final-portfolio/case-pages/landa-new-top-intro-mockup.webp";
+import nextLandaRedesignFramed from "../assets/final-portfolio/case-pages/next-landa-redesign-framed.webp";
+import landaNewHeroWireframe from "../assets/final-portfolio/case-pages/landa-new-hero-wireframe.webp";
 import landaNewMobileLeft from "../assets/final-portfolio/case-pages/landa-new-mobile-left.png";
 import landaNewMobileRight from "../assets/final-portfolio/case-pages/landa-new-mobile-right.png";
-import landaProcessPersona4x from "../assets/final-portfolio/case-pages/landa-process-persona-4x.png";
-import landaProcessReadinessModel4x from "../assets/final-portfolio/case-pages/landa-process-readiness-model-4x.png";
-import landaProcessSitemap4x from "../assets/final-portfolio/case-pages/landa-process-sitemap-4x.png";
-import nextIcaFigma4x from "../assets/final-portfolio/case-pages/next-ica-figma-4x.png";
+import landaProcessPersona4x from "../assets/final-portfolio/case-pages/landa-process-persona-4x.webp";
+import landaProcessReadinessModel4x from "../assets/final-portfolio/case-pages/landa-process-readiness-model-4x.webp";
+import landaProcessSitemap4x from "../assets/final-portfolio/case-pages/landa-process-sitemap-4x.webp";
+import nextIcaFigma4x from "../assets/final-portfolio/case-pages/next-ica-figma-4x.webp";
 import { portfolioScrollTo, usePortfolioInteractions } from "./interactions";
 
 type Project = {
@@ -363,7 +366,7 @@ const projects: Project[] = [
     slug: "landa",
     title: "Landa",
     year: "2026",
-    category: "Intelligence",
+    category: "Intelligence / AI",
     accent: "#031066",
     role: "Product Designer & Developer",
     context: "Self Developed Tool",
@@ -386,6 +389,27 @@ const projects: Project[] = [
   },
 ];
 
+
+type RapidPrototype = {
+  slug: string;
+  title: string;
+  year: string;
+  category: string;
+  intro: string;
+  thumbnail: string;
+};
+
+const rapidPrototypes: RapidPrototype[] = [
+  {
+    slug: "apple-mail",
+    title: "Apple Mail",
+    year: "2026",
+    category: "Interaction Concept",
+    intro: "A rapid prototype exploring how Mail could recognise repeated signature removals and surface a contextual preference choice.",
+    thumbnail: appleMailThumbnail,
+  },
+];
+
 const projectBySlug = new Map(projects.map((project) => [project.slug, project]));
 const resumePageHref = "/resume";
 const resumePdfHref = "/dare-abinde-resume.pdf";
@@ -396,6 +420,7 @@ const landaPrototype2PlaybackId = "yYHz02gzesk1Slqq01OZDGBgZa02Ecs02EqsnC6XO7JWu
 const landaMobilePlaybackId = "ydFQRH01inTdmL9IjY8TMhf7OzfccIpXGFUxzgWOm2P00";
 const calmotionPromoPlaybackId = "xoVP01CGibJQjhHIQZuZ4pfDwoBh3a5INn8YXARpxHNI";
 const climatePromoPlaybackId = "gGi3Z1BRLEFc4LA85F6PSq4Koz94vEmVpuuNpetdZg00";
+const appleMailPrototypePlaybackId = "nmHHw2lyEajqprvvHisGdCaVm7ZrFwEt3JoI4s1j7S4";
 const projectPreviewBySlug: Record<string, { image: string; frame: string }> = {
   "ica-banken": { image: nextIcaFigma4x, frame: "#3b3335" },
   calmotion: { image: nextCalmotionFigma4x, frame: "#d6d4ce" },
@@ -482,6 +507,31 @@ function MuxLoopVideo({ playbackId, label, dataSwipeIndex }: { playbackId: strin
   }, [isVisible, shouldLoad]);
 
   return <video ref={videoRef} data-swipe-index={dataSwipeIndex} aria-label={label} muted loop playsInline preload="none" />;
+}
+
+function usePreloadImages(images: string[], mediaQuery?: string, delayMs = 0) {
+  const imageKey = images.join("|");
+
+  useEffect(() => {
+    if (mediaQuery && !window.matchMedia(mediaQuery).matches) return;
+    let preloads: HTMLImageElement[] = [];
+
+    const timer = window.setTimeout(() => {
+      preloads = images.map((src) => {
+        const image = new Image();
+        image.decoding = "async";
+        image.src = src;
+        return image;
+      });
+    }, delayMs);
+
+    return () => {
+      window.clearTimeout(timer);
+      preloads.forEach((image) => {
+        image.src = "";
+      });
+    };
+  }, [imageKey, mediaQuery, delayMs]);
 }
 
 function currentPath() {
@@ -864,7 +914,7 @@ function Footer({ top }: { top: number }) {
         <strong>Work</strong><a href="/case/ica-banken">ICA Banken</a><a href="/case/calmotion">Calmotion</a><a href="/case/safemap">SafeMap</a><a href="/work">...All</a>
       </div>
       <div className="fp-footer__links fp-footer__connect">
-        <strong>Connect</strong><a href="https://www.linkedin.com/in/dareabinde/" target="_blank" rel="noreferrer">LinkedIn</a><a href="mailto:dareabinde04@gmail.com" target="_blank" rel="noreferrer">Email</a><a href="https://x.com/dareabinde" target="_blank" rel="noreferrer">Twitter</a><a href="https://www.behance.net" target="_blank" rel="noreferrer">Behance</a>
+        <strong>Connect</strong><a href="https://github.com/DareAbinde" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/dareabinde/" target="_blank" rel="noreferrer">LinkedIn</a><a href="mailto:dareabinde04@gmail.com" target="_blank" rel="noreferrer">Email</a><a href="https://www.instagram.com/dare_abinde" target="_blank" rel="noreferrer">Instagram</a>
       </div>
       <div className="fp-footer__bottom-line" />
       <small>© Dare Abinde. All rights reserved.</small>
@@ -872,10 +922,11 @@ function Footer({ top }: { top: number }) {
   );
 }
 
-function ProjectRows({ top, includeLanda = false, button = "More Work", items, className }: { top: number; includeLanda?: boolean; button?: "More Work" | "Get in Touch"; items?: Project[]; className?: string }) {
-  const rows = items ?? (includeLanda ? projects : projects.slice(0, 4));
-  const actionTop = button === "Get in Touch" ? 170.58 + rows.length * 179 : 895.58;
-  const sectionHeight = actionTop + 56.419;
+function ProjectRows({ top, includeLanda = false, button = "More Work", items, className, showRapidPrototypeCta = false }: { top: number; includeLanda?: boolean; button?: "More Work" | "Get in Touch"; items?: Project[]; className?: string; showRapidPrototypeCta?: boolean }) {
+  const rows = items ?? (includeLanda ? projects : projects.slice(0, 3));
+  const baseActionTop = 170.58 + rows.length * 179 + (button === "More Work" ? 9 : 0);
+  const contactActionTop = baseActionTop;
+  const sectionHeight = contactActionTop + 56.419;
 
   return (
     <section className={`fp-work-list${className ? ` ${className}` : ""}`} style={{ top, height: sectionHeight }}>
@@ -898,9 +949,16 @@ function ProjectRows({ top, includeLanda = false, button = "More Work", items, c
           </a>
         );
       })}
-      <a className={`fp-action-pill ${button === "Get in Touch" ? "fp-action-pill--dark" : ""}`} style={{ top: actionTop }} href={button === "More Work" ? "/work" : "#contact"} onClick={button === "Get in Touch" ? scrollToContact : undefined}>
-        {button} <small>{button === "More Work" ? "05" : "↓"}</small>
-      </a>
+      <div className={showRapidPrototypeCta ? "fp-work-action-group" : undefined} style={showRapidPrototypeCta ? { top: contactActionTop } : undefined}>
+        {showRapidPrototypeCta && (
+          <a className="fp-action-pill fp-action-pill--rapid-link" href="/rapid-prototypes">
+            View Rapid Prototypes
+          </a>
+        )}
+        <a className={`fp-action-pill ${button === "Get in Touch" ? "fp-action-pill--dark" : ""}`} style={showRapidPrototypeCta ? undefined : { top: contactActionTop }} href={button === "More Work" ? "/work" : "#contact"} onClick={button === "Get in Touch" ? scrollToContact : undefined}>
+          {button} <small>{button === "More Work" ? "05" : "↓"}</small>
+        </a>
+      </div>
     </section>
   );
 }
@@ -928,7 +986,9 @@ const homeExpertise = [
   },
 ];
 
-const homeExpertiseTop = 3643;
+const homeRapidTop = 2565;
+const homeGalleryTop = 3101;
+const homeExpertiseTop = 3984;
 const homeExpertiseHeaderHeight = 80;
 const homeExpertiseRowHeight = 128;
 const homeExpertiseFooterGap = 120;
@@ -1054,7 +1114,7 @@ function HomePage() {
             <img src={arrowUpRight} alt="" />
             <p><span>Product Designer</span><span>UX Researcher</span></p>
           </div>
-          <div className="fp-home-portrait"><img src={homePortrait} alt="Dare Abinde portrait" /></div>
+          <div className="fp-home-portrait"><img src={homePortrait} alt="Dare Abinde portrait" loading="eager" decoding="async" fetchPriority="high" /></div>
         </section>
         <Nav top={51} />
         <section className="fp-home-intro">
@@ -1072,7 +1132,8 @@ function HomePage() {
           </a>
         </section>
         <ProjectRows top={1694} className="fp-home-selected-list" />
-        <section className="fp-gallery">
+        <RapidRows top={homeRapidTop} className="fp-home-rapid-list" button="More Prototypes" />
+        <section className="fp-gallery" style={{ top: homeGalleryTop }}>
           <div className="fp-gallery__row fp-gallery__row--top">
             <figure><img src={galleryIcaTop} alt="ICA Banken" /></figure>
             <figure><img src={gallerySafemapTop} alt="SafeMap" /></figure>
@@ -1183,10 +1244,124 @@ function WorkPage() {
         </div>
       </section>
       {view === "list" ? (
-        <ProjectRows top={707} items={visibleProjects} button="Get in Touch" />
+        <ProjectRows top={707} items={visibleProjects} button="Get in Touch" showRapidPrototypeCta />
       ) : (
         <section className="fp-work-grid-shell" style={{ top: 707, height: gridSectionHeight }}>
           <WorkGrid top={0} items={visibleProjects} />
+          <div className="fp-work-action-group fp-work-grid__action" style={{ top: gridButtonTop - 707 }}>
+            <a className="fp-action-pill fp-action-pill--rapid-link" href="/rapid-prototypes">
+              View Rapid Prototypes
+            </a>
+            <a className="fp-action-pill fp-action-pill--dark" href="#contact" onClick={scrollToContact}>
+              Get in Touch <small>↓</small>
+            </a>
+          </div>
+        </section>
+      )}
+      <Footer top={footerTop} />
+    </FigmaFrame>
+  );
+}
+
+function RapidRows({ top, className, button = "More Prototypes" }: { top: number; className?: string; button?: "More Prototypes" | "Get in Touch" }) {
+  const rows = rapidPrototypes;
+  const actionTop = 170.58 + rows.length * 179;
+  const sectionHeight = actionTop + 56.419;
+
+  return (
+    <section className={`fp-work-list fp-rapid-list${className ? ` ${className}` : ""}`} style={{ top, height: sectionHeight }}>
+      <p className="fp-kicker">RAPID PROTOTYPES</p>
+      <div className="fp-row-line" style={{ top: 90 }} />
+      {rows.map((study, index) => {
+        const titleY = 159.5 + index * 179;
+        const categoryY = 166.5 + index * 179;
+        return (
+          <a className="fp-project-row" href={`/case/${study.slug}`} data-work-preview={study.thumbnail} data-work-preview-frame="transparent" data-work-preview-slug={study.slug} key={study.slug}>
+            <span className="fp-project-row__hit" style={{ top: 90 + index * 179 }} />
+            <span className="fp-project-row__title" style={{ top: titleY }}>
+              {study.title.toUpperCase()} <small>({study.year})</small>
+            </span>
+            <span className="fp-project-row__category" style={{ top: categoryY }}>
+              {study.category}
+            </span>
+            <span className="fp-row-line" style={{ top: 269 + index * 179 }} />
+          </a>
+        );
+      })}
+      <a className={`fp-action-pill ${button === "Get in Touch" ? "fp-action-pill--dark" : ""}`} style={{ top: actionTop }} href={button === "More Prototypes" ? "/rapid-prototypes" : "#contact"} onClick={button === "Get in Touch" ? scrollToContact : undefined}>
+        {button} <small>{button === "More Prototypes" ? "01" : "↓"}</small>
+      </a>
+    </section>
+  );
+}
+
+function RapidGrid({ top }: { top: number }) {
+  return (
+    <section className="fp-work-grid fp-rapid-grid" style={{ top }}>
+      {rapidPrototypes.map((study) => (
+        <a className="fp-work-grid__card" href={`/case/${study.slug}`} key={study.slug}>
+          <figure data-preview-slug={study.slug} style={{ "--preview-frame-bg": "transparent" } as CSSProperties}>
+            <img src={study.thumbnail} alt="" />
+            <span className="fp-work-grid__view">View</span>
+          </figure>
+          <h2>{study.title}</h2>
+          <div className="fp-work-grid__line" />
+          <p>{study.category}</p>
+          <small>{study.year}</small>
+        </a>
+      ))}
+    </section>
+  );
+}
+
+function RapidPrototypesPage() {
+  const [view, setView] = useState<"list" | "grid">(() => defaultWorkView());
+  const [hasChosenView, setHasChosenView] = useState(false);
+  const headlineRevealRef = useDownwardHeadlineReveal();
+  const footerButtonGap = 327.42;
+  const footerFrameGap = 1100;
+  const listButtonTop = 707 + 170.58 + rapidPrototypes.length * 179;
+  const gridButtonTop = 707 + 574 + 120;
+  const workButtonTop = view === "grid" ? gridButtonTop : listButtonTop;
+  const footerTop = workButtonTop + footerButtonGap;
+  const gridSectionHeight = gridButtonTop - 707 + 56.419;
+
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent("portfolio:refresh-interactions"));
+  }, [view]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const query = window.matchMedia("(max-width: 1024px)");
+    const syncDefaultView = () => {
+      if (!hasChosenView) setView(query.matches ? "grid" : "list");
+    };
+    syncDefaultView();
+    query.addEventListener("change", syncDefaultView);
+    return () => query.removeEventListener("change", syncDefaultView);
+  }, [hasChosenView]);
+
+  function chooseView(nextView: "list" | "grid") {
+    setHasChosenView(true);
+    setView(nextView);
+  }
+
+  return (
+    <FigmaFrame height={footerTop + footerFrameGap}>
+      <Nav />
+      <IcaResponsiveNav className="figma-top-level-responsive-nav" />
+      <section className="fp-work-intro">
+        <h1 className="fp-top-level-headline-mask"><span className="fp-top-level-headline-reveal" ref={headlineRevealRef}>Rethinking small<span className="fp-desktop-break"><br /></span> interaction<span className="fp-mobile-break"><br /></span> costs</span></h1>
+        <div className="fp-filter fp-filter--view">
+          <button type="button" aria-label="List view" aria-pressed={view === "list"} onClick={() => chooseView("list")}><span /></button>
+          <button type="button" aria-label="Grid view" aria-pressed={view === "grid"} onClick={() => chooseView("grid")}><span /></button>
+        </div>
+      </section>
+      {view === "list" ? (
+        <RapidRows top={707} button="Get in Touch" />
+      ) : (
+        <section className="fp-work-grid-shell" style={{ top: 707, height: gridSectionHeight }}>
+          <RapidGrid top={0} />
           <a className="fp-action-pill fp-action-pill--dark fp-work-grid__action" style={{ top: gridButtonTop - 707 }} href="#contact" onClick={scrollToContact}>
             Get in Touch <small>↓</small>
           </a>
@@ -1196,6 +1371,7 @@ function WorkPage() {
     </FigmaFrame>
   );
 }
+
 
 function WorkGrid({ top, items }: { top: number; items: Project[] }) {
   function updateViewPosition(event: MouseEvent<HTMLElement>) {
@@ -1358,16 +1534,17 @@ function ContactPage() {
     setSubmitState("sending");
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const body = new URLSearchParams();
-    formData.forEach((value, key) => {
-      body.append(key, String(value));
-    });
 
     try {
-      const response = await fetch("/", {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: body.toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          botField: String(formData.get("bot-field") || ""),
+        }),
       });
       if (!response.ok) throw new Error("Form submission failed");
       setSubmitState("sent");
@@ -1393,12 +1570,9 @@ function ContactPage() {
         className="fp-contact-form"
         name="contact"
         method="POST"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
         noValidate
         onSubmit={submitContactForm}
       >
-        <input type="hidden" name="form-name" value="contact" />
         <p className="fp-contact-form__hidden">
           <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
         </p>
@@ -1437,8 +1611,8 @@ function ContactPage() {
         <section>
           <h2>Socials</h2>
           <a href="https://www.linkedin.com/in/dareabinde/" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href="https://x.com/dareabinde" target="_blank" rel="noreferrer">Twitter</a>
-          <a href="https://www.behance.net" target="_blank" rel="noreferrer">Behance</a>
+          <a href="https://github.com/DareAbinde" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://www.instagram.com/dare_abinde" target="_blank" rel="noreferrer">Instagram</a>
         </section>
       </aside>
       <div className="fp-contact-bottom-line" />
@@ -1498,7 +1672,7 @@ type FigmaExportImage = {
   left: number;
   top: number;
   width: number;
-  height: number;
+  height?: number;
   className?: string;
 };
 
@@ -1684,8 +1858,9 @@ function IcaResponsiveCopyBlock({ title, children, className = "" }: { title?: s
 }
 
 function IcaResponsivePhase({ phase, title, children, className = "" }: { phase: string; title: string; children: ReactNode; className?: string }) {
+  const phaseClass = phase.toLowerCase().replace(/\s+/g, "-");
   return (
-    <section className={`figma-ica-responsive-phase figma-ica-responsive-phase--${phase.toLowerCase()} ${className}`.trim()}>
+    <section className={`figma-ica-responsive-phase figma-ica-responsive-phase--${phaseClass} ${className}`.trim()}>
       <p className="figma-ica-responsive-kicker">{phase}</p>
       <h2>{title}</h2>
       <div className="figma-ica-responsive-phase__body">{children}</div>
@@ -1923,7 +2098,7 @@ function IcaResponsiveFooter({
       <div className="figma-ica-responsive-footer__links">
         <div><strong>Pages</strong><a href="/">Home</a><a href="/work">Work</a><a href="/about">About</a><a href={resumePageHref} target="_blank" rel="noreferrer">Resume</a></div>
         <div><strong>Work</strong><a href="/case/ica-banken">ICA Banken</a><a href="/case/calmotion">Calmotion</a><a href="/case/safemap">SafeMap</a><a href="/work">...All</a></div>
-        <div><strong>Connect</strong><a href="https://www.linkedin.com/in/dareabinde/" target="_blank" rel="noreferrer">LinkedIn</a><a href="mailto:dareabinde04@gmail.com" target="_blank" rel="noreferrer">Email</a><a href="https://x.com/dareabinde" target="_blank" rel="noreferrer">Twitter</a><a href="https://www.behance.net" target="_blank" rel="noreferrer">Behance</a></div>
+        <div><strong>Connect</strong><a href="https://github.com/DareAbinde" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/dareabinde/" target="_blank" rel="noreferrer">LinkedIn</a><a href="mailto:dareabinde04@gmail.com" target="_blank" rel="noreferrer">Email</a><a href="https://www.instagram.com/dare_abinde" target="_blank" rel="noreferrer">Instagram</a></div>
       </div>
       <small>© Dare Abinde. All rights reserved.</small>
     </footer>
@@ -2874,7 +3049,7 @@ function CaseNextFooter({
         <strong>Work</strong><a href="/case/ica-banken">ICA Banken</a><a href="/case/calmotion">Calmotion</a><a href="/case/safemap">SafeMap</a><a href="/work">...All</a>
       </div>
       <div className="figma-case-footer__links figma-case-footer__connect">
-        <strong>Connect</strong><a href="https://www.linkedin.com/in/dareabinde/" target="_blank" rel="noreferrer">LinkedIn</a><a href="mailto:dareabinde04@gmail.com" target="_blank" rel="noreferrer">Email</a><a href="https://x.com/dareabinde" target="_blank" rel="noreferrer">Twitter</a><a href="https://www.behance.net" target="_blank" rel="noreferrer">Behance</a>
+        <strong>Connect</strong><a href="https://github.com/DareAbinde" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/dareabinde/" target="_blank" rel="noreferrer">LinkedIn</a><a href="mailto:dareabinde04@gmail.com" target="_blank" rel="noreferrer">Email</a><a href="https://www.instagram.com/dare_abinde" target="_blank" rel="noreferrer">Instagram</a>
       </div>
       <div className="figma-case-footer__bottom-line" />
       <small>© Dare Abinde. All rights reserved.</small>
@@ -3081,6 +3256,10 @@ function IcaCasePage() {
   const tabletLightScreensB = [icaTabletLight04Figma4x, icaTabletLight05Figma4x, icaTabletLight06Figma4x];
   const tabletDarkScreensA = [icaTabletDark01Figma4x, icaTabletDark02Figma4x, icaTabletDark03Figma4x];
   const tabletDarkScreensB = [icaTabletDark04Figma4x, icaTabletDark05Figma4x, icaTabletDark06Figma4x];
+  usePreloadImages([icaScreensLightStrip4x, icaScreensDarkStrip4x, ...lightNextScreens, ...darkNextScreens], "(min-width: 1025px)", 800);
+  usePreloadImages([...tabletLightScreensA, ...tabletLightScreensB, ...tabletDarkScreensA, ...tabletDarkScreensB], "(max-width: 1024px)", 800);
+  usePreloadImages([...icaResponsiveLightScreens, ...icaResponsiveDarkScreens], "(max-width: 1024px)", 1200);
+
   return (
     <FigmaFrame height={12243} className="figma-ica-case">
       <Nav />
@@ -3181,6 +3360,9 @@ function CalmotionCasePage() {
   ];
   const tabletCalmotionScreensA = [calTabletScreen01Figma4x, calTabletScreen02Figma4x, calTabletScreen03Figma4x];
   const tabletCalmotionScreensB = [calTabletScreen04Figma4x, calTabletScreen05Figma4x, calTabletScreen06Figma4x];
+  usePreloadImages([calHudBg, calPrototypeFigma4x, calScreensStrip4x, ...calmotionHudStates.map((state) => state.src), ...calmotionNextScreens], "(min-width: 1025px)", 800);
+  usePreloadImages([...tabletCalmotionScreensA, ...tabletCalmotionScreensB], "(max-width: 1024px)", 800);
+  usePreloadImages(calmotionResponsiveScreens, "(max-width: 1024px)", 1200);
 
   return (
     <FigmaFrame height={14351.125} className="figma-calmotion-case">
@@ -3263,6 +3445,9 @@ function SafeMapCasePage() {
   const [safemapScreensPage, setSafemapScreensPage] = useState<"current" | "next">("current");
   const tabletSafemapScreensA = [safemapTabletScreen01Figma4x, safemapTabletScreen02Figma4x, safemapTabletScreen03Figma4x];
   const tabletSafemapScreensB = [safemapTabletScreen04Figma4x, safemapTabletScreen05Figma4x, safemapTabletScreen06Figma4x];
+  usePreloadImages([safemapAppScreensFigma4x], "(min-width: 1025px)", 800);
+  usePreloadImages([...tabletSafemapScreensA, ...tabletSafemapScreensB], "(max-width: 1024px)", 800);
+  usePreloadImages(safemapResponsiveScreens, "(max-width: 1024px)", 1200);
 
   return (
     <FigmaFrame height={12200.875} className="figma-safemap-case">
@@ -3325,6 +3510,9 @@ function SafeMapCasePage() {
 }
 
 function ClimateHubCasePage() {
+  usePreloadImages([climatePrototype1Figma4x, climateNewMobileLeft, climateNewMobileRight], "(min-width: 1025px)", 800);
+  usePreloadImages([climateNewMobileLeft, climateNewMobileRight], "(max-width: 1024px)", 1200);
+
   return (
     <FigmaFrame height={16105.274} className="figma-climate-case">
       <Nav />
@@ -3572,6 +3760,9 @@ function LandaDesktopNarrative() {
 }
 
 function LandaCasePage() {
+  usePreloadImages([landaPrototype1Figma4x, landaNewMobileLeft, landaNewMobileRight], "(min-width: 1025px)", 800);
+  usePreloadImages([landaNewMobileLeft, landaNewMobileRight], "(max-width: 1024px)", 1200);
+
   return (
     <FigmaFrame height={12072.313} className="figma-landa-case">
       <Nav />
@@ -3590,7 +3781,7 @@ function LandaCasePage() {
           <p>Developed <span>Landa</span>, a minimal, decision-support tool helping prospective international students assess their readiness to build a life in Sweden before committing to study there.</p>
         </section>
         <LandaResponsiveNarrative />
-        <IcaResponsiveFooter title="ICA BANKEN" href="/case/ica-banken" thumbnail={nextIcaFigma4x} />
+        <IcaResponsiveFooter title="APPLE MAIL" href="/case/apple-mail" thumbnail={appleMailThumbnail} thumbnailSlug="apple-mail" />
       </section>
       <section className="figma-case-hero">
         <h1>LANDA</h1>
@@ -3619,10 +3810,301 @@ function LandaCasePage() {
         <MuxLoopVideo playbackId={landaMobilePlaybackId} label="Landa mobile prototype" />
         <img src={landaNewMobileRight} alt="Landa mobile results screen" />
       </section>
-      <CaseNextFooter top={11021.313} title="ICA BANKEN" href="/case/ica-banken" thumbnail={nextIcaFigma4x} />
+      <CaseNextFooter top={11021.313} title="APPLE MAIL" href="/case/apple-mail" thumbnail={appleMailThumbnail} thumbnailSlug="apple-mail" />
     </FigmaFrame>
   );
 }
+
+function AppleMailResponsiveNarrative() {
+  return (
+    <>
+      <section className="figma-ica-responsive-brief figma-apple-responsive-brief">
+        <p className="figma-ica-responsive-kicker">THE PROBLEM</p>
+        <p>This rapid prototype began with a small interaction question inside Apple Mail: what happens when a default keeps asking for attention after its original value has faded? “Sent from my iPhone” made sense in 2008. It signalled ownership, normalised mobile email, and turned every message into product exposure. Today, Apple and smartphones no longer need that kind of awareness. The signature can still create impressions, but I was more interested in the user cost those impressions preserve.</p>
+      </section>
+      <IcaResponsivePhase phase="Understand" title="When a default becomes work.">
+        <IcaResponsiveCopyBlock title="Friction">
+          <p>I framed the problem around the user who does not want the signature, but also does not know where the permanent control lives. Their solution becomes manual correction: open an email, delete the line, send, repeat. It is a small task, but it is also a repeated mismatch between what the interface provides and what the user keeps trying to do.</p>
+        </IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Interaction cost">
+          <p>The key issue is discoverability. The friction happens inside the composer, while the control is buried in Settings. That split means the user experiences the cost in one place but has to solve it in another. I treated that as the design opportunity: bring the preference choice closer to the moment where the need becomes visible.</p>
+        </IcaResponsiveCopyBlock>
+      </IcaResponsivePhase>
+      <IcaResponsivePhase phase="Design Direction" title="An inference followed by a choice.">
+        <IcaResponsiveCopyBlock title="Direction">
+          <p>I designed the prototype around repeated corrective behaviour. A single deletion may be situational, but repeated removals across separate emails begin to suggest that the default no longer matches the user’s preference. In the prototype, the third removal becomes the moment where Mail has enough signal to ask a better question.</p>
+        </IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Interaction model">
+          <p>The intervention is intentionally not automatic. Mail notices a pattern, then offers a lightweight choice in context: remove signature, edit signature, or keep signature. The user is not forced into a hidden setting, and the system does not silently decide for them. It makes the preference visible at the moment the user is already correcting it.</p>
+        </IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Product judgement">
+          <p>The three-removal trigger is a design hypothesis, not a scientifically established or research-backed threshold. In a real product, I would expect that threshold to be shaped by behavioural data, recency, testing, and possibly other contextual signals. The principle is simple: infer carefully, intervene lightly, and keep the choice reversible.</p>
+        </IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Technical implementation">
+          <p>The prototype uses a deterministic rule where removals, recency, and replacement patterns are stored locally on the user’s device. I kept it rule-based because that is the right scale for the behaviour: the intervention may sound intelligent, but it does not need to be complex. ML/AI could become useful if the concept moved into adaptive personalisation, where Mail can interpret more ambiguous patterns, such as removing a signature from professional emails but keeping it for personal ones.</p>
+        </IcaResponsiveCopyBlock>
+      </IcaResponsivePhase>
+      <section className="figma-apple-still-showcase" aria-label="Apple Mail intervention still">
+        <img src={appleMailInterventionImage} alt="Apple Mail signature intervention prompt" />
+      </section>
+    </>
+  );
+}
+
+function AppleMailResponsiveReflection() {
+  return (
+      <IcaResponsivePhase phase="Reflection" title="Interfaces that respond to correction.">
+        <IcaResponsiveCopyBlock title="Beyond one default">
+          <p>The useful idea here is not limited to “Sent from my iPhone.” If someone creates a custom signature and later keeps deleting or replacing it, that behaviour can also mean the setting no longer serves them. For me, the larger design question is how interfaces can recognise correction as feedback and turn it into timely, reversible preference support.</p>
+        </IcaResponsiveCopyBlock>
+      </IcaResponsivePhase>
+  );
+}
+
+function AppleMailPrototypeVideo({ className, showCaption = false, mediaQuery }: { className: string; showCaption?: boolean; mediaQuery: string }) {
+  const figureRef = useRef<HTMLFigureElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [matchesMedia, setMatchesMedia] = useState(false);
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia(mediaQuery);
+    const updateMatch = () => setMatchesMedia(query.matches);
+    updateMatch();
+    query.addEventListener("change", updateMatch);
+    return () => query.removeEventListener("change", updateMatch);
+  }, [mediaQuery]);
+
+  useEffect(() => {
+    const figure = figureRef.current;
+    if (!figure || !matchesMedia) {
+      setHasEnteredViewport(false);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setHasEnteredViewport(true);
+      },
+      { rootMargin: "600px 0px", threshold: 0.12 },
+    );
+    observer.observe(figure);
+    return () => observer.disconnect();
+  }, [matchesMedia]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (!matchesMedia || !hasEnteredViewport) {
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+      return;
+    }
+
+    const source = `https://stream.mux.com/${appleMailPrototypePlaybackId}.m3u8`;
+    let hls: Hls | undefined;
+
+    if (Hls.isSupported()) {
+      hls = new Hls({
+        enableWorker: true,
+        capLevelToPlayerSize: true,
+        startFragPrefetch: true,
+      });
+      hls.loadSource(source);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        void video.play().catch(() => undefined);
+      });
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = source;
+      video.addEventListener("canplay", () => {
+        void video.play().catch(() => undefined);
+      }, { once: true });
+    }
+
+    return () => {
+      hls?.destroy();
+      video.removeAttribute("src");
+      video.load();
+    };
+  }, [matchesMedia, hasEnteredViewport]);
+
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      void video.play();
+      return;
+    }
+    video.pause();
+  };
+
+  const restartVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.currentTime = 0;
+    void video.play();
+  };
+
+  return (
+    <figure ref={figureRef} className={className} aria-label="Apple Mail signature preference prototype">
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="none"
+        onPlay={() => setIsPaused(false)}
+        onPause={() => setIsPaused(true)}
+      />
+      <div className="figma-apple-video-controls" aria-label="Apple Mail prototype controls">
+        <button
+          className={`figma-apple-video-control ${isPaused ? "figma-apple-video-control--play" : "figma-apple-video-control--pause"}`}
+          type="button"
+          aria-label={isPaused ? "Play Apple Mail prototype" : "Pause Apple Mail prototype"}
+          onClick={togglePlayback}
+        >
+          {isPaused ? (
+            <span aria-hidden="true" />
+          ) : (
+            <>
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+            </>
+          )}
+        </button>
+          <button className="figma-apple-video-control figma-apple-video-control--restart" type="button" aria-label="Restart Apple Mail prototype" onClick={restartVideo}>
+            <svg className="figma-apple-video-restart-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+            </svg>
+          </button>
+      </div>
+      {showCaption ? (
+        <figcaption className="figma-apple-video-caption">
+          <span>PROTOTYPE</span>
+          <a href="https://apple-mail-phi.vercel.app/" target="_blank" rel="noreferrer">TEST PROTOTYPE</a>
+        </figcaption>
+      ) : null}
+    </figure>
+  );
+}
+
+function AppleMailDesktopNarrative() {
+  return (
+    <>
+      <section className="figma-ica-desktop-only figma-apple-project-brief">
+        <div className="figma-apple-problem-column">
+          <div className="figma-ica-narrative__phase-heading figma-apple-problem-heading">
+            <p>THE PROBLEM</p>
+          </div>
+        </div>
+        <p className="figma-ica-narrative__body">
+          This rapid prototype began with a small interaction question inside Apple Mail: what happens when a default keeps asking for attention after its original value has faded? “Sent from my iPhone” made sense in 2008. It signalled ownership, normalised mobile email, and turned every message into product exposure. Today, Apple and smartphones no longer need that kind of awareness. The signature can still create impressions, but I was more interested in the user cost those impressions preserve.
+        </p>
+        <div className="figma-apple-understand-column">
+          <div className="figma-ica-narrative__phase-heading">
+            <p>UNDERSTAND</p>
+            <h2>When a default becomes work.</h2>
+          </div>
+        </div>
+        <div className="figma-ica-narrative__copy figma-apple-narrative__copy--friction">
+          <h3>Friction</h3>
+          <p>I framed the problem around the user who does not want the signature, but also does not know where the permanent control lives. Their solution becomes manual correction: open an email, delete the line, send, repeat. It is a small task, but it is also a repeated mismatch between what the interface provides and what the user keeps trying to do.</p>
+        </div>
+        <div className="figma-ica-narrative__copy figma-apple-narrative__copy--cost">
+          <h3>Interaction cost</h3>
+          <p>The key issue is discoverability. The friction happens inside the composer, while the control is buried in Settings. That split means the user experiences the cost in one place but has to solve it in another. I treated that as the design opportunity: bring the preference choice closer to the moment where the need becomes visible.</p>
+        </div>
+      </section>
+
+      <section className="figma-ica-desktop-only figma-apple-narrative-phase figma-apple-narrative-phase--direction">
+        <div className="figma-apple-direction-phone" aria-label="Apple Mail intervention still">
+          <img src={appleMailInterventionImage} alt="Apple Mail signature intervention prompt" />
+        </div>
+        <div className="figma-ica-narrative__copy figma-apple-narrative__copy--hypothesis">
+          <h3>Design Direction</h3>
+          <p>I designed the prototype around repeated corrective behaviour. A single deletion may be situational, but repeated removals across separate emails begin to suggest that the default no longer matches the user’s preference. In the prototype, the third removal becomes the moment where Mail has enough signal to ask a better question.</p>
+        </div>
+        <div className="figma-ica-narrative__copy figma-apple-narrative__copy--prototype">
+          <h3>Interaction model</h3>
+          <p>The intervention is intentionally not automatic. Mail notices a pattern, then offers a lightweight choice in context: remove signature, edit signature, or keep signature. The user is not forced into a hidden setting, and the system does not silently decide for them. It makes the preference visible at the moment the user is already correcting it.</p>
+        </div>
+        <div className="figma-ica-narrative__copy figma-apple-narrative__copy--judgement">
+          <h3>Product judgement</h3>
+          <p>The three-removal trigger is a design hypothesis, not a scientifically established or research-backed threshold. In a real product, I would expect that threshold to be shaped by behavioural data, recency, testing, and possibly other contextual signals. The principle is simple: infer carefully, intervene lightly, and keep the choice reversible.</p>
+        </div>
+        <div className="figma-ica-narrative__copy figma-apple-narrative__copy--implementation">
+          <h3>Technical implementation</h3>
+          <p>The prototype uses a deterministic rule where removals, recency, and replacement patterns are stored locally on the user’s device. I kept it rule-based because that is the right scale for the behaviour: the intervention may sound intelligent, but it does not need to be complex. ML/AI could become useful if the concept moved into adaptive personalisation, where Mail can interpret more ambiguous patterns, such as removing a signature from professional emails but keeping it for personal ones.</p>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function AppleMailDesktopReflection() {
+  return (
+      <section className="figma-ica-desktop-only figma-apple-narrative-phase figma-apple-narrative-phase--reflection">
+        <div className="figma-ica-narrative__phase-heading">
+          <p>REFLECTION</p>
+          <h2>Interfaces that respond to correction.</h2>
+        </div>
+        <div className="figma-ica-narrative__copy figma-apple-narrative__copy--reflection">
+          <h3>Beyond one default</h3>
+          <p>The useful idea here is not limited to “Sent from my iPhone.” If someone creates a custom signature and later keeps deleting or replacing it, that behaviour can also mean the setting no longer serves them. For me, the larger design question is how interfaces can recognise correction as feedback and turn it into timely, reversible preference support.</p>
+        </div>
+      </section>
+  );
+}
+
+function AppleMailCasePage() {
+  return (
+    <FigmaFrame height={5717} className="figma-apple-case">
+      <Nav />
+      <section className="figma-ica-mobile-layout">
+        <IcaResponsiveNav />
+        <section className="figma-ica-mobile-hero">
+          <h1>APPLE MAIL</h1>
+          <FigmaCaseMeta items={[
+            { label: "ROLE", value: "UX & Interaction Designer" },
+            { label: "CONTEXT", value: "Interaction Redesign" },
+            { label: "TEAM", value: "Solo Project" },
+          ]} />
+          <img className="figma-ica-mobile-hero__image" src={appleMailIntroThumbnail} alt="Apple Mail prototype intro" />
+        </section>
+        <section className="figma-ica-mobile-intro">
+          <p>Explored how <span>Apple Mail</span> could recognise repeated signature removals and surface a contextual preference choice.</p>
+        </section>
+        <AppleMailResponsiveNarrative />
+        <AppleMailPrototypeVideo className="figma-apple-video-responsive" showCaption mediaQuery="(max-width: 1024px)" />
+        <AppleMailResponsiveReflection />
+        <IcaResponsiveFooter title="ICA BANKEN" href="/case/ica-banken" thumbnail={nextIcaFigma4x} />
+      </section>
+      <section className="figma-case-hero">
+        <h1>APPLE MAIL</h1>
+        <FigmaCaseMeta items={[
+          { label: "ROLE", value: "UX & Interaction Designer" },
+          { label: "CONTEXT", value: "Interaction Redesign" },
+          { label: "TEAM", value: "Solo Project" },
+        ]} />
+        <FigmaExport src={appleMailIntroThumbnail} alt="Apple Mail prototype intro" left={100} top={711} width={1480} />
+      </section>
+      <section className="figma-case-intro figma-apple-intro">
+        <p>Explored how <span>Apple Mail</span> could recognise repeated signature removals and surface a contextual preference choice at the exact moment the friction happens.</p>
+      </section>
+      <AppleMailDesktopNarrative />
+      <AppleMailPrototypeVideo className="figma-ica-desktop-only figma-apple-desktop-video" showCaption mediaQuery="(min-width: 1025px)" />
+      <AppleMailDesktopReflection />
+      <div className="figma-ica-desktop-only figma-apple-footer-mask-anchor" aria-hidden="true" />
+      <CaseNextFooter top={4666} title="ICA BANKEN" href="/case/ica-banken" thumbnail={nextIcaFigma4x} />
+    </FigmaFrame>
+  );
+}
+
 
 function CasePage({ project }: { project: Project }) {
   const currentIndex = projects.findIndex((item) => item.slug === project.slug);
@@ -3743,6 +4225,7 @@ export default function App() {
 
   let page: ReactNode;
   if (path === "/work") page = <WorkPage />;
+  else if (path === "/rapid-prototypes") page = <RapidPrototypesPage />;
   else if (path === "/about") page = <AboutPage />;
   else if (path === "/contact") page = <ContactPage />;
   else if (path === "/resume") page = <ResumePage />;
@@ -3751,6 +4234,7 @@ export default function App() {
   else if (path === "/case/safemap") page = <SafeMapCasePage />;
   else if (path === "/case/climate-hub") page = <ClimateHubCasePage />;
   else if (path === "/case/landa") page = <LandaCasePage />;
+  else if (path === "/case/apple-mail") page = <AppleMailCasePage />;
   else if (path.startsWith("/case/")) {
     const project = projectBySlug.get(path.replace("/case/", ""));
     page = project ? <CasePage project={project} /> : <WorkPage />;

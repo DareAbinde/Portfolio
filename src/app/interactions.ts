@@ -132,6 +132,7 @@ function setupMagneticTargets() {
     ".fp-about-portrait",
     ".fp-expertise__row > button",
     ".fp-home-selected-list .fp-project-row",
+    ".fp-home-rapid-list .fp-project-row",
     ".fp-filter button",
     ".fp-action-pill",
     ".fp-pill",
@@ -143,12 +144,12 @@ function setupMagneticTargets() {
     ".figma-case-prototype-label",
   ].join(","))).filter((target) => (
     !target.matches(":disabled")
-    && (!target.matches(".fp-home-selected-list .fp-project-row") || window.matchMedia("(max-width: 1024px)").matches)
+    && (!target.matches(".fp-home-selected-list .fp-project-row, .fp-home-rapid-list .fp-project-row") || window.matchMedia("(max-width: 1024px)").matches)
   ));
 
   const cleanups = targets.map((target) => {
     const inner = target.classList.contains("fp-floating-menu") || target.classList.contains("fp-mobile-top-menu") ? null : target.querySelector<HTMLElement>("span, small, img");
-    const strength = target.matches(".fp-expertise__row > button, .fp-home-selected-list .fp-project-row")
+    const strength = target.matches(".fp-expertise__row > button, .fp-home-selected-list .fp-project-row, .fp-home-rapid-list .fp-project-row")
       ? 0.025
       : target.classList.contains("figma-case-round-button")
       ? 0.16
@@ -881,6 +882,7 @@ function setupSectionUncovers() {
       ".figma-case-mobile-mockups",
       ".figma-climate-mobile-screens",
       ".figma-landa-mobile-screens",
+      ".figma-apple-footer-mask-anchor",
       ".fp-home-mobile-work",
       ".fp-expertise",
       ".fp-gallery",
