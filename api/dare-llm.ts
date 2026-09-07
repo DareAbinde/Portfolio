@@ -1,4 +1,3 @@
-import { get, put } from "@vercel/blob";
 import { SYSTEM_PROMPT } from "./lib/dare-knowledge";
 import { extractJson, parseDareResponse, wordCount, type DareResponse } from "./lib/dare-response";
 
@@ -213,13 +212,17 @@ async function callOpenRouter(
 }
 
 async function readTranscript(conversationId: string): Promise<StoredTranscript | null> {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return null;
+  const { get } = await import("@vercel/blob");
   const result = await get(transcriptPrefix + "/" + conversationId + ".json", { access: "private" }).catch(() => null);
   if (!result?.stream) return null;
   return new Response(result.stream).json().catch(() => null) as Promise<StoredTranscript | null>;
 }
 
 async function storeTranscript(conversationId: string, path: string, messages: InputMessage[], response: DareResponse, model: string) {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return;
   try {
+    const { put } = await import("@vercel/blob");
     const existing = await readTranscript(conversationId);
     const now = new Date().toISOString();
     const latestUser = messages.at(-1)?.content || "";
