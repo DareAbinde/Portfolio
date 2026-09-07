@@ -1,5 +1,5 @@
-import { SYSTEM_PROMPT } from "./lib/dare-knowledge";
-import { extractJson, parseDareResponse, wordCount, type DareResponse } from "./lib/dare-response";
+import { SYSTEM_PROMPT } from "./lib/dare-knowledge.js";
+import { extractJson, parseDareResponse, wordCount, type DareResponse } from "./lib/dare-response.js";
 
 type InputMessage = { role: "user" | "assistant"; content: string };
 
