@@ -127,6 +127,14 @@ function guardedResponse(messages: InputMessage[]): DareResponse | null {
   };
 }
 
+function scopeFallbackResponse(): DareResponse {
+  return {
+    answer: "I may not be the best place for that one. DARE LLM is focused on my work, projects, research, design process, background, and interests.",
+    followUps: ["Tell me about Dare's projects", "What is Dare's design process?", "What is Dare's HCI background?"],
+    mediaKey: null,
+  };
+}
+
 function refererUrl() {
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL;
   if (process.env.VERCEL_URL) return "https://" + process.env.VERCEL_URL;
@@ -162,7 +170,6 @@ async function callOpenRouter(
           ...messages,
         ],
         response_format: { type: "json_schema", json_schema: { name: "dare_llm_response", strict: true, schema: responseSchema } },
-        reasoning: { enabled: false },
         temperature: 0.35,
         max_tokens: 420,
         provider: { data_collection: "deny", allow_fallbacks: true },
@@ -275,7 +282,16 @@ export async function POST(request: Request) {
       console.warn("DARE LLM validation retry", {
         model: "model" in error && typeof error.model === "string" ? error.model : primaryModel,
       });
-      result = await callOpenRouter(messages, path, usedMediaKeys, true, [fallbackModel]);
+      try {
+        result = await callOpenRouter(messages, path, usedMediaKeys, true, [fallbackModel]);
+      } catch (retryError) {
+        console.warn("DARE LLM validation fallback returned scope response", {
+          message: retryError instanceof Error ? retryError.message : "Unknown error",
+        });
+        const response = scopeFallbackResponse();
+        await storeTranscript(body.conversationId as string, path, messages, response, "scope-fallback");
+        return json({ ...response, conversationId: body.conversationId });
+      }
     }
     const response = result.response;
     console.info("DARE LLM response model", { model: result.model });
