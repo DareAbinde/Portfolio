@@ -107,7 +107,7 @@ function mediaMatchesQuestion(mediaKey: DareResponse["mediaKey"], question: stri
 }
 
 function isBehindScenesQuestion(question: string) {
-  return /(?:dare llm|chatbot|language model|system prompt|prompt instructions?|api|architecture|knowledge (?:base|source)|logging implementation|stored transcripts?)/i.test(question);
+  return /(?:dare llm|chatbot|language model|system prompt|prompt instructions?|\bapi\b|architecture|knowledge (?:base|source)|logging implementation|stored transcripts?)/i.test(question);
 }
 
 function isClearlyOutOfScopeQuestion(question: string) {
