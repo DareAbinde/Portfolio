@@ -3,6 +3,7 @@ dist/
 .playwright-browsers/
 .DS_Store
 .netlify/
+.vercel/
 .env
 .env.*
 !.env.example
