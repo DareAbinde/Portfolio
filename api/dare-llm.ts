@@ -110,6 +110,10 @@ function isBehindScenesQuestion(question: string) {
   return /(?:dare llm|chatbot|language model|system prompt|prompt instructions?|api|architecture|knowledge (?:base|source)|logging implementation|stored transcripts?)/i.test(question);
 }
 
+function isClearlyOutOfScopeQuestion(question: string) {
+  return /(?:\bweather\b|\bforecast\b|\btemperature\b|\brain\b|\bsnow\b|\bnews\b|\blatest\b|\btoday'?s\b|\bstock\b|\bcrypto\b|\bbitcoin\b|\bexchange rate\b|\btranslate\b|\bsummarize this\b|\bwrite (?:me )?(?:an?|the)\b|\bsolve\b|\bcalculate\b|\bmedical advice\b|\blegal advice\b|\bfinancial advice\b|\brecipe\b|\bmovie\b|\bsong\b|\bsports\b|\bscore\b)/i.test(question);
+}
+
 function guardedResponse(messages: InputMessage[]): DareResponse | null {
   const latestQuestion = messages.at(-1)?.content || "";
   if (isEnglishStyleGreeting(latestQuestion)) {
@@ -119,6 +123,7 @@ function guardedResponse(messages: InputMessage[]): DareResponse | null {
       mediaKey: null,
     };
   }
+  if (isClearlyOutOfScopeQuestion(latestQuestion)) return scopeFallbackResponse();
   if (!isBehindScenesQuestion(latestQuestion)) return null;
   return {
     answer: "I keep DARE LLM focused on my work, experience, projects, and interests rather than its behind-the-scenes implementation.",
@@ -129,7 +134,7 @@ function guardedResponse(messages: InputMessage[]): DareResponse | null {
 
 function scopeFallbackResponse(): DareResponse {
   return {
-    answer: "I may not be the best place for that one. DARE LLM is focused on my work, projects, research, design process, background, and interests.",
+    answer: "I don't have enough context to answer that well. DARE LLM is focused on Dare's work, projects, research, design process, background, and interests.",
     followUps: ["Tell me about Dare's projects", "What is Dare's design process?", "What is Dare's HCI background?"],
     mediaKey: null,
   };
