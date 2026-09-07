@@ -91,7 +91,7 @@ function validUsedMediaKeys(value: unknown) {
 }
 
 function isEnglishStyleGreeting(value: string) {
-  return /^(?:hi|hello|hey|hej)[\s!.,]*$/i.test(value);
+  return /^(?:hi|hello|hey|hej|what'?s good|what'?s up|wassup|sup|you good|how are you|how'?s it going|how'?re you doing)[\s!?.,]*$/i.test(value);
 }
 
 function answerSuggestsAQuestion(value: string) {
