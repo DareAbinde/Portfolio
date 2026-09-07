@@ -134,7 +134,7 @@ function guardedResponse(messages: InputMessage[]): DareResponse | null {
 
 function scopeFallbackResponse(): DareResponse {
   return {
-    answer: "I don't have enough context to answer that well. DARE LLM is focused on Dare's work, projects, research, design process, background, and interests.",
+    answer: "I don't have enough context to answer that well. I keep the focus on my work, projects, research, design process, background, and interests.",
     followUps: ["Tell me about Dare's projects", "What is Dare's design process?", "What is Dare's HCI background?"],
     mediaKey: null,
   };
