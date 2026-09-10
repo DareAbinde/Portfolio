@@ -981,8 +981,8 @@ const homeExpertise = [
     skills: ["Journey mapping", "Service blueprints", "Stakeholder mapping", "Touchpoint design", "Adoption planning"],
   },
   {
-    title: "AI & Emerging Design",
-    skills: ["Rapid design exploration", "AI prototyping", "AI-assisted design", "Agentic development"],
+    title: "AI & Development",
+    skills: ["Rapid design exploration", "AI-assisted design", "AI prototyping", "Agentic development"],
   },
 ];
 
@@ -1432,7 +1432,7 @@ function AboutPage() {
   const pillars = [
     { number: "01", title: "Research", body: "I use qual and quant research methods to uncover user needs, validate assumptions, and evaluate product usability through interviews, surveys, usability testing, behavioural observation, and evidence based synthesis." },
     { number: "02", title: "Strategy", body: "I translate research into product direction by framing opportunities, prioritising problems, defining product requirements, mapping user journeys, and aligning user needs with business goals." },
-    { number: "03", title: "Design", body: "I turn validated ideas into intuitive digital experiences by exploring concepts, prototyping interactions, refining interfaces, building design systems, and iterating through continuous user feedback." },
+    { number: "03", title: "Design", body: "I turn validated ideas into intuitive digital experiences through concept exploration, interface design, interaction prototyping, functional implementation, and continuous user feedback." },
   ];
 
   return (
