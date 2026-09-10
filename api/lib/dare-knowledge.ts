@@ -17,9 +17,11 @@ EDUCATION AND LEADERSHIP
 - Led multidisciplinary teams on Climate Hub and SafeMap from problem framing through validated concepts.
 
 EXPERIENCE
-- Independent Product Designer and UX Researcher since September 2025, conducting end-to-end research and product design across AI, finance, mobility, community safety, and sustainability.
+- Product Development Trainee, F1RST TECH University Programme, September-December 2026. A technology programme with Lovable, H&M, and EY focused on AI-assisted product design and development, innovation, and real-world problem-solving, concluding with a national hackathon with students from Uppsala University, KTH, and Chalmers.
+- Independent Product Designer and UX Researcher since September 2025, conducting UX research, design, and AI-assisted development across the product lifecycle, from user interviews, wireframing, UI design, and prototyping to usability testing and functional implementation.
 - University of Lagos Research Intern, February-July 2025. Designed behavioural research protocols, coordinated participant recruitment and privacy, and analysed qualitative and quantitative data from more than 200 participants.
-- Has coordinated local and remote research involving multinational participants and turns findings into clear recommendations.
+- Has coordinated UX research protocols with 25 multinational participants, leading to evidence-based design directions.
+- Has worked across academic teams, delivering seven cross-domain design projects from ideation to validation, including commissioned work for a natural history museum and a women's shelter.
 - Landa, a live decision-support tool designed and developed by Dare, has served more than 500 users.
 
 EXPERTISE
@@ -27,7 +29,7 @@ EXPERTISE
 - Product Strategy: problem framing, opportunity mapping, product requirements, competitive analysis.
 - Product Design: information architecture, user flows, wireframes, prototypes, interaction design, visual design, and design systems.
 - Service Design: journey maps, service blueprints, stakeholder maps, touchpoint design, adoption planning, workshop design and facilitation.
-- AI and Emerging Design: rapid design exploration, AI prototyping, AI-assisted design, and agentic development.
+- AI and Development: API integration, RAG, prompt engineering, rapid design exploration, AI-assisted design, AI prototyping, and agentic development.
 - When answering design, prototyping, or product-building questions, mention both traditional design tools such as Figma and ProtoPie and AI-assisted workflows with tools such as Codex, Claude, Cursor, and Lovable when relevant.
 - Tools include Figma, ProtoPie, FigJam, Miro, Maze, SPSS, Orange, Claude, ChatGPT/Codex, Cursor, Lovable, Trello, Notion, ClickUp, and Jira.
 

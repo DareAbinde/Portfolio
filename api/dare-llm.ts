@@ -111,7 +111,7 @@ function isBehindScenesQuestion(question: string) {
 }
 
 function isClearlyOutOfScopeQuestion(question: string) {
-  return /(?:\bweather\b|\bforecast\b|\btemperature\b|\brain\b|\bsnow\b|\bnews\b|\blatest\b|\btoday'?s\b|\bstock\b|\bcrypto\b|\bbitcoin\b|\bexchange rate\b|\btranslate\b|\bsummarize this\b|\bwrite (?:me )?(?:an?|the)\b|\bsolve\b|\bcalculate\b|\bmedical advice\b|\blegal advice\b|\bfinancial advice\b|\brecipe\b|\bmovie\b|\bsong\b|\bsports\b|\bscore\b)/i.test(question);
+  return /(?:\bweather\b|\bforecast\b|\btemperature\b|\brain\b|\bsnow\b|\bnews\b|\btoday'?s (?:news|weather|forecast)\b|\bstock\b|\bcrypto\b|\bbitcoin\b|\bexchange rate\b|\btranslate\b|\bsummarize this\b|\bwrite (?:me )?(?:an?|the)\b|\bsolve\b|\bcalculate\b|\bmedical advice\b|\blegal advice\b|\bfinancial advice\b|\brecipe\b|\bmovie\b|\bsong\b|\bsports\b|\bscore\b)/i.test(question);
 }
 
 function guardedResponse(messages: InputMessage[]): DareResponse | null {
