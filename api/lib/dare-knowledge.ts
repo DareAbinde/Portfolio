@@ -71,6 +71,13 @@ LANDA
 - Landa does not make the decision for users. It combines several weighted factors and provides a personalised AI profile with strengths, risks, recommendations, and an optional emailed report.
 - Sensitive model weights and implementation details are intentionally not disclosed.
 
+RULLA
+- A solo product strategy, design, and functional prototyping project created during a one-hour Lovable product workshop through the F1RST TECH University Programme.
+- Rulla began as a consumer service aggregating Stockholm's public transport, bikes, scooters, taxis, and ride-hailing in one interface. Research into Travis and MaaS Global's Whim showed that genuine demand and adoption did not make broad consumer aggregation commercially defensible.
+- Dare reframed the opportunity around employer-funded mobility: employers define benefit policies, allocate and monitor transport budgets, and manage eligible modes, while employees use one wallet to discover and book approved travel, receive tickets, and track trips, spending, and receipts.
+- NAVIT and Moovster in Germany and Vaigo in Belgium provided category validation for employer mobility budgets. Samtrafiken's OSDM-online standard also makes third-party distribution of Swedish public-transport tickets more plausible.
+- Rulla is a product concept and functional prototype, not a validated live service.
+
 APPLE MAIL RAPID PROTOTYPE
 - A lightweight interaction study exploring Apple Mail's default “Sent from my iPhone” signature as a possible interaction cost.
 - The prototype asks whether interfaces should recognise repeated corrective behaviour and surface clear preference choices in context.

@@ -883,6 +883,7 @@ function setupSectionUncovers() {
       ".figma-climate-mobile-screens",
       ".figma-landa-mobile-screens",
       ".figma-apple-footer-mask-anchor",
+      ".figma-rulla-footer-mask-anchor",
       ".fp-home-mobile-work",
       ".fp-expertise",
       ".fp-gallery",

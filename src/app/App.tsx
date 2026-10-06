@@ -57,6 +57,30 @@ import landaMobile3 from "../assets/final-portfolio/cases/landa-mobile-3.webp";
 import appleMailThumbnail from "../assets/final-portfolio/case-pages/apple-mail/apple-mail-thumbnail.webp";
 import appleMailIntroThumbnail from "../assets/final-portfolio/case-pages/apple-mail/intro-thumbnail.webp";
 import appleMailInterventionImage from "../assets/final-portfolio/case-pages/apple-mail/static-intervention.webp";
+import rullaThumbnail from "../assets/final-portfolio/case-pages/rulla/rulla-thumbnail.webp";
+import rullaListThumbnail from "../assets/final-portfolio/case-pages/rulla/rulla-list-thumbnail.png";
+import rullaPrototypePoster from "../assets/final-portfolio/case-pages/rulla/rulla-prototype-poster.png";
+import rullaStrategyPivot from "../assets/final-portfolio/case-pages/rulla/strategy-pivot.png";
+import rullaProductArchitecture from "../assets/final-portfolio/case-pages/rulla/product-architecture.webp";
+import rullaOnboardingWelcome from "../assets/final-portfolio/case-pages/rulla/onboarding/Welcome.png";
+import rullaOnboardingRole from "../assets/final-portfolio/case-pages/rulla/onboarding/Choose role.png";
+import rullaOnboardingPreferences from "../assets/final-portfolio/case-pages/rulla/onboarding/Travel preferences.png";
+import rullaOnboardingEmployeeEmail from "../assets/final-portfolio/case-pages/rulla/onboarding/Employee email.png";
+import rullaOnboardingEmployerEmail from "../assets/final-portfolio/case-pages/rulla/onboarding/Employer admin email.png";
+import rullaOnboardingVerification from "../assets/final-portfolio/case-pages/rulla/onboarding/Verification.png";
+import rullaOnboardingVerified from "../assets/final-portfolio/case-pages/rulla/onboarding/Company verified.png";
+import rullaEmployeeHome from "../assets/final-portfolio/case-pages/rulla/employee/Home.png";
+import rullaEmployeeExplore from "../assets/final-portfolio/case-pages/rulla/employee/Explore.png";
+import rullaEmployeeJourney from "../assets/final-portfolio/case-pages/rulla/employee/Journey results.png";
+import rullaEmployeeTicket from "../assets/final-portfolio/case-pages/rulla/employee/Ticket ready.png";
+import rullaEmployeeRideBooked from "../assets/final-portfolio/case-pages/rulla/employee/Ride booked.png";
+import rullaEmployeeWallet from "../assets/final-portfolio/case-pages/rulla/employee/Wallet.png";
+import rullaEmployeeTrips from "../assets/final-portfolio/case-pages/rulla/employee/Trips.png";
+import rullaEmployerOverview from "../assets/final-portfolio/case-pages/rulla/employer/Overview.png";
+import rullaEmployerPeople from "../assets/final-portfolio/case-pages/rulla/employer/People.png";
+import rullaEmployerPolicy from "../assets/final-portfolio/case-pages/rulla/employer/Policy.png";
+import rullaEmployerInvite from "../assets/final-portfolio/case-pages/rulla/employer/Invite employees.png";
+import rullaEmployerProfile from "../assets/final-portfolio/case-pages/rulla/employer/Profile.png";
 
 declare global {
   interface Window {
@@ -397,6 +421,17 @@ type RapidPrototype = {
   category: string;
   intro: string;
   thumbnail: string;
+  team?: string;
+};
+
+const rullaSelectedWork: RapidPrototype = {
+  slug: "rulla",
+  title: "Rulla",
+  year: "2026",
+  category: "B2B / Mobility",
+  intro: "A B2B mobility wallet that lets employers fund transport benefits while employees discover, book, and pay for approved travel.",
+  thumbnail: rullaListThumbnail,
+  team: "Solo Project",
 };
 
 const rapidPrototypes: RapidPrototype[] = [
@@ -410,6 +445,8 @@ const rapidPrototypes: RapidPrototype[] = [
   },
 ];
 
+const workProjects: Array<Project | RapidPrototype> = [rullaSelectedWork, ...projects];
+
 const projectBySlug = new Map(projects.map((project) => [project.slug, project]));
 const resumePageHref = "/resume";
 const resumePdfHref = "/dare-abinde-resume.pdf";
@@ -421,7 +458,11 @@ const landaMobilePlaybackId = "ydFQRH01inTdmL9IjY8TMhf7OzfccIpXGFUxzgWOm2P00";
 const calmotionPromoPlaybackId = "xoVP01CGibJQjhHIQZuZ4pfDwoBh3a5INn8YXARpxHNI";
 const climatePromoPlaybackId = "gGi3Z1BRLEFc4LA85F6PSq4Koz94vEmVpuuNpetdZg00";
 const appleMailPrototypePlaybackId = "nmHHw2lyEajqprvvHisGdCaVm7ZrFwEt3JoI4s1j7S4";
+const rullaIntroPlaybackId = "KMPyqIMBUhSbwoihnMega7b6LUD3deAoREKJUSV78pA";
+const rullaPrototypePlaybackId = "00y8H6iI029Ni7FZzPgHD98RXfpaUrxxpQK9uXQGzhZa4";
+const rullaMotionTwoVimeoUrl = "https://player.vimeo.com/video/1233235874?autoplay=0&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0&playsinline=1";
 const projectPreviewBySlug: Record<string, { image: string; frame: string }> = {
+  rulla: { image: rullaListThumbnail, frame: "#ffffff" },
   "ica-banken": { image: nextIcaFigma4x, frame: "#3b3335" },
   calmotion: { image: nextCalmotionFigma4x, frame: "#d6d4ce" },
   safemap: { image: nextSafemapFigma4x, frame: "#d6d4ce" },
@@ -429,40 +470,41 @@ const projectPreviewBySlug: Record<string, { image: string; frame: string }> = {
   landa: { image: nextLandaRedesignFramed, frame: "#d6d4ce" },
 };
 
-function MuxLoopVideo({ playbackId, label, dataSwipeIndex }: { playbackId: string; label: string; dataSwipeIndex?: number }) {
+function MuxLoopVideo({ playbackId, label, dataSwipeIndex, className, poster, onCanPlay, loadImmediately = false, playImmediately = false }: { playbackId: string; label: string; dataSwipeIndex?: number; className?: string; poster?: string; onCanPlay?: () => void; loadImmediately?: boolean; playImmediately?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const visibleRef = useRef(false);
-  const [shouldLoad, setShouldLoad] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const visibleRef = useRef(playImmediately);
+  const [shouldLoad, setShouldLoad] = useState(loadImmediately);
+  const [isVisible, setIsVisible] = useState(playImmediately);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video || typeof IntersectionObserver === "undefined") {
       setShouldLoad(true);
       setIsVisible(true);
+      visibleRef.current = true;
       return;
     }
 
-    const preloadObserver = new IntersectionObserver(([entry]) => {
+    const preloadObserver = loadImmediately ? undefined : new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
       setShouldLoad(true);
-      preloadObserver.disconnect();
+      preloadObserver?.disconnect();
     }, { rootMargin: "1200px 0px", threshold: 0 });
 
-    const playbackObserver = new IntersectionObserver(([entry]) => {
+    const playbackObserver = playImmediately ? undefined : new IntersectionObserver(([entry]) => {
       const visible = entry.isIntersecting && entry.intersectionRatio >= 0.1;
       visibleRef.current = visible;
       setIsVisible(visible);
     }, { threshold: [0, 0.1, 0.5] });
 
-    preloadObserver.observe(video);
-    playbackObserver.observe(video);
+    preloadObserver?.observe(video);
+    playbackObserver?.observe(video);
 
     return () => {
-      preloadObserver.disconnect();
-      playbackObserver.disconnect();
+      preloadObserver?.disconnect();
+      playbackObserver?.disconnect();
     };
-  }, []);
+  }, [loadImmediately, playImmediately]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -471,7 +513,7 @@ function MuxLoopVideo({ playbackId, label, dataSwipeIndex }: { playbackId: strin
     const source = `https://stream.mux.com/${playbackId}.m3u8`;
     let hls: Hls | undefined;
     const playWhenVisible = () => {
-      if (visibleRef.current) void video.play().catch(() => undefined);
+      if (playImmediately || visibleRef.current) void video.play().catch(() => undefined);
     };
 
     if (Hls.isSupported()) {
@@ -494,7 +536,7 @@ function MuxLoopVideo({ playbackId, label, dataSwipeIndex }: { playbackId: strin
       video.removeAttribute("src");
       video.load();
     };
-  }, [playbackId, shouldLoad]);
+  }, [playbackId, playImmediately, shouldLoad]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -506,7 +548,7 @@ function MuxLoopVideo({ playbackId, label, dataSwipeIndex }: { playbackId: strin
     }
   }, [isVisible, shouldLoad]);
 
-  return <video ref={videoRef} data-swipe-index={dataSwipeIndex} aria-label={label} muted loop playsInline preload="none" />;
+  return <video ref={videoRef} className={className} data-swipe-index={dataSwipeIndex} poster={poster} aria-label={label} autoPlay={playImmediately} muted loop playsInline preload={loadImmediately ? "auto" : "none"} onCanPlay={onCanPlay} />;
 }
 
 function usePreloadImages(images: string[], mediaQuery?: string, delayMs = 0) {
@@ -922,7 +964,7 @@ function Footer({ top }: { top: number }) {
   );
 }
 
-function ProjectRows({ top, includeLanda = false, button = "More Work", items, className, showRapidPrototypeCta = false }: { top: number; includeLanda?: boolean; button?: "More Work" | "Get in Touch"; items?: Project[]; className?: string; showRapidPrototypeCta?: boolean }) {
+function ProjectRows({ top, includeLanda = false, button = "More Work", items, className, label = "SELECTED WORK", showRapidPrototypeCta = false }: { top: number; includeLanda?: boolean; button?: "More Work" | "Get in Touch"; items?: Array<Project | RapidPrototype>; className?: string; label?: string; showRapidPrototypeCta?: boolean }) {
   const rows = items ?? (includeLanda ? projects : projects.slice(0, 3));
   const baseActionTop = 170.58 + rows.length * 179 + (button === "More Work" ? 9 : 0);
   const contactActionTop = baseActionTop;
@@ -930,7 +972,7 @@ function ProjectRows({ top, includeLanda = false, button = "More Work", items, c
 
   return (
     <section className={`fp-work-list${className ? ` ${className}` : ""}`} style={{ top, height: sectionHeight }}>
-      <p className="fp-kicker">SELECTED WORK</p>
+      <p className="fp-kicker">{label}</p>
       <div className="fp-row-line" style={{ top: 90 }} />
       {rows.map((project, index) => {
         const titleY = 159.5 + index * 179;
@@ -956,7 +998,7 @@ function ProjectRows({ top, includeLanda = false, button = "More Work", items, c
           </a>
         )}
         <a className={`fp-action-pill ${button === "Get in Touch" ? "fp-action-pill--dark" : ""}`} style={showRapidPrototypeCta ? undefined : { top: contactActionTop }} href={button === "More Work" ? "/work" : "#contact"} onClick={button === "Get in Touch" ? scrollToContact : undefined}>
-          {button} <small>{button === "More Work" ? "05" : "↓"}</small>
+          {button} <small>{button === "More Work" ? "06" : "↓"}</small>
         </a>
       </div>
     </section>
@@ -986,9 +1028,10 @@ const homeExpertise = [
   },
 ];
 
-const homeRapidTop = 2565;
-const homeGalleryTop = 3101;
-const homeExpertiseTop = 3984;
+const homeSelectedProjects: Array<Project | RapidPrototype> = [rullaSelectedWork, ...projects.slice(0, 3)];
+const homeSelectedTop = 1694;
+const homeGalleryTop = 2776;
+const homeExpertiseTop = 3659;
 const homeExpertiseHeaderHeight = 80;
 const homeExpertiseRowHeight = 128;
 const homeExpertiseFooterGap = 120;
@@ -1128,11 +1171,10 @@ function HomePage() {
           <p className="fp-kicker">SELECTED WORK</p>
           <WorkGrid top={0} items={projects.slice(0, 2)} />
           <a className="fp-action-pill" href="/work">
-            More Work <small>05</small>
+            More Work <small>06</small>
           </a>
         </section>
-        <ProjectRows top={1694} className="fp-home-selected-list" />
-        <RapidRows top={homeRapidTop} className="fp-home-rapid-list" button="More Prototypes" />
+        <ProjectRows top={homeSelectedTop} className="fp-home-selected-list" items={homeSelectedProjects} />
         <section className="fp-gallery" style={{ top: homeGalleryTop }}>
           <div className="fp-gallery__row fp-gallery__row--top">
             <figure><img src={galleryIcaTop} alt="ICA Banken" /></figure>
@@ -1192,7 +1234,7 @@ function WorkPage() {
   const [view, setView] = useState<"list" | "grid">(() => defaultWorkView());
   const [hasChosenView, setHasChosenView] = useState(false);
   const headlineRevealRef = useDownwardHeadlineReveal();
-  const visibleProjects = projects.filter((project) => {
+  const visibleProjects = workProjects.filter((project) => {
     if (filter === "team") return project.team !== "Solo Project";
     if (filter === "solo") return project.team === "Solo Project";
     return true;
@@ -1236,7 +1278,7 @@ function WorkPage() {
         <div className="fp-filter fp-filter--categories">
           <button type="button" aria-pressed={filter === "all"} onClick={() => setFilter("all")}>All</button>
           <button type="button" aria-pressed={filter === "team"} onClick={() => setFilter("team")}>Team <small>03</small></button>
-          <button type="button" aria-pressed={filter === "solo"} onClick={() => setFilter("solo")}>Solo <small>02</small></button>
+          <button type="button" aria-pressed={filter === "solo"} onClick={() => setFilter("solo")}>Solo <small>03</small></button>
         </div>
         <div className="fp-filter fp-filter--view">
           <button type="button" aria-label="List view" aria-pressed={view === "list"} onClick={() => chooseView("list")}><span /></button>
@@ -1263,8 +1305,8 @@ function WorkPage() {
   );
 }
 
-function RapidRows({ top, className, button = "More Prototypes" }: { top: number; className?: string; button?: "More Prototypes" | "Get in Touch" }) {
-  const rows = rapidPrototypes;
+function RapidRows({ top, className, button = "More Prototypes", items }: { top: number; className?: string; button?: "More Prototypes" | "Get in Touch"; items?: RapidPrototype[] }) {
+  const rows = items ?? rapidPrototypes;
   const actionTop = 170.58 + rows.length * 179;
   const sectionHeight = actionTop + 56.419;
 
@@ -1289,7 +1331,7 @@ function RapidRows({ top, className, button = "More Prototypes" }: { top: number
         );
       })}
       <a className={`fp-action-pill ${button === "Get in Touch" ? "fp-action-pill--dark" : ""}`} style={{ top: actionTop }} href={button === "More Prototypes" ? "/rapid-prototypes" : "#contact"} onClick={button === "Get in Touch" ? scrollToContact : undefined}>
-        {button} <small>{button === "More Prototypes" ? "01" : "↓"}</small>
+        {button} <small>{button === "More Prototypes" ? String(rows.length).padStart(2, "0") : "↓"}</small>
       </a>
     </section>
   );
@@ -1373,7 +1415,7 @@ function RapidPrototypesPage() {
 }
 
 
-function WorkGrid({ top, items }: { top: number; items: Project[] }) {
+function WorkGrid({ top, items }: { top: number; items: Array<Project | RapidPrototype> }) {
   function updateViewPosition(event: MouseEvent<HTMLElement>) {
     const rect = event.currentTarget.getBoundingClientRect();
     event.currentTarget.style.setProperty("--view-x", `${event.clientX - rect.left}px`);
@@ -3993,6 +4035,320 @@ function AppleMailPrototypeVideo({ className, showCaption = false, mediaQuery }:
   );
 }
 
+const rullaOnboardingScreens = [
+  rullaOnboardingWelcome,
+  rullaOnboardingRole,
+  rullaOnboardingPreferences,
+  rullaOnboardingEmployeeEmail,
+  rullaOnboardingEmployerEmail,
+  rullaOnboardingVerification,
+  rullaOnboardingVerified,
+];
+
+const rullaEmployeeScreens = [
+  rullaEmployeeHome,
+  rullaEmployeeExplore,
+  rullaEmployeeJourney,
+  rullaEmployeeTicket,
+  rullaEmployeeRideBooked,
+  rullaEmployeeWallet,
+  rullaEmployeeTrips,
+];
+
+const rullaEmployerScreens = [
+  rullaEmployerOverview,
+  rullaEmployerPeople,
+  rullaEmployerPolicy,
+  rullaEmployerInvite,
+  rullaEmployerProfile,
+];
+
+function RullaHeroMedia({ mobile = false }: { mobile?: boolean }) {
+  const [isReady, setIsReady] = useState(false);
+  return (
+    <div className={`${mobile ? "figma-ica-mobile-hero__image figma-rulla-mobile-hero-media" : "figma-rulla-hero-media"}${isReady ? " is-ready" : ""}`}>
+      <img src={rullaThumbnail} alt="" aria-hidden="true" />
+      <MuxLoopVideo
+        playbackId={rullaIntroPlaybackId}
+        label="Rulla mobility wallet introduction"
+        className={isReady ? "is-ready" : ""}
+        poster={rullaThumbnail}
+        loadImmediately
+        playImmediately
+        onCanPlay={() => setIsReady(true)}
+      />
+    </div>
+  );
+}
+
+function VimeoLoopVideo({ src, label, className }: { src: string; label: string; className?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const visibleRef = useRef(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || typeof IntersectionObserver === "undefined") {
+      setShouldLoad(true);
+      setIsVisible(true);
+      visibleRef.current = true;
+      return;
+    }
+
+    const preloadObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setShouldLoad(true);
+      preloadObserver.disconnect();
+    }, { rootMargin: "1600px 0px", threshold: 0 });
+
+    const playbackObserver = new IntersectionObserver(([entry]) => {
+      const visible = entry.isIntersecting && entry.intersectionRatio >= 0.1;
+      visibleRef.current = visible;
+      setIsVisible(visible);
+    }, { threshold: [0, 0.1, 0.5] });
+
+    preloadObserver.observe(container);
+    playbackObserver.observe(container);
+
+    return () => {
+      preloadObserver.disconnect();
+      playbackObserver.disconnect();
+    };
+  }, []);
+
+  const sendPlaybackCommand = (method: "play" | "pause") => {
+    iframeRef.current?.contentWindow?.postMessage({ method }, "https://player.vimeo.com");
+  };
+
+  useEffect(() => {
+    if (!shouldLoad) return;
+    sendPlaybackCommand(isVisible ? "play" : "pause");
+  }, [isVisible, shouldLoad]);
+
+  return (
+    <div ref={containerRef} className={className} aria-label={label}>
+      {shouldLoad ? (
+        <iframe
+          ref={iframeRef}
+          src={src}
+          title={label}
+          allow="autoplay; fullscreen; picture-in-picture"
+          loading="eager"
+          onLoad={() => sendPlaybackCommand(visibleRef.current ? "play" : "pause")}
+        />
+      ) : null}
+    </div>
+  );
+}
+
+function RullaArtifact({ src, alt, caption, className = "" }: { src: string; alt: string; caption: string; className?: string }) {
+  return (
+    <figure className={`figma-rulla-artifact ${className}`.trim()}>
+      <img src={src} alt={alt} loading="lazy" decoding="async" />
+      <figcaption>{caption}</figcaption>
+    </figure>
+  );
+}
+
+function RullaScreenGallery({ title, screens }: { title: string; screens: string[] }) {
+  const pagination = useSwipePagination(screens.length);
+  return (
+    <section className="figma-rulla-gallery">
+      <div className="figma-rulla-gallery__header"><p>{title}</p></div>
+      <div ref={pagination.scrollerRef} className="figma-rulla-gallery__scroller" aria-label={`${title.toLowerCase()} screens`}>
+        {screens.map((src, index) => (
+          <img data-swipe-index={index} src={src} alt={`${title.toLowerCase()} screen ${index + 1}`} loading="lazy" decoding="async" key={src} />
+        ))}
+      </div>
+      <IcaSwipePagination count={screens.length} activeIndex={pagination.activeIndex} onSelect={pagination.scrollToIndex} label={`${title} screen navigation`} />
+    </section>
+  );
+}
+
+function RullaDesktopScreens({ title, screens, top }: { title: string; screens: string[]; top: number }) {
+  const maxStart = Math.max(0, screens.length - 5);
+  const [startIndex, setStartIndex] = useState(0);
+  const visibleScreens = screens.slice(startIndex, startIndex + 5);
+  const showPrevious = () => setStartIndex((index) => Math.max(0, index - 1));
+  const showNext = () => setStartIndex((index) => Math.min(maxStart, index + 1));
+
+  return (
+    <section className="figma-rulla-desktop-screens" style={{ top }}>
+      <div className="figma-rulla-desktop-screens__header"><p>{title}</p></div>
+      <div className="figma-rulla-desktop-screens__strip">
+        {visibleScreens.map((src, index) => <img src={src} alt={`${title.toLowerCase()} screen ${startIndex + index + 1}`} loading="lazy" decoding="async" key={src} />)}
+      </div>
+      {maxStart > 0 ? (
+        <div className="figma-case-screen-controls figma-case-screen-controls--rulla">
+          <button className="figma-rulla-screen-arrow figma-rulla-screen-arrow--left" type="button" aria-label={`Previous ${title.toLowerCase()} screen`} onClick={showPrevious} disabled={startIndex === 0}><span aria-hidden="true">←</span></button>
+          <button className="figma-case-screen-pill figma-case-screen-pill--rulla" type="button" onClick={startIndex === maxStart ? showPrevious : showNext}><span className="figma-rulla-screen-pill__label">SEE MORE</span><span className="figma-rulla-screen-pill__dot" aria-hidden="true" /></button>
+          <button className="figma-rulla-screen-arrow figma-rulla-screen-arrow--right" type="button" aria-label={`Next ${title.toLowerCase()} screen`} onClick={showNext} disabled={startIndex === maxStart}><span aria-hidden="true">→</span></button>
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function RullaResponsiveNarrative() {
+  return (
+    <>
+      <section className="figma-ica-responsive-brief figma-rulla-responsive-brief">
+        <p className="figma-ica-responsive-kicker">PROJECT BRIEF</p>
+        <p>Rulla began during a one-hour Lovable product build that compressed research, product framing, interface design, and prototyping into one sprint. I started with a consumer service aggregating Stockholm’s transport modes, but tested the model before committing to a build. When the evidence challenged its economics, I reframed the buyer and proposition, then built a connected employee wallet and employer administration experience around the more defensible opportunity.</p>
+      </section>
+
+      <IcaResponsivePhase phase="RESEARCH" title="Validating the concept before committing to a build." className="figma-rulla-responsive-phase figma-rulla-responsive-phase--research">
+        <IcaResponsiveCopyBlock title="Original proposition"><p>The initial proposition brought public transport, bikes, scooters, taxis, and ride-hailing into one interface for discovery, booking, and payment. It addressed a real fragmentation problem, but depended on broad provider integrations and thin ticket commissions in a market with little room for differentiation.</p></IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Market evidence"><p>Travis had already tested much of this model in Sweden. More than four million tickets sold and over 35,000 monthly users were not enough to overcome weak long-term market conditions. MaaS Global’s Whim reached several markets before bankruptcy, reinforcing that demand for convenience did not automatically create sustainable unit economics. The evidence did not invalidate the user need; it showed that “aggregate everything and take a commission” was the wrong commercial structure.</p></IcaResponsiveCopyBlock>
+      </IcaResponsivePhase>
+
+      <RullaArtifact src={rullaStrategyPivot} alt="Rulla strategy pivot from consumer aggregation to employer-funded mobility" caption="STRATEGY PIVOT" />
+
+      <IcaResponsivePhase phase="DEFINE" title="Finding a viable wedge with a clear buyer." className="figma-rulla-responsive-phase">
+        <IcaResponsiveCopyBlock title="Strategic openings"><p>The research surfaced three routes: own a high-value niche, lead with discovery before monetisation, or begin with a narrower payment proposition and expand. Employer-funded mobility offered the strongest combination of recurring use, identifiable buyer, and administrative pain. NAVIT and Moovster in Germany, and Vaigo in Belgium, also showed that employer mobility budgets were already a validated category.</p></IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Localising the opportunity"><p>Swedish mobility benefits remain fragmented and car-skewed. Employers manage taxable public-transport benefits, reimbursements, and receipts, while employees move between disconnected providers. Rulla reframes that fragmentation as one managed mobility budget.</p></IcaResponsiveCopyBlock>
+      </IcaResponsivePhase>
+
+      <RullaArtifact src={rullaProductArchitecture} alt="Rulla product architecture across employee, employer, and mobility infrastructure" caption="PRODUCT ARCHITECTURE" />
+
+      <IcaResponsivePhase phase="DEVELOP" title="Designing both sides of the mobility benefit." className="figma-rulla-responsive-phase figma-rulla-responsive-phase--develop">
+        <IcaResponsiveCopyBlock title="Employee experience"><p>I designed one wallet around the full travel journey: seeing the available benefit, discovering eligible modes, comparing routes, booking transport, receiving tickets, and tracking trips and receipts. Eligibility stays visible throughout so the employee understands what the employer budget covers before committing to a journey.</p></IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Employer administration"><p>The employer experience turns mobility into a manageable benefit rather than a reimbursement process. Administrators can invite employees, allocate budgets, define eligible transport modes, monitor adoption and spending, and review sustainability indicators from one operational view.</p></IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Infrastructure assumptions"><p>The product connects journey-planning and live-departure data with provider integrations, payments, employer billing, ticket fulfilment, and receipts. Samtrafiken’s OSDM-online standard makes the direction more plausible by opening third-party distribution of Swedish public-transport tickets, while later partnerships could extend the same wallet to bikes, scooters, taxis, and ride-hailing.</p></IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Visual language">
+          <p>Sora gives key moments a distinct, contemporary voice, while Manrope keeps journey details, budgets, and administrative data highly legible. The palette balances sustainable mobility with the operational credibility expected of a B2B product: bright green and pale mint signal movement and environmental intent, while near-black green grounds policies, spending, and administration with greater authority. Off-white keeps dense information calm and approachable.</p>
+          <div className="figma-ica-responsive-colors" aria-label="Rulla interface colours">
+            <span><i style={{ background: "#111511" }} /><b>#111511</b><small>Foundation</small></span>
+            <span><i style={{ background: "#33d177" }} /><b>#33D177</b><small>Mobility</small></span>
+            <span><i style={{ background: "#e0f0e3" }} /><b>#E0F0E3</b><small>Surface</small></span>
+            <span><i style={{ background: "#f6faf6" }} /><b>#F6FAF6</b><small>Base</small></span>
+          </div>
+        </IcaResponsiveCopyBlock>
+      </IcaResponsivePhase>
+
+      <RullaScreenGallery title="ONBOARDING" screens={rullaOnboardingScreens} />
+      <RullaScreenGallery title="EMPLOYEE EXPERIENCE" screens={rullaEmployeeScreens} />
+      <RullaScreenGallery title="EMPLOYER EXPERIENCE" screens={rullaEmployerScreens} />
+      <section className="figma-rulla-responsive-prototype">
+        <MuxLoopVideo playbackId={rullaPrototypePlaybackId} poster={rullaPrototypePoster} label="Rulla employee and employer prototype" />
+        <figcaption className="figma-apple-video-caption figma-rulla-video-caption">
+          <a href="https://rulla-sigma.vercel.app/" target="_blank" rel="noreferrer">TEST PROTOTYPE</a>
+        </figcaption>
+      </section>
+
+      <IcaResponsivePhase phase="DELIVER" title="A sprint where research changed what was worth building." className="figma-rulla-responsive-phase figma-rulla-responsive-phase--deliver">
+        <IcaResponsiveCopyBlock title="What the concept demonstrates"><p>Rulla connects an employee-facing mobility wallet to an employer-facing policy and budget tool. The value is not aggregation alone; it is making a fragmented benefit easier to fund, use, and administer.</p></IcaResponsiveCopyBlock>
+        <IcaResponsiveCopyBlock title="Next steps and reflection"><p>The sprint reinforced that product development velocity cannot rescue a weak commercial model. To take this further, my next step would be to validate with Swedish employers, test employee and employer flows, and assess provider, tax, and billing constraints.</p></IcaResponsiveCopyBlock>
+      </IcaResponsivePhase>
+    </>
+  );
+}
+
+function RullaDesktopNarrative() {
+  return (
+    <>
+      <section className="figma-rulla-desktop-only figma-rulla-project-brief">
+        <p className="figma-ica-narrative__kicker">PROJECT BRIEF</p>
+        <p className="figma-ica-narrative__body">Rulla began during a one-hour Lovable product build that compressed research, product framing, interface design, and prototyping into one sprint. I started with a consumer service aggregating Stockholm’s transport modes, but tested the model before committing to a build. When the evidence challenged its economics, I reframed the buyer and proposition, then built a connected employee wallet and employer administration experience around the more defensible opportunity.</p>
+      </section>
+
+      <section className="figma-rulla-desktop-only figma-rulla-narrative-phase figma-rulla-narrative-phase--research">
+        <div className="figma-ica-narrative__phase-heading"><p>RESEARCH</p><h2>Validating the concept before committing to a build.</h2></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--original"><h3>Original proposition</h3><p>The initial proposition brought public transport, bikes, scooters, taxis, and ride-hailing into one interface for discovery, booking, and payment. It addressed a real fragmentation problem, but depended on broad provider integrations and thin ticket commissions in a market with little room for differentiation.</p></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--evidence"><h3>Market evidence</h3><p>Travis had already tested much of this model in Sweden. More than four million tickets sold and over 35,000 monthly users were not enough to overcome weak long-term market conditions. MaaS Global’s Whim reached several markets before bankruptcy, reinforcing that demand for convenience did not automatically create sustainable unit economics. The evidence did not invalidate the user need; it showed that “aggregate everything and take a commission” was the wrong commercial structure.</p></div>
+      </section>
+      <FigmaExport className="figma-rulla-desktop-only figma-rulla-process-visual" src={rullaStrategyPivot} alt="Rulla strategy pivot" left={100} top={2601} width={1480} height={925} />
+      <p className="figma-rulla-desktop-only figma-rulla-artifact-label" style={{ top: 3544 }}>STRATEGY PIVOT</p>
+
+      <section className="figma-rulla-desktop-only figma-rulla-narrative-phase figma-rulla-narrative-phase--define">
+        <div className="figma-ica-narrative__phase-heading"><p>DEFINE</p><h2>Finding a viable wedge with a clear buyer.</h2></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--openings"><h3>Strategic openings</h3><p>The research surfaced three routes: own a high-value niche, lead with discovery before monetisation, or begin with a narrower payment proposition and expand. Employer-funded mobility offered the strongest combination of recurring use, identifiable buyer, and administrative pain. NAVIT and Moovster in Germany, and Vaigo in Belgium, also showed that employer mobility budgets were already a validated category.</p></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--localise"><h3>Localising the opportunity</h3><p>Swedish mobility benefits remain fragmented and car-skewed. Employers manage taxable public-transport benefits, reimbursements, and receipts, while employees move between disconnected providers. Rulla reframes that fragmentation as one managed mobility budget.</p></div>
+      </section>
+      <FigmaExport className="figma-rulla-desktop-only figma-rulla-process-visual" src={rullaProductArchitecture} alt="Rulla product architecture" left={100} top={4170} width={1480} height={971.25} />
+      <p className="figma-rulla-desktop-only figma-rulla-artifact-label" style={{ top: 5159.25 }}>PRODUCT ARCHITECTURE</p>
+
+      <section className="figma-rulla-desktop-only figma-rulla-narrative-phase figma-rulla-narrative-phase--develop">
+        <div className="figma-ica-narrative__phase-heading"><p>DEVELOP</p><h2>Designing both sides of the mobility benefit.</h2></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--employee"><h3>Employee experience</h3><p>I designed one wallet around the full travel journey: seeing the available benefit, discovering eligible modes, comparing routes, booking transport, receiving tickets, and tracking trips and receipts. Eligibility stays visible throughout so the employee understands what the employer budget covers before committing to a journey.</p></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--employer"><h3>Employer administration</h3><p>The employer experience turns mobility into a manageable benefit rather than a reimbursement process. Administrators can invite employees, allocate budgets, define eligible transport modes, monitor adoption and spending, and review sustainability indicators from one operational view.</p></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--infrastructure"><h3>Infrastructure assumptions</h3><p>The product connects journey-planning and live-departure data with provider integrations, payments, employer billing, ticket fulfilment, and receipts. Samtrafiken’s OSDM-online standard makes the direction more plausible by opening third-party distribution of Swedish public-transport tickets, while later partnerships could extend the same wallet to bikes, scooters, taxis, and ride-hailing.</p></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--visual-language">
+          <h3>Visual language</h3>
+          <p>Sora gives key moments a distinct, contemporary voice, while Manrope keeps journey details, budgets, and administrative data highly legible. The palette balances sustainable mobility with the operational credibility expected of a B2B product: bright green and pale mint signal movement and environmental intent, while near-black green grounds policies, spending, and administration with greater authority. Off-white keeps dense information calm and approachable.</p>
+          <div className="figma-ica-colors figma-rulla-colors" aria-label="Rulla interface colours">
+            <span>Primary: <i style={{ background: "#111511" }} />#111511 <i style={{ background: "#33d177" }} />#33D177</span>
+            <span>Surfaces: <i style={{ background: "#e0f0e3" }} />#E0F0E3 <i style={{ background: "#f6faf6" }} />#F6FAF6</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="figma-rulla-desktop-only figma-rulla-deliver">
+        <div className="figma-ica-narrative__phase-heading"><p>DELIVER</p><h2>A sprint where research changed what was worth building.</h2></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--enables"><h3>What the concept demonstrates</h3><p>Rulla connects an employee-facing mobility wallet to an employer-facing policy and budget tool. The value is not aggregation alone; it is making a fragmented benefit easier to fund, use, and administer.</p></div>
+        <div className="figma-ica-narrative__copy figma-rulla-copy--reflection"><h3>Next steps and reflection</h3><p>The sprint reinforced that product development velocity cannot rescue a weak commercial model. To take this further, my next step would be to validate with Swedish employers, test employee and employer flows, and assess provider, tax, and billing constraints.</p></div>
+      </section>
+    </>
+  );
+}
+
+function RullaCasePage() {
+  usePreloadImages([rullaStrategyPivot, rullaProductArchitecture], undefined, 700);
+  return (
+    <FigmaFrame height={10915.25} className="figma-ica-case figma-rulla-case">
+      <Nav />
+      <section className="figma-ica-mobile-layout figma-rulla-mobile-layout">
+        <IcaResponsiveNav />
+        <section className="figma-ica-mobile-hero">
+          <h1>RULLA</h1>
+          <FigmaCaseMeta items={[
+            { label: "ROLE", value: "Product Designer & Developer" },
+            { label: "CONTEXT", value: "Lovable Product Workshop" },
+            { label: "TEAM", value: "Solo Project" },
+          ]} />
+          <RullaHeroMedia mobile />
+        </section>
+        <section className="figma-ica-mobile-intro figma-rulla-mobile-intro">
+          <p>Conceptualised and built <span>Rulla</span>, a B2B mobility wallet that enables employers to fund and manage transport benefits while employees discover and book from one place.</p>
+        </section>
+        <RullaResponsiveNarrative />
+        <IcaResponsiveFooter title="ICA BANKEN" href="/case/ica-banken" thumbnail={nextIcaFigma4x} />
+      </section>
+
+      <section className="figma-case-hero">
+        <h1>RULLA</h1>
+        <FigmaCaseMeta items={[
+          { label: "ROLE", value: "Product Designer & Developer" },
+          { label: "CONTEXT", value: "Lovable Product Workshop" },
+          { label: "TEAM", value: "Solo Project" },
+        ]} />
+        <RullaHeroMedia />
+      </section>
+      <section className="figma-case-intro figma-rulla-intro">
+        <p>Conceptualised and built <span>Rulla</span>, a B2B mobility wallet that enables employers to fund and manage transport benefits while employees discover and book from one place.</p>
+      </section>
+
+      <RullaDesktopNarrative />
+      <section className="figma-rulla-desktop-prototype">
+        <VimeoLoopVideo className="figma-rulla-desktop-prototype__motion" src={rullaMotionTwoVimeoUrl} label="Rulla mobility wallet motion study" />
+        <div className="figma-rulla-desktop-prototype__primary">
+          <MuxLoopVideo playbackId={rullaPrototypePlaybackId} poster={rullaPrototypePoster} label="Rulla employee and employer prototype" />
+          <figcaption className="figma-apple-video-caption figma-rulla-video-caption">
+            <a href="https://rulla-sigma.vercel.app/" target="_blank" rel="noreferrer">TEST PROTOTYPE</a>
+          </figcaption>
+        </div>
+      </section>
+      <RullaDesktopScreens title="ONBOARDING" screens={rullaOnboardingScreens} top={6831.25} />
+      <RullaDesktopScreens title="EMPLOYEE EXPERIENCE" screens={rullaEmployeeScreens} top={7668.25} />
+      <RullaDesktopScreens title="EMPLOYER EXPERIENCE" screens={rullaEmployerScreens} top={8505.25} />
+      <div className="figma-rulla-desktop-only figma-rulla-footer-mask-anchor fp-footer-mask-source" aria-hidden="true" />
+      <CaseNextFooter top={9863.25} title="ICA BANKEN" href="/case/ica-banken" thumbnail={nextIcaFigma4x} />
+    </FigmaFrame>
+  );
+}
+
 function AppleMailDesktopNarrative() {
   return (
     <>
@@ -4082,7 +4438,7 @@ function AppleMailCasePage() {
         <AppleMailResponsiveNarrative />
         <AppleMailPrototypeVideo className="figma-apple-video-responsive" showCaption mediaQuery="(max-width: 1024px)" />
         <AppleMailResponsiveReflection />
-        <IcaResponsiveFooter title="ICA BANKEN" href="/case/ica-banken" thumbnail={nextIcaFigma4x} />
+        <IcaResponsiveFooter title="RULLA" href="/case/rulla" thumbnail={rullaListThumbnail} thumbnailSlug="rulla" />
       </section>
       <section className="figma-case-hero">
         <h1>APPLE MAIL</h1>
@@ -4100,7 +4456,7 @@ function AppleMailCasePage() {
       <AppleMailPrototypeVideo className="figma-ica-desktop-only figma-apple-desktop-video" showCaption mediaQuery="(min-width: 1025px)" />
       <AppleMailDesktopReflection />
       <div className="figma-ica-desktop-only figma-apple-footer-mask-anchor" aria-hidden="true" />
-      <CaseNextFooter top={4666} title="ICA BANKEN" href="/case/ica-banken" thumbnail={nextIcaFigma4x} />
+      <CaseNextFooter top={4666} title="RULLA" href="/case/rulla" thumbnail={rullaListThumbnail} thumbnailSlug="rulla" />
     </FigmaFrame>
   );
 }
@@ -4234,6 +4590,7 @@ export default function App() {
   else if (path === "/case/safemap") page = <SafeMapCasePage />;
   else if (path === "/case/climate-hub") page = <ClimateHubCasePage />;
   else if (path === "/case/landa") page = <LandaCasePage />;
+  else if (path === "/case/rulla") page = <RullaCasePage />;
   else if (path === "/case/apple-mail") page = <AppleMailCasePage />;
   else if (path.startsWith("/case/")) {
     const project = projectBySlug.get(path.replace("/case/", ""));
