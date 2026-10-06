@@ -4296,6 +4296,7 @@ function RullaDesktopNarrative() {
 
 function RullaCasePage() {
   usePreloadImages([rullaStrategyPivot, rullaProductArchitecture], undefined, 700);
+  usePreloadImages([...rullaOnboardingScreens, ...rullaEmployeeScreens], "(min-width: 1025px)", 800);
   return (
     <FigmaFrame height={10915.25} className="figma-ica-case figma-rulla-case">
       <Nav />
